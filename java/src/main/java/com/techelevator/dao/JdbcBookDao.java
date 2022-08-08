@@ -76,10 +76,7 @@ public class JdbcBookDao implements BookDao {
                         "values (?, ?)";
 
                 jdbcTemplate.update(sql2, id, genreId);
-
-
         }
-
         return book;
     }
 
@@ -135,7 +132,6 @@ public class JdbcBookDao implements BookDao {
         }
 
         return genres;
-
     }
 
     @Override

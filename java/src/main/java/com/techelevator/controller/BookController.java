@@ -17,12 +17,13 @@ public class BookController {
         this.bookDao = bookDao;
     }
 
-
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/books/{Id}", method = RequestMethod.GET)
     public Book getBookById(@PathVariable("Id") int bookId) {
         return bookDao.getBook(bookId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/books", method = RequestMethod.GET)
     public List<Book> getBookList() {
         return bookDao.getBookList();
@@ -40,6 +41,7 @@ public class BookController {
         bookDao.deleteBook(bookId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/genres/{id}", method = RequestMethod.GET)
     public List<String> getGenreListByBookId(@PathVariable("id") int bookId) {
         return bookDao.getGenreListByBookId(bookId);
@@ -51,6 +53,7 @@ public class BookController {
         bookDao.addGenres(bookId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/genres", method = RequestMethod.GET)
     public List<String> genres() {
         return bookDao.getAllGenres();
