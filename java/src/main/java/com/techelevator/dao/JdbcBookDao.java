@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 
 @Component
@@ -66,8 +66,19 @@ public class JdbcBookDao implements BookDao {
 
         book.setBookId(id);
 
-        addGenres(id);
-        // TODO: issue w/adding genre
+       List<String> genres = book.getGenres();
+
+        for(String genre: genres) {
+
+                int genreId = getGenreId(genre);
+
+                String sql2 = "insert into book_genre (book_id, genre_id) " +
+                        "values (?, ?)";
+
+                jdbcTemplate.update(sql2, id, genreId);
+
+
+        }
 
         return book;
     }
@@ -86,7 +97,7 @@ public class JdbcBookDao implements BookDao {
 
         List<String> genres = new ArrayList<>();
 
-        String sql = "select genre_name " +
+        String sql = "select genres.genre_id, genre_name " +
                 "from genres " +
                 "join book_genre on genres.genre_id = book_genre.genre_id " +
                 "where book_id = ?";
@@ -100,12 +111,30 @@ public class JdbcBookDao implements BookDao {
         return genres;
     }
 
-    @Override
-    public Integer getGenreId(String genreName) {
+    private Integer getGenreId(String genreName) {
 
         String sql = "select genre_id from genres where genre_name = ?";
 
         return jdbcTemplate.queryForObject(sql, Integer.class, genreName);
+
+    }
+
+    private List<String> getListOfBookGenres(int bookId) {
+
+        List<String> genres = new ArrayList<>();
+
+        String sql = "select genre_name " +
+                "from genres " +
+                "join book_genre on genres.genre_id = book_genre.genre_id " +
+                "where book_id = ?";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, bookId);
+
+        while(rowSet.next()) {
+            genres.add(rowSet.getString("genre_name"));
+        }
+
+        return genres;
 
     }
 
@@ -117,16 +146,14 @@ public class JdbcBookDao implements BookDao {
         List<String> bookGenres = getGenreListByBookId(bookId);
         for(String genre: allGenres) {
             if (bookGenres.contains(genre)) {
-               Integer genreId = getGenreId(genre);
+               int genreId = getGenreId(genre);
 
                 String sql = "insert into book_genre (book_id, genre_id) " +
                         "values (?, ?)";
 
                 jdbcTemplate.update(sql, bookId, genreId);
             }
-
         }
-
     }
 
     @Override
@@ -140,11 +167,10 @@ public class JdbcBookDao implements BookDao {
 
         while(rowSet.next()) {
             genres.add(rowSet.getString("genre_name"));
-        }
 
+        }
         return genres;
     }
-
 
     private Book mapRowToBook(SqlRowSet rowSet) {
 
@@ -161,10 +187,11 @@ public class JdbcBookDao implements BookDao {
             book.setPublishingDate(rowSet.getDate("publishing_date").toLocalDate());
         }
         book.setCoverImageUrl(rowSet.getString("cover_image_url"));
-        book.setGenres(getGenreListByBookId(rowSet.getInt("book_id")));
-
+        book.setGenres(getListOfBookGenres(rowSet.getInt("book_id")));
         return book;
     }
+
+
 
 
 

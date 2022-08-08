@@ -11,9 +11,9 @@ public interface BookDao {
     Book addBook(Book book);
     void deleteBook(int bookId);
     List<String> getGenreListByBookId(int bookId);
-    Integer getGenreId(String genreName);
     void addGenres(int bookId);
     List<String> getAllGenres();
+
 
 
 }

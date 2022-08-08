@@ -17,7 +17,7 @@ public class Book {
     private List<String> genres;
 
 
-    public Book() {};
+    public Book() {}
 
 
     public Book(int bookId, String title, String author, boolean bestSeller, long isbn, String summary, String keywords, LocalDate publishingDate, String coverImageUrl, List<String> genres) {

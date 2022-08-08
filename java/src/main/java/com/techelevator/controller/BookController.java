@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.BookDao;
 import com.techelevator.model.Book;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,11 +27,13 @@ public class BookController {
         return bookDao.getBookList();
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/books", method = RequestMethod.POST)
     public Book addBook(@RequestBody Book book) {
         return bookDao.addBook(book);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/books/{id}", method = RequestMethod.DELETE)
     public void deleteBook(@PathVariable("id") int bookId) {
         bookDao.deleteBook(bookId);
@@ -41,6 +44,7 @@ public class BookController {
         return bookDao.getGenreListByBookId(bookId);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/genres/{id}", method = RequestMethod.POST)
     public void addGenres(@PathVariable("id") int bookId) {
         bookDao.addGenres(bookId);

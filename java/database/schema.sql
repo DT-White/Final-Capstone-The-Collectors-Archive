@@ -28,14 +28,15 @@ INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpUL
 
 Create table books (
 	book_id serial primary key,
-	title varchar(64) not null,
+	title varchar(128) not null,
 	author varchar(64) not null,
 	isbn bigint not null unique,
 	bestseller boolean,
-	summary varchar(1024) not null,
+	summary varchar(2048) not null,
 	keyword varchar(512) not null,
 	publishing_date date not null,
-	cover_image_url varchar(128)
+	cover_image_url varchar(128),
+	genres_of_book varchar(512)
 	);
 
 Create table genres (
