@@ -22,14 +22,14 @@
     <input
       type="text"
       id="keyWords"
-      v-model="book.keyWords"
+      v-model="book.keyword"
       placeholder="Key Words separated by commas"
     />
 
     <input
       type="text"
       id="coverUrl"
-      v-model="book.coverUrl"
+      v-model="book.coverImageUrl"
       placeholder="Cover Image Url"
     />
 
@@ -53,7 +53,7 @@
         {{ genre.name }}
       </div>
     </div>
-    <button v-on:click="createBook" type="submit">Add Book</button>
+    <button v-on:click.prevent="createBook" type="submit">Add Book</button>
   </form>
 </template>
 
@@ -86,17 +86,30 @@ export default {
           { name: "Horror", selected: false },
           { name: "Fantasy", selected: false },
         ],
-      },
+       
+      }
     };
   },
   methods: {
     createBook() {
-      bookService.createBook(this.book).then((response) => {
+      let newBook = {
+        title: this.book.title,
+        author: this.book.author,
+        isbn: this.book.isbn,
+        keyword: this.book.keyword,
+        summary: this.book.summary,
+        publishingDate: this.book.publishingDate,
+        coverImageUrl: this.book.coverImageUrl,
+        genres: this.book.genres.filter(g => g.selected).map((g) => g.name)
+      }
+      bookService.createBook(newBook).then((response) => {
         if (response.status === 201) {
           alert("Book Added");
         }
       });
     },
+
+    
 
     getBookFromGoogle() {
       googleService.getBook(this.book.isbn).then((response) => {
@@ -110,9 +123,8 @@ export default {
               ? response.authors.join(", ")
               : response.authors[0];
           this.book.summary = response.description;
-          this.book.coverUrl = response.imageLinks.thumbnail;
+          this.book.coverImageUrl = response.imageLinks.thumbnail;
           this.book.publishingDate = response.publishedDate;
-
           for (let category of response.categories) {
             for (let genre of this.book.genres) {
               if (genre.name === category) {
@@ -120,7 +132,10 @@ export default {
               }
             }
           }
+       
         }
+        
+        
       });
     },
 
