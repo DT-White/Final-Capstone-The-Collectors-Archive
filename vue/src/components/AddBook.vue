@@ -1,11 +1,16 @@
 <template>
-  <form>
-    <input
-      type="text"
-      id="isbn"
-      v-model="book.isbn"
-      placeholder="Enter ISBN to autofill"
-    />
+  <form v-on:click="showError = false">
+    <span>
+      <input
+        type="text"
+        id="isbn"
+        v-model="book.isbn"
+        placeholder="Enter ISBN to autofill"
+      />
+      <button v-on:click.prevent="getBookFromGoogle">Autofill</button>
+    </span>
+    <isbn-not-found v-if="showError" />
+
     <input type="text" id="title" v-model="book.title" placeholder="Title" />
     <input type="text" id="author" v-model="book.author" placeholder="Author" />
     <textarea
@@ -20,6 +25,14 @@
       v-model="book.keyWords"
       placeholder="Key Words separated by commas"
     />
+
+    <input
+      type="text"
+      id="coverUrl"
+      v-model="book.coverUrl"
+      placeholder="Cover Image Url"
+    />
+
     <span>
       <p id="dateLabel">Publishing Date</p>
       <input
@@ -29,78 +42,119 @@
         placeholder="Publishing Date"
       />
     </span>
-    <input
-      type="text"
-      id="coverUrl"
-      v-model="book.coverUrl"
-      placeholder="Cover Image Url"
-    />
+
     <div id="genres">
       <div
         v-on:click="toggleSelected(genre)"
-        v-for="genre in genres"
+        v-for="genre in book.genres"
         v-bind:key="genre.id"
         v-bind:class="{ selected: genre.selected }"
       >
         {{ genre.name }}
       </div>
     </div>
+    <button v-on:click="createBook" type="submit">Add Book</button>
   </form>
 </template>
 
 <script>
+import googleService from "@/services/GoogleService";
+import isbnNotFound from "@/components/IsbnNotFound";
+import bookService from "@/services/BookService";
 export default {
+  components: {
+    isbnNotFound,
+  },
+
   data() {
     return {
-      book: {},
-      genres: [
-        { name: "Fiction", selected: false },
-        { name: "Nonfiction", selected: false },
-        { name: "Young Adult", selected: false },
-        { name: "Science Fiction", selected: false },
-        { name: "Western", selected: false },
-        { name: "Mystery", selected: false },
-        { name: "Romance", selected: false },
-        { name: "Comedy", selected: false },
-        { name: "Historical", selected: false },
-        { name: "Thriller", selected: false },
-        { name: "Horror", selected: false },
-        { name: "Fantasy", selected: false },
-      ],
+      showError: false,
+
+      book: {
+        title: "",
+        genres: [
+          { name: "Fiction", selected: false },
+          { name: "Nonfiction", selected: false },
+          { name: "Young Adult", selected: false },
+          { name: "Science Fiction", selected: false },
+          { name: "Western", selected: false },
+          { name: "Mystery", selected: false },
+          { name: "Romance", selected: false },
+          { name: "Comedy", selected: false },
+          { name: "Historical", selected: false },
+          { name: "Thriller", selected: false },
+          { name: "Horror", selected: false },
+          { name: "Fantasy", selected: false },
+        ],
+      },
     };
   },
   methods: {
+    createBook() {
+      bookService.createBook(this.book).then((response) => {
+        if (response.status === 201) {
+          alert("Book Added");
+        }
+      });
+    },
+
+    getBookFromGoogle() {
+      googleService.getBook(this.book.isbn).then((response) => {
+        if (!response.data.items) {
+          this.showError = true;
+        } else {
+          response = response.data.items[0].volumeInfo;
+          this.book.title = response.title;
+          this.book.author =
+            response.authors.length > 1
+              ? response.authors.join(", ")
+              : response.authors[0];
+          this.book.summary = response.description;
+          this.book.coverUrl = response.imageLinks.thumbnail;
+          this.book.publishingDate = response.publishedDate;
+
+          for (let category of response.categories) {
+            for (let genre of this.book.genres) {
+              if (genre.name === category) {
+                genre.selected = true;
+              }
+            }
+          }
+        }
+      });
+    },
+
     toggleSelected(genre) {
       if (genre.selected) {
         genre.selected = false;
       } else {
         genre.selected = true;
         if (genre.name === "Fiction") {
-          this.genres.find(
+          this.book.genres.find(
             (genre) => genre.name === "Nonfiction"
           ).selected = false;
         } else if (genre.name === "Nonfiction") {
-          this.genres.find(
+          this.book.genres.find(
             (genre) => genre.name === "Fiction"
           ).selected = false;
-           this.genres.find(
+          this.book.genres.find(
             (genre) => genre.name === "Science Fiction"
           ).selected = false;
-           this.genres.find(
+          this.book.genres.find(
             (genre) => genre.name === "Fantasy"
           ).selected = false;
         } else if (genre.name === "Fantasy") {
-          this.genres.find(
+          this.book.genres.find(
             (genre) => genre.name === "Nonfiction"
           ).selected = false;
-           this.genres.find(
+          this.book.genres.find(
             (genre) => genre.name === "Fiction"
           ).selected = true;
         } else if (genre.name === "Science Fiction") {
-          this.genres.find(
+          this.book.genres.find(
             (genre) => genre.name === "Nonfiction"
           ).selected = false;
-           this.genres.find(
+          this.book.genres.find(
             (genre) => genre.name === "Fiction"
           ).selected = true;
         }
@@ -135,13 +189,11 @@ form span {
   align-items: center;
   justify-content: space-between;
   display: flex;
-  border: 1px;
+  /* border: 1px;
   border-style: solid;
-  border-color: rgb(109, 106, 106);
+  border-color: rgb(109, 106, 106); */
   min-width: 225px;
   max-width: 500px;
-}
-#summary {
 }
 
 #date {
@@ -149,13 +201,17 @@ form span {
 }
 
 #dateLabel {
-  color: rgb(109, 106, 106);
+  color: black;
   height: 75%;
   padding: 3px;
   margin: 0;
   font-size: 0.85rem;
   min-width: 105px;
   font-family: sans-serif;
+}
+
+#dateLabel:hover {
+  cursor: default;
 }
 
 #genres {
