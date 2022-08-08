@@ -1,6 +1,7 @@
 BEGIN TRANSACTION;
 
 
+
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS seq_user_id;
 DROP table if exists book_genre;
@@ -33,7 +34,7 @@ Create table books (
 	isbn bigint not null unique,
 	bestseller boolean,
 	summary varchar(2048) not null,
-	keyword varchar(512) not null,
+	keyword varchar(512),
 	publishing_date date not null,
 	cover_image_url varchar(128),
 	genres_of_book varchar(512)

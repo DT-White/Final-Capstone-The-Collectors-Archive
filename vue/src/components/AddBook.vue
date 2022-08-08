@@ -1,5 +1,7 @@
 <template>
-  <form v-on:click="showError = false">
+<div>
+  <button v-on:click ="showAddBook =!showAddBook">{{showAddBook?"Cancel":"Add Book"}}</button>
+  <form v-if="showAddBook"  v-on:click="showError = false">
     <span>
       <input
         type="text"
@@ -53,8 +55,9 @@
         {{ genre.name }}
       </div>
     </div>
-    <button v-on:click.prevent="createBook" type="submit">Add Book</button>
+    <button v-on:click.prevent="createBook" type="submit">Submit</button>
   </form>
+  </div>
 </template>
 
 <script>
@@ -68,6 +71,9 @@ export default {
 
   data() {
     return {
+      showAddBook:false,
+
+
       showError: false,
 
       book: {
@@ -90,6 +96,7 @@ export default {
       }
     };
   },
+  
   methods: {
     createBook() {
       let newBook = {
@@ -104,7 +111,8 @@ export default {
       }
       bookService.createBook(newBook).then((response) => {
         if (response.status === 201) {
-          alert("Book Added");
+          this.showAddBook=false;
+          this.book={}
         }
       });
     },
