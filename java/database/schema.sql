@@ -60,7 +60,7 @@ Insert into genres (genre_name) Values ('Romance');
 Insert into genres (genre_name) Values ('Western');
 Insert into genres (genre_name) Values ('Fantasy');
 Insert into genres (genre_name) Values ('Science-Fiction');
-Insert into genres (genre_name) Values ('Non-Fiction');
+Insert into genres (genre_name) Values ('Nonfiction');
 Insert into genres (genre_name) Values ('Young-Adult');
 Insert into genres (genre_name) Values ('Comedy');
 

@@ -1,7 +1,7 @@
 <template>
 <div>
   <button v-on:click ="showAddBook =!showAddBook">{{showAddBook?"Cancel":"Add Book"}}</button>
-  <form v-if="showAddBook"  v-on:click="showError = false">
+  <form id ="addBookForm" v-if="showAddBook"  v-on:click="showError = false">
     <span>
       <input
         type="text"
@@ -45,8 +45,9 @@
       />
     </span>
 
-    <div id="genres">
+    <div id="genres" v-if="book.genres.length > 0">
       <div
+      
         v-on:click="toggleSelected(genre)"
         v-for="genre in book.genres"
         v-bind:key="genre.id"
@@ -70,6 +71,7 @@ export default {
   },
 
   data() {
+
     return {
       showAddBook:false,
 
@@ -78,23 +80,21 @@ export default {
 
       book: {
         title: "",
-        genres: [
-          { name: "Fiction", selected: false },
-          { name: "Nonfiction", selected: false },
-          { name: "Young Adult", selected: false },
-          { name: "Science Fiction", selected: false },
-          { name: "Western", selected: false },
-          { name: "Mystery", selected: false },
-          { name: "Romance", selected: false },
-          { name: "Comedy", selected: false },
-          { name: "Historical", selected: false },
-          { name: "Thriller", selected: false },
-          { name: "Horror", selected: false },
-          { name: "Fantasy", selected: false },
-        ],
+        genres: [],
        
       }
     };
+  },
+
+  created(){
+    bookService.getGenres().then(response =>{
+      if(response.status === 200){
+        for(let genre of response.data){
+          this.book.genres.push({name:genre,selected:false});
+        }
+      }
+    })
+    
   },
   
   methods: {
@@ -188,13 +188,13 @@ export default {
 </script>
 
 <style>
-form > * {
+#addBookForm > * {
   display: block;
   width: 100%;
   min-width: 220px;
 }
 
-form > input {
+#addBookForm > input {
   width: 98%;
   max-width: 500px;
 }
@@ -204,11 +204,11 @@ textarea {
   max-width: 500px;
 }
 
-form {
+#addBookForm {
   width: 50%;
 }
 
-form span {
+#addBookForm span {
   align-items: center;
   justify-content: space-between;
   display: flex;
