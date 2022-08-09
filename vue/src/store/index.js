@@ -18,12 +18,29 @@ if (currentToken != null) {
 
 export default new Vuex.Store({
   state: {
+    filtered: [],
     genres: [],
     books: [],
+    // titleFilter: "",
+    // author: "",
+    // keywordFilter: "",
+    storeFilter: {
+      title: "",
+      author: "",
+      keyword: "",
+      startDate: "",
+      endDate: "",
+      genres: [],
+      isbn: ""
+    },
     token: currentToken || '',
     user: currentUser || {}
   },
   mutations: {
+
+    GET_FILTERED_LIST(state, filterBooks) {
+      state.filtered = filterBooks;
+    },
 
     GET_GENRE_LIST(state, genres) {
       state.genres = genres;
@@ -35,6 +52,12 @@ export default new Vuex.Store({
 
     ADD_BOOK(state, book) {
       state.books.push(book);
+    },
+    // SET_KEYWORD(state, keyword) {
+    //   state.keywordFilter = keyword
+    // },
+    SET_STORE_FILTER(state, filter) {
+      state.storeFilter = filter
     },
 
     SET_AUTH_TOKEN(state, token) {
