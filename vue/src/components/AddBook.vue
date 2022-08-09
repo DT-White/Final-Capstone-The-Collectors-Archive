@@ -45,11 +45,11 @@
       />
     </span>
 
-    <div id="genres" v-if="book.genres.length > 0">
+    <div class="genres" v-if="this.$store.state.genres.length > 0">
       <div
       
         v-on:click="toggleSelected(genre)"
-        v-for="genre in book.genres"
+        v-for="genre in this.$store.state.genres"
         v-bind:key="genre.id"
         v-bind:class="{ selected: genre.selected }"
       >
@@ -89,9 +89,11 @@ export default {
   created(){
     bookService.getGenres().then(response =>{
       if(response.status === 200){
+        let genreList=[]
         for(let genre of response.data){
-          this.book.genres.push({name:genre,selected:false});
+          genreList.push({name:genre,selected:false});
         }
+        this.$store.commit("GET_GENRE_LIST", genreList)
       }
     })
     
@@ -112,7 +114,8 @@ export default {
       bookService.createBook(newBook).then((response) => {
         if (response.status === 201) {
           this.showAddBook=false;
-          this.book={}
+          this.$store.commit("ADD_BOOK", this.book);
+          this.book={genres:[]};
         }
       });
     },
@@ -153,31 +156,31 @@ export default {
       } else {
         genre.selected = true;
         if (genre.name === "Fiction") {
-          this.book.genres.find(
+          this.$store.state.genres.find(
             (genre) => genre.name === "Nonfiction"
           ).selected = false;
         } else if (genre.name === "Nonfiction") {
-          this.book.genres.find(
+          this.$store.state.genres.find(
             (genre) => genre.name === "Fiction"
           ).selected = false;
-          this.book.genres.find(
+         this.$store.state.genres.find(
             (genre) => genre.name === "Science Fiction"
           ).selected = false;
-          this.book.genres.find(
+          this.$store.state.genres.find(
             (genre) => genre.name === "Fantasy"
           ).selected = false;
         } else if (genre.name === "Fantasy") {
-          this.book.genres.find(
+          this.$store.state.genres.find(
             (genre) => genre.name === "Nonfiction"
           ).selected = false;
-          this.book.genres.find(
+          this.$store.state.genres.find(
             (genre) => genre.name === "Fiction"
           ).selected = true;
         } else if (genre.name === "Science Fiction") {
-          this.book.genres.find(
+          this.$store.state.genres.find(
             (genre) => genre.name === "Nonfiction"
           ).selected = false;
-          this.book.genres.find(
+          this.$store.state.genres.find(
             (genre) => genre.name === "Fiction"
           ).selected = true;
         }
@@ -189,7 +192,7 @@ export default {
 
 <style>
 #addBookForm > * {
-  display: block;
+  /* display: block; */
   width: 100%;
   min-width: 220px;
 }
@@ -237,7 +240,7 @@ textarea {
   cursor: default;
 }
 
-#genres {
+.genres {
   display: flex;
   gap: 5px;
   align-items: center;
@@ -246,7 +249,7 @@ textarea {
   flex-wrap: wrap;
 }
 
-#genres div {
+.genres div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -259,11 +262,11 @@ textarea {
   font-family: sans-serif;
 }
 
-#genres div:hover {
+.genres div:hover {
   cursor: pointer;
 }
 
-#genres div.selected {
+.genres div.selected {
   background-color: chartreuse;
   border-width: 2px;
 }
