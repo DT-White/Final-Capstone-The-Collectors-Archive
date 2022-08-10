@@ -13,6 +13,8 @@ public interface BookDao {
     List<String> getGenreListByBookId(int bookId);
     void addGenres(int bookId);
     List<String> getAllGenres();
+    List<Book> getUserReadingList(String username);
+    void addBookToReadingList(String username, Book book);
 
 
 

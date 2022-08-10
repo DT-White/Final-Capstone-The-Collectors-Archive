@@ -10,14 +10,16 @@ import java.util.List;
 
 
 
+
 @Component
 public class JdbcBookDao implements BookDao {
 
+    private final JdbcTemplate jdbcTemplate;
+    private final UserDao userDao;
 
-    private JdbcTemplate jdbcTemplate;
-
-    public JdbcBookDao (JdbcTemplate jdbcTemplate) {
+    public JdbcBookDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userDao = userDao;
     }
 
 
@@ -166,6 +168,36 @@ public class JdbcBookDao implements BookDao {
 
         }
         return genres;
+    }
+
+    @Override
+    public List<Book> getUserReadingList(String username) {
+
+        List<Book> books = new ArrayList<>();
+
+        String sql = "select title " +
+                "from books " +
+                "join reading_list on reading_list.book_id = books.book_id " +
+                "where username = ?";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, username);
+
+        while(rowSet.next()) {
+            books.add(mapRowToBook(rowSet));
+        }
+
+        return books;
+    }
+
+    @Override
+    public void addBookToReadingList(String username, Book book) {
+
+        String sql = "insert into reading_list (user_id, book_id) " +
+                "values (?, ?)";
+
+        int userId = userDao.findIdByUsername(username);
+
+        jdbcTemplate.update(sql, userId, book.getBookId());
     }
 
     private Book mapRowToBook(SqlRowSet rowSet) {

@@ -5,6 +5,7 @@ import com.techelevator.model.Book;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
@@ -60,4 +61,15 @@ public class BookController {
     }
 
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/reading-list", method = RequestMethod.GET)
+    public List<Book> getUserReadingList(Principal principal) {
+        return bookDao.getUserReadingList(principal.getName());
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/reading-list", method = RequestMethod.POST)
+    public void addBookToReadingList(@RequestBody Book book, Principal principal) {
+        bookDao.addBookToReadingList(principal.getName(), book);
+    }
 }
