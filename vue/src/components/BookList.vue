@@ -52,8 +52,6 @@ export default {
     checkKeyWords(book) {
       for (let word of this.$store.state.storeFilter.keyword.split(",")) {
         if (book.keyword){
-          console.log(word);
-          console.log(book.keyword);
           if (book.keyword.toLowerCase().includes(word.toLowerCase().trim())) {
             return true;
           }

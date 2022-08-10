@@ -46,7 +46,7 @@ public class JdbcBookDao implements BookDao {
 
         List<Book> bookList = new ArrayList<>();
 
-        String sql = "select book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url " +
+        String sql = "select book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added " +
                 "from books order by book_id desc";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
@@ -175,9 +175,10 @@ public class JdbcBookDao implements BookDao {
 
         List<Book> books = new ArrayList<>();
 
-        String sql = "select title " +
+        String sql = "select books.book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added " +
                 "from books " +
                 "join reading_list on reading_list.book_id = books.book_id " +
+                "join users on users.user_id = reading_list.user_id " +
                 "where username = ?";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, username);
@@ -213,6 +214,9 @@ public class JdbcBookDao implements BookDao {
         book.setKeyword((rowSet.getString("keyword")));
         if (rowSet.getDate("publishing_date") != null) {
             book.setPublishingDate(rowSet.getDate("publishing_date").toLocalDate());
+        }
+        if (rowSet.getTimestamp("date_added") != null) {
+            book.setDateAdded(rowSet.getTimestamp("date_added").toLocalDateTime());
         }
         book.setCoverImageUrl(rowSet.getString("cover_image_url"));
         book.setGenres(getListOfBookGenres(rowSet.getInt("book_id")));

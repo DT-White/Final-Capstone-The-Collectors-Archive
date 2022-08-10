@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Book {
@@ -15,12 +16,13 @@ public class Book {
     private LocalDate publishingDate;
     private String coverImageUrl;
     private List<String> genres;
+    private LocalDateTime dateAdded;
 
 
     public Book() {}
 
 
-    public Book(int bookId, String title, String author, boolean bestSeller, long isbn, String summary, String keywords, LocalDate publishingDate, String coverImageUrl, List<String> genres) {
+    public Book(int bookId, LocalDateTime dateAdded, String title, String author, boolean bestSeller, long isbn, String summary, String keywords, LocalDate publishingDate, String coverImageUrl, List<String> genres) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
@@ -31,6 +33,7 @@ public class Book {
         this.publishingDate = publishingDate;
         this.coverImageUrl = coverImageUrl;
         this.genres = genres;
+        this.dateAdded = dateAdded;
     }
 
     public int getBookId() {
@@ -43,6 +46,14 @@ public class Book {
 
     public String getTitle() {
         return title;
+    }
+
+    public LocalDateTime getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(LocalDateTime dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
     public void setTitle(String title) {
