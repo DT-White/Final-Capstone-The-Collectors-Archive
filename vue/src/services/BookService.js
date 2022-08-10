@@ -11,6 +11,10 @@ export default {
 
     getGenres(){
         return axios.get("http://localhost:8080/genres")
+    },
+
+    getReadingList(){
+        return axios.get("http://localhost:8080/reading-list")
     }
 
 }

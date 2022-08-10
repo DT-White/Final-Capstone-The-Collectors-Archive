@@ -37,7 +37,6 @@ export default {
           this.checkKeyWords(book) &&
           this.checkGenres(book)
         );
-        // && book.keyword.includes(this.$store.state.storeFilter.keyword)
       });
     },
   },
@@ -50,14 +49,14 @@ export default {
     });
   },
   methods: {
-    updateBooks() {
-      this.books = this.$store.state.filtered;
-    },
     checkKeyWords(book) {
       for (let word of this.$store.state.storeFilter.keyword.split(",")) {
-        console.log(word);
-        if (book.keyword.toLowerCase().includes(word.toLowerCase())) {
-          return true;
+        if (book.keyword){
+          console.log(word);
+          console.log(book.keyword);
+          if (book.keyword.toLowerCase().includes(word.toLowerCase().trim())) {
+            return true;
+          }
         }
       }
       return false;

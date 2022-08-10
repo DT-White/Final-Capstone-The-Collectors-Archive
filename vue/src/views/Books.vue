@@ -1,11 +1,11 @@
 <template>
   <div id="booksView">
       <book-filter/>
-        <section>
-      <add-book />
-      <bookList />
+      <section>
+        <add-book />
+        <bookList />
       </section>
-
+      <reading-list/>
   </div>
 </template>
 
@@ -13,8 +13,9 @@
 import addBook from "@/components/AddBook";
 import bookList from "@/components/BookList";
 import bookFilter from "@/components/BookFilter";
+import readingList from "@/components/ReadingList";
 export default {
-  components: { addBook, bookList, bookFilter },
+  components: { addBook, bookList, bookFilter, readingList },
 };
 </script>
 

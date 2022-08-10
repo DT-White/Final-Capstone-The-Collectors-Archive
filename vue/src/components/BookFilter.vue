@@ -203,7 +203,7 @@ export default {
 #bookFilterForm {
   display: flex;
   width: 200px;
-  background-color: skyblue;
+  background-color: rgb(29, 150, 75);
   flex-direction: column;
   padding: 10px;
   gap: 10px;

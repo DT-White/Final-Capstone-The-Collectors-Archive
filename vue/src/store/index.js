@@ -21,9 +21,7 @@ export default new Vuex.Store({
     filtered: [],
     genres: [],
     books: [],
-    // titleFilter: "",
-    // author: "",
-    // keywordFilter: "",
+    readingList: [],
     storeFilter: {
       title: "",
       author: "",
@@ -37,6 +35,10 @@ export default new Vuex.Store({
     user: currentUser || {}
   },
   mutations: {
+
+    GET_READING_LIST(state, readingList){
+      state.readingList = readingList;
+    },
 
     GET_FILTERED_LIST(state, filterBooks) {
       state.filtered = filterBooks;
