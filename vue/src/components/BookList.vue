@@ -13,48 +13,133 @@ import bookService from "@/services/BookService";
 export default {
   data() {
     return {
-      books: []
+      books: [],
     };
   },
-  computed:{
-      booksList(){
-           return this.$store.state.books
-           .filter((book) => {
-               return book.title.toLowerCase().includes(this.$store.state.storeFilter.title.toLowerCase())
-               && book.author.toLowerCase().includes(this.$store.state.storeFilter.author.toLowerCase())
-               && (book.isbn == this.$store.state.storeFilter.isbn || !this.$store.state.storeFilter.isbn)
-               && (Date.parse(book.publishingDate) > Date.parse(this.$store.state.storeFilter.startDate) || !this.$store.state.storeFilter.startDate)
-               && (Date.parse(book.publishingDate) < Date.parse(this.$store.state.storeFilter.endDate) || !this.$store.state.storeFilter.endDate)
-               
-        })
-      }
+  computed: {
+    booksList() {
+      return this.$store.state.books.filter((book) => {
+        return (
+          book.title
+            .toLowerCase()
+            .includes(this.$store.state.storeFilter.title.toLowerCase()) &&
+          book.author
+            .toLowerCase()
+            .includes(this.$store.state.storeFilter.author.toLowerCase()) &&
+          (book.isbn == this.$store.state.storeFilter.isbn ||
+            !this.$store.state.storeFilter.isbn) &&
+          (Date.parse(book.publishingDate) >
+            Date.parse(this.$store.state.storeFilter.startDate) ||
+            !this.$store.state.storeFilter.startDate) &&
+          (Date.parse(book.publishingDate) <
+            Date.parse(this.$store.state.storeFilter.endDate) ||
+            !this.$store.state.storeFilter.endDate) &&
+          this.checkKeyWords(book) &&
+          this.checkGenres(book)
+        );
+        // && book.keyword.includes(this.$store.state.storeFilter.keyword)
+      });
+    },
   },
   created() {
     bookService.getBooks().then((response) => {
       if (response.status === 200) {
         this.$store.commit("GET_BOOK_LIST", response.data);
-        this.books = response.data
+        this.books = response.data;
       }
     });
   },
-  methods:{
-      updateBooks(){
-          this.books = this.$store.state.filtered;
+  methods: {
+    updateBooks() {
+      this.books = this.$store.state.filtered;
+    },
+    checkKeyWords(book) {
+      for (let word of this.$store.state.storeFilter.keyword.split(",")) {
+        console.log(word);
+        if (book.keyword.toLowerCase().includes(word.toLowerCase())) {
+          return true;
+        }
       }
+      return false;
+    },
+    checkGenres(book) {
+      let noneSelected = true;
+      let matchesAll = true;
+      for (let genre of this.$store.state.storeFilter.genres) {
+        if (genre.selected) {
+          noneSelected = false;
+          if (!book.genres.includes(genre.name)) {
+            matchesAll = false;
+          }
+        }
+      }
+      return noneSelected || matchesAll;
+    },
   },
-  
 };
 </script>
 
 <style>
+body {
+  background-color: rgb(83, 38, 7);
+}
+
+#bookList h2 {
+  text-align: center;
+  flex-grow: 2;
+}
+
+#bookList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #bookList > div {
+  padding-left: 10px;
+  padding-right: 20px;
   display: flex;
   justify-content: space-around;
   background-color: seagreen;
+  border-radius: 2px;
+  max-width: 98%;
+}
+
+#bookList > div:nth-child(5n) {
+  background: linear-gradient(#662358, #782b67 55%, #662358);
+  min-width: 95%;
+}
+
+#bookList > div:nth-child(5n + 1) {
+  background: linear-gradient(#ac6027, #e48136 55%, #ac6027);
+  min-width: 90%;
+}
+
+#bookList > div:first-child {
+  background: linear-gradient(#e48136 55%, #ac6027);
+  min-width: 90%;
+}
+
+#bookList > div:nth-child(5n + 2) {
+  background: linear-gradient(#17305f, #1c3b73 55%, #132850);
+  min-width: 85%;
+  color: #fdfdfd;
+}
+#bookList > div:nth-child(5n + 3) {
+  background: linear-gradient(#377e19, #469f20 55%, #377e19);
+  min-width: 95%;
+  color: #ffffff;
+}
+#bookList > div:nth-child(5n + 4) {
+  background: linear-gradient(#791c1c, #932323 55%, #791c1c);
+  min-width: 92%;
+  color: #ffffff;
 }
 
 #divider {
   background-color: black;
   width: 3px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>

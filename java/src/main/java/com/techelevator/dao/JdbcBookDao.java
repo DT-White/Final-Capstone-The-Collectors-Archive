@@ -45,7 +45,7 @@ public class JdbcBookDao implements BookDao {
         List<Book> bookList = new ArrayList<>();
 
         String sql = "select book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url " +
-                "from books";
+                "from books order by book_id desc";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 
