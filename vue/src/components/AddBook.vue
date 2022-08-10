@@ -208,7 +208,9 @@ textarea {
 }
 
 #addBookForm {
+  background-color:slategray;
   width: 50%;
+  
 }
 
 #addBookForm span {
@@ -267,7 +269,7 @@ textarea {
 }
 
 .genres div.selected {
-  background-color: chartreuse;
+  background-color: white;
   border-width: 2px;
 }
 </style>

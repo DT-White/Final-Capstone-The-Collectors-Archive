@@ -2,20 +2,31 @@
   <form id="bookFilterForm">
     <h2>Filter Books</h2>
 
-    <input type="text" v-on:change = "updateStoreFilter()" v-model="filter.isbn" placeholder="ISBN" />
+    <input
+      type="text"
+      v-on:change="updateStoreFilter()"
+      v-model="filter.isbn"
+      placeholder="ISBN"
+    />
 
-    <input type="text" id="title" v-on:change = "updateStoreFilter()" v-model="filter.title" placeholder="Title" />
+    <input
+      type="text"
+      id="title"
+      v-on:change="updateStoreFilter()"
+      v-model="filter.title"
+      placeholder="Title"
+    />
     <input
       type="text"
       id="author"
-      v-on:change = "updateStoreFilter()"
+      v-on:change="updateStoreFilter()"
       v-model="filter.author"
       placeholder="Author"
     />
 
     <input
       type="text"
-      v-on:change = "updateStoreFilter()"
+      v-on:change="updateStoreFilter()"
       v-model="filter.keyword"
       placeholder="Key Words separated by commas"
     />
@@ -24,12 +35,22 @@
       <p id="dateLabel">Publishing Date</p>
       <span>
         <p>From:</p>
-        <input type="date" id="startDate" v-on:change = "updateStoreFilter()" v-model="filter.startDate" />
+        <input
+          type="date"
+          id="startDate"
+          v-on:change="updateStoreFilter()"
+          v-model="filter.startDate"
+        />
       </span>
 
       <span>
         <p>To:</p>
-        <input type="date" id="endDate" v-on:change = "updateStoreFilter()" v-model="filter.endDate" />
+        <input
+          type="date"
+          id="endDate"
+          v-on:change="updateStoreFilter()"
+          v-model="filter.endDate"
+        />
       </span>
     </div>
 
@@ -37,7 +58,6 @@
       <div
         v-on:click="toggleSelected(genre)"
         v-for="genre in filter.genres"
-        v-on:change = "updateStoreFilter()"
         v-bind:key="genre.id"
         v-bind:class="{ selected: genre.selected }"
       >
@@ -50,79 +70,122 @@
 <script>
 import bookService from "@/services/BookService";
 export default {
-  data () {
+  data() {
     return {
-        filter: {
-            title: "",
-            author: "",
-            keyword: "",
-            startDate: "",
-            endDate: "",
-            genres: [],
-            isbn: ""
-        }
-    }
-},
-methods: {
+      filter: {
+        title: "",
+        author: "",
+        keyword: "",
+        startDate: "",
+        endDate: "",
+        genres: [],
+        isbn: "",
+      },
+    };
+  },
+  methods: {
     // updateKeywordFilter() {
     //     this.$store.commit("SET_KEYWORD", this.filter.keyword)
     // }
     updateStoreFilter() {
-        this.$store.commit('SET_STORE_FILTER', this.filter)
-    }
-},
+      this.$store.commit("SET_STORE_FILTER", this.filter);
+    },
 
-computed: {
+    toggleSelected(genre) {
+      if (genre.selected) {
+        genre.selected = false;
+      } else {
+        genre.selected = true;
+        if (genre.name === "Fiction") {
+          this.$store.state.genres.find(
+            (genre) => genre.name === "Nonfiction"
+          ).selected = false;
+        } else if (genre.name === "Nonfiction") {
+          this.$store.state.genres.find(
+            (genre) => genre.name === "Fiction"
+          ).selected = false;
+          this.$store.state.genres.find(
+            (genre) => genre.name === "Science Fiction"
+          ).selected = false;
+          this.$store.state.genres.find(
+            (genre) => genre.name === "Fantasy"
+          ).selected = false;
+        } else if (genre.name === "Fantasy") {
+          this.$store.state.genres.find(
+            (genre) => genre.name === "Nonfiction"
+          ).selected = false;
+          this.$store.state.genres.find(
+            (genre) => genre.name === "Fiction"
+          ).selected = true;
+        } else if (genre.name === "Science Fiction") {
+          this.$store.state.genres.find(
+            (genre) => genre.name === "Nonfiction"
+          ).selected = false;
+          this.$store.state.genres.find(
+            (genre) => genre.name === "Fiction"
+          ).selected = true;
+        }
+      }
+      this.updateStoreFilter()
+    },
+  },
+
+  computed: {
     filteredList() {
-        let filteredBooks = this.$store.state.books;
-        if (this.filter.title != "" || this.filter.author != "" || this.filter.keyword != "") {
-            filteredBooks = filteredBooks.filter((book) =>
-            book.title.toLowerCase().includes(this.filter.title.toLowerCase())
-            && book.author.toLowerCase().includes(this.filter.author.toLowerCase())
-            );
+      let filteredBooks = this.$store.state.books;
+      if (
+        this.filter.title != "" ||
+        this.filter.author != "" ||
+        this.filter.keyword != ""
+      ) {
+        filteredBooks = filteredBooks.filter(
+          (book) =>
+            book.title
+              .toLowerCase()
+              .includes(this.filter.title.toLowerCase()) &&
+            book.author.toLowerCase().includes(this.filter.author.toLowerCase())
+        );
+      }
+      if (this.filter.keyword != "") {
+        let keywordArray = this.filter.keyword.split(",");
+        for (let word in keywordArray) {
+          filteredBooks = filteredBooks.filter((book) => {
+            if (book.keyword.includes(word.toLowerCase())) {
+              return true;
+            }
+          });
         }
-        if (this.filter.keyword != "") {
-            let keywordArray = this.filter.keyword.split(",");
-            for (let word in keywordArray) {
-                filteredBooks = filteredBooks.filter((book) =>{
-                if(book.keyword.includes(word.toLowerCase())){
-                    return true;
-                }
-                
+      }
+      // if (this.filter.startDate != "" && this.filter.endDate != "") {
+      //     filteredBooks = filteredBooks.filter((book) =>{
+      //     book.publishingDate >= this.filter.startDate && book.publishingDate <= this.filter.endDate;
+      //     });
+      // }
+      // if (this.filter.startDate != "" && this.filter.endDate == "") {
+      //     filteredBooks = filteredBooks.filter((book) =>{
+      //     book.publishingDate >= this.filter.startDate;
+      // })
+      // }
+      // if (this.filter.startDate == "" && this.filter.endDate != "") {
+      //     filteredBooks = filteredBooks.filter((book) =>{
+      //     book.publishingDate <= this.filter.endDate;
+      //     })
+      // }
+      // if (this.filter.genres.length > 0) {
+      //     for (let genre in this.filter.genres) {
+      //     filteredBooks = filteredBooks.filter((book) =>
+      //     book.genres.includes(genre)
+      //     )}
+      // }
+      // if (this.filter.isbn != "") {
+      //     filteredBooks = filteredBooks.filter((book) =>
+      //     book.isbn == this.filter.isbn)
+      // }
 
-                }
-                )}
-        }
-        // if (this.filter.startDate != "" && this.filter.endDate != "") {
-        //     filteredBooks = filteredBooks.filter((book) =>{
-        //     book.publishingDate >= this.filter.startDate && book.publishingDate <= this.filter.endDate;
-        //     });
-        // }
-        // if (this.filter.startDate != "" && this.filter.endDate == "") {
-        //     filteredBooks = filteredBooks.filter((book) =>{
-        //     book.publishingDate >= this.filter.startDate;
-        // })
-        // }
-        // if (this.filter.startDate == "" && this.filter.endDate != "") {
-        //     filteredBooks = filteredBooks.filter((book) =>{
-        //     book.publishingDate <= this.filter.endDate;
-        //     })
-        // }
-        // if (this.filter.genres.length > 0) {
-        //     for (let genre in this.filter.genres) {
-        //     filteredBooks = filteredBooks.filter((book) =>
-        //     book.genres.includes(genre)
-        //     )}
-        // }
-        // if (this.filter.isbn != "") {
-        //     filteredBooks = filteredBooks.filter((book) =>
-        //     book.isbn == this.filter.isbn)
-        // }
-
-        this.$store.commit("GET_FILTERED_LIST", filteredBooks)
-        return filteredBooks;
-    }
-},
+      this.$store.commit("GET_FILTERED_LIST", filteredBooks);
+      return filteredBooks;
+    },
+  },
 
   created() {
     bookService.getGenres().then((response) => {

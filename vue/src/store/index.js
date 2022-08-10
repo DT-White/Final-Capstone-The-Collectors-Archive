@@ -51,7 +51,7 @@ export default new Vuex.Store({
     },
 
     ADD_BOOK(state, book) {
-      state.books.push(book);
+      state.books.unshift(book);
     },
     // SET_KEYWORD(state, keyword) {
     //   state.keywordFilter = keyword
