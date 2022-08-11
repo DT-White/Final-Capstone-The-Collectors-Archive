@@ -5,8 +5,8 @@
       <div id="divider"></div>
       <h3>{{ currentBook.author }}</h3>
     </div>
-    <div id="shelf">
-    </div>
+      <div id="shelf">
+      </div>
   </div>
 </template>
 
@@ -80,8 +80,15 @@ export default {
 
 <style>
 body {
-  
+  background-color: white;
+  display: block;
+  background-image: url("");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
+
+
 
 #bookList h2 {
   text-align: center;
@@ -108,37 +115,37 @@ body {
 }
 
 #bookList > div:nth-child(5n) {
-  background: linear-gradient(#662358, #782b67 55%, #662358);
+  background: linear-gradient(#662358, #a37399 55%, #662358);
   min-width: 95%;
 
   
 }
 
 #bookList > div:nth-child(5n + 1) {
-  background: linear-gradient(#ac6027, #e48136 55%, #ac6027);
+  background: linear-gradient(#ac6027, #ffcba3 55%, #ac6027);
   min-width: 90%;
   
 }
 
 #bookList > div:first-child {
-  background: linear-gradient(#e48136 55%, #ac6027);
+  background: linear-gradient(#b96c30, #ffcba3 55%, #ac6027);
   min-width: 90%;
   
 }
 
 #bookList > div:nth-child(5n + 2) {
-  background: linear-gradient(#17305f, #1c3b73 55%, #132850);
+  background: linear-gradient(#17305f, #829cce 55%, #132850);
   min-width: 85%;
   color: #fdfdfd;
   
 }
 #bookList > div:nth-child(5n + 3) {
-  background: linear-gradient(#377e19, #469f20 55%, #377e19);
+  background: linear-gradient(#253f1a, #8bc473 55%, #253f1a);
   min-width: 95%;
   color: #ffffff;
 }
 #bookList > div:nth-child(5n + 4) {
-  background: linear-gradient(#791c1c, #932323 55%, #791c1c);
+  background: linear-gradient(#791c1c, #b66a6a 55%, #791c1c);
   min-width: 92%;
   color: #ffffff;
   
@@ -146,7 +153,7 @@ body {
 
 #divider {
   background-color: black;
-  width: 3px;
+  width: 4px;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -155,7 +162,6 @@ body {
   border-top: 22px solid #755D44;
   max-width: 90%;
   border-radius: 50%;
-  
-  
+  box-shadow: 5px 10px 18px #1d1611;
 }
 </style>

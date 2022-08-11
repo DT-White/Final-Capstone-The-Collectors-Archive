@@ -74,39 +74,39 @@ export default {
 }
 
 #readingList > div:nth-child(5n) {
-  background: linear-gradient(#662358, #782b67 55%, #662358);
+  background: linear-gradient(#662358, #a37399 55%, #662358);
   min-width: 95%;
 }
 
 #readingList > div:nth-child(5n + 1) {
-  background: linear-gradient(#ac6027, #e48136 55%, #ac6027);
+  background: linear-gradient(#ac6027, #ffcba3 55%, #ac6027);
   min-width: 90%;
 }
 
 #readingList > div:first-child {
-  background: linear-gradient(#e48136 55%, #ac6027);
+  background: linear-gradient(#b96c30, #ffcba3 55%, #ac6027);
   min-width: 90%;
 }
 
 #readingList > div:nth-child(5n + 2) {
-  background: linear-gradient(#17305f, #1c3b73 55%, #132850);
+  background: linear-gradient(#17305f, #829cce 55%, #132850);
   min-width: 85%;
   color: #fdfdfd;
 }
 #readingList > div:nth-child(5n + 3) {
-  background: linear-gradient(#377e19, #469f20 55%, #377e19);
+  background: linear-gradient(#253f1a, #8bc473 55%, #253f1a);
   min-width: 95%;
   color: #ffffff;
 }
 #readingList > div:nth-child(5n + 4) {
-  background: linear-gradient(#791c1c, #932323 55%, #791c1c);
+  background: linear-gradient(#791c1c, #b66a6a 55%, #791c1c);
   min-width: 92%;
   color: #ffffff;
 }
 
 #divider {
   background-color: black;
-  width: 3px;
+  width: 4px;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -115,7 +115,7 @@ export default {
   border-top: 22px solid #755D44;
   max-width: 90%;
   border-radius: 50%;
-  
+  box-shadow: 5px 10px 18px #1d1611;
 }
 
 </style>

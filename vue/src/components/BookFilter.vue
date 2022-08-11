@@ -218,6 +218,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+  width: 98%;
 }
 
 #filterDates > p {
@@ -227,13 +228,13 @@ export default {
 }
 
 #filterDates span p {
-  font-family: sans-serif;
+  font-family: 'Sans-serif';
   font-size: 0.8rem;
 }
 
 #filterGenres {
   width: 100%;
-  border-style: double;
+  border-style: inset;
 }
 
 #filterGenres div {
