@@ -34,7 +34,7 @@
     <div id="filterDates">
       <p id="dateLabel">Publishing Date</p>
       <span>
-        <p>From:</p>
+        <p>Start Date:</p>
         <input
           type="date"
           id="startDate"
@@ -44,7 +44,7 @@
       </span>
 
       <span>
-        <p>To:</p>
+        <p>End Date:</p>
         <input
           type="date"
           id="endDate"
@@ -203,10 +203,13 @@ export default {
 #bookFilterForm {
   display: flex;
   width: 200px;
-  background-color: rgb(29, 150, 75);
+  background-color: #C8DAAA;
   flex-direction: column;
   padding: 10px;
   gap: 10px;
+  max-height: 500px;
+  border-style: inset;
+  
 }
 
 #filterDates > span {
@@ -230,9 +233,11 @@ export default {
 
 #filterGenres {
   width: 100%;
+  border-style: double;
 }
 
 #filterGenres div {
-  width: 60px;
+  width: 90px;
+  
 }
 </style>

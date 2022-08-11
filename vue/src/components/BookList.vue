@@ -5,6 +5,8 @@
       <div id="divider"></div>
       <h3>{{ currentBook.author }}</h3>
     </div>
+    <div id="shelf">
+    </div>
   </div>
 </template>
 
@@ -78,18 +80,20 @@ export default {
 
 <style>
 body {
-  background-color: rgb(83, 38, 7);
+  background-color: #ffffff;
 }
 
 #bookList h2 {
   text-align: center;
   flex-grow: 2;
+  
 }
 
 #bookList {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 #bookList > div {
@@ -100,27 +104,33 @@ body {
   background-color: seagreen;
   border-radius: 2px;
   max-width: 98%;
+  
 }
 
 #bookList > div:nth-child(5n) {
   background: linear-gradient(#662358, #782b67 55%, #662358);
   min-width: 95%;
+
+  
 }
 
 #bookList > div:nth-child(5n + 1) {
   background: linear-gradient(#ac6027, #e48136 55%, #ac6027);
   min-width: 90%;
+  
 }
 
 #bookList > div:first-child {
   background: linear-gradient(#e48136 55%, #ac6027);
   min-width: 90%;
+  
 }
 
 #bookList > div:nth-child(5n + 2) {
   background: linear-gradient(#17305f, #1c3b73 55%, #132850);
   min-width: 85%;
   color: #fdfdfd;
+  
 }
 #bookList > div:nth-child(5n + 3) {
   background: linear-gradient(#377e19, #469f20 55%, #377e19);
@@ -131,6 +141,7 @@ body {
   background: linear-gradient(#791c1c, #932323 55%, #791c1c);
   min-width: 92%;
   color: #ffffff;
+  
 }
 
 #divider {
@@ -138,5 +149,13 @@ body {
   width: 3px;
   margin-left: 20px;
   margin-right: 20px;
+}
+
+#shelf {
+  border-top: 22px solid #4E3939;
+  max-width: 90%;
+  border-radius: 50%;
+  
+  
 }
 </style>

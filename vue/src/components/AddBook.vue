@@ -269,7 +269,7 @@ textarea {
 }
 
 .genres div.selected {
-  background-color: white;
+  background-color: #5cc461;
   border-width: 2px;
 }
 </style>

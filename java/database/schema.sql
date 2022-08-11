@@ -39,7 +39,7 @@ Create table books (
 	keyword varchar(512),
 	publishing_date date not null,
 	cover_image_url varchar(128),
-	date_added timestamp not null
+	date_added timestamp 
 	);
 	
 Create table reading_list (
