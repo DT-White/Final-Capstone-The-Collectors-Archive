@@ -49,7 +49,7 @@ export default {
 
 <style>
 #readingList{
-    background-color: #ffffff;
+    background-color:transparent;
 }
 
 #readingList h2 {
@@ -112,7 +112,7 @@ export default {
 }
 
 #shelf {
-  border-top: 22px solid #4E3939;
+  border-top: 22px solid #755D44;
   max-width: 90%;
   border-radius: 50%;
   

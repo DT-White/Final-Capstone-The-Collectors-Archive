@@ -207,7 +207,7 @@ export default {
   flex-direction: column;
   padding: 10px;
   gap: 10px;
-  max-height: 500px;
+  max-height: auto;
   border-style: inset;
   
 }

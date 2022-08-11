@@ -208,7 +208,7 @@ textarea {
 }
 
 #addBookForm {
-  background-color:slategray;
+  background-color:#C8DAAA;
   width: 50%;
   
 }
@@ -222,6 +222,7 @@ textarea {
   border-color: rgb(109, 106, 106); */
   min-width: 225px;
   max-width: 500px;
+  
 }
 
 #date {

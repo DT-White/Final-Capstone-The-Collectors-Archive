@@ -80,7 +80,7 @@ export default {
 
 <style>
 body {
-  background-color: #ffffff;
+  
 }
 
 #bookList h2 {
@@ -152,7 +152,7 @@ body {
 }
 
 #shelf {
-  border-top: 22px solid #4E3939;
+  border-top: 22px solid #755D44;
   max-width: 90%;
   border-radius: 50%;
   
