@@ -1,70 +1,73 @@
 <template>
-  <form id="bookFilterForm">
-    <h2>Filter Books</h2>
+  <div>
+    <button v-on:click="hidden=!hidden" >{{ hidden === true ? "Search Books" : "Hide Search" }}</button>
+    <form id="bookFilterForm" v-bind:class="{ hidden }">
+      <h2>Filter Books</h2>
 
-    <input
-      type="text"
-      v-on:change="updateStoreFilter()"
-      v-model="filter.isbn"
-      placeholder="ISBN"
-    />
+      <input
+        type="text"
+        v-on:change="updateStoreFilter()"
+        v-model="filter.isbn"
+        placeholder="ISBN"
+      />
 
-    <input
-      type="text"
-      id="title"
-      v-on:change="updateStoreFilter()"
-      v-model="filter.title"
-      placeholder="Title"
-    />
-    <input
-      type="text"
-      id="author"
-      v-on:change="updateStoreFilter()"
-      v-model="filter.author"
-      placeholder="Author"
-    />
+      <input
+        type="text"
+        id="title"
+        v-on:change="updateStoreFilter()"
+        v-model="filter.title"
+        placeholder="Title"
+      />
+      <input
+        type="text"
+        id="author"
+        v-on:change="updateStoreFilter()"
+        v-model="filter.author"
+        placeholder="Author"
+      />
 
-    <input
-      type="text"
-      v-on:change="updateStoreFilter()"
-      v-model="filter.keyword"
-      placeholder="Key Words separated by commas"
-    />
+      <input
+        type="text"
+        v-on:change="updateStoreFilter()"
+        v-model="filter.keyword"
+        placeholder="Key Words separated by commas"
+      />
 
-    <div id="filterDates">
-      <p id="dateLabel">Publishing Date</p>
-      <span>
-        <p>Start Date:</p>
-        <input
-          type="date"
-          id="startDate"
-          v-on:change="updateStoreFilter()"
-          v-model="filter.startDate"
-        />
-      </span>
+      <div id="filterDates">
+        <p id="dateLabel">Publishing Date</p>
+        <span>
+          <p>Start Date:</p>
+          <input
+            type="date"
+            id="startDate"
+            v-on:change="updateStoreFilter()"
+            v-model="filter.startDate"
+          />
+        </span>
 
-      <span>
-        <p>End Date:</p>
-        <input
-          type="date"
-          id="endDate"
-          v-on:change="updateStoreFilter()"
-          v-model="filter.endDate"
-        />
-      </span>
-    </div>
-
-    <div class="genres" id="filterGenres">
-      <div
-        v-on:click="toggleSelected(genre)"
-        v-for="genre in filter.genres"
-        v-bind:key="genre.id"
-        v-bind:class="{ selected: genre.selected }"
-      >
-        {{ genre.name }}
+        <span>
+          <p>End Date:</p>
+          <input
+            type="date"
+            id="endDate"
+            v-on:change="updateStoreFilter()"
+            v-model="filter.endDate"
+          />
+        </span>
       </div>
-    </div>
-  </form>
+
+      <div class="genres" id="filterGenres">
+        <div
+          v-on:click="toggleSelected(genre)"
+          v-for="genre in filter.genres"
+          v-bind:key="genre.id"
+          v-bind:class="{ selected: genre.selected }"
+        >
+          {{ genre.name }}
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -81,6 +84,7 @@ export default {
         genres: [],
         isbn: "",
       },
+      hidden: true,
     };
   },
   methods: {
@@ -126,7 +130,7 @@ export default {
           ).selected = true;
         }
       }
-      this.updateStoreFilter()
+      this.updateStoreFilter();
     },
   },
 
@@ -179,13 +183,12 @@ export default {
   display: flex;
   min-width: 200px;
   max-width: 200px;
-  background-color: #C8DAAA;
+  background-color: #c8daaa;
   flex-direction: column;
   padding: 10px;
   gap: 10px;
   max-height: auto;
   border-style: inset;
-  
 }
 
 #filterDates > span {
@@ -218,5 +221,9 @@ export default {
 #filterGenres div {
   width: 90px;
   font-weight: 700;
+}
+
+#bookFilterForm.hidden {
+  display: none;
 }
 </style>
