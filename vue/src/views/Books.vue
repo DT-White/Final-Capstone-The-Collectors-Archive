@@ -3,9 +3,11 @@
       <book-filter/>
       <section>
         <add-book />
-        <bookList />
+        <section>
+          <bookList />
+          <reading-list/>
+        </section>
       </section>
-      <reading-list/>
   </div>
 </template>
 
@@ -23,7 +25,18 @@ export default {
 
 #booksView{
   display: flex;
-  gap:10px;
+  align-items: start;
+  gap: 50px;
+}
+
+#booksView > section{
+  display: flex;
+  flex-direction: column;
+}
+
+#booksView > section > section{
+  display: flex;
+  gap: 50px;
 }
 
 

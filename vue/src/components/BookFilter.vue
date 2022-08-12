@@ -156,31 +156,6 @@ export default {
           });
         }
       }
-      // if (this.filter.startDate != "" && this.filter.endDate != "") {
-      //     filteredBooks = filteredBooks.filter((book) =>{
-      //     book.publishingDate >= this.filter.startDate && book.publishingDate <= this.filter.endDate;
-      //     });
-      // }
-      // if (this.filter.startDate != "" && this.filter.endDate == "") {
-      //     filteredBooks = filteredBooks.filter((book) =>{
-      //     book.publishingDate >= this.filter.startDate;
-      // })
-      // }
-      // if (this.filter.startDate == "" && this.filter.endDate != "") {
-      //     filteredBooks = filteredBooks.filter((book) =>{
-      //     book.publishingDate <= this.filter.endDate;
-      //     })
-      // }
-      // if (this.filter.genres.length > 0) {
-      //     for (let genre in this.filter.genres) {
-      //     filteredBooks = filteredBooks.filter((book) =>
-      //     book.genres.includes(genre)
-      //     )}
-      // }
-      // if (this.filter.isbn != "") {
-      //     filteredBooks = filteredBooks.filter((book) =>
-      //     book.isbn == this.filter.isbn)
-      // }
 
       this.$store.commit("GET_FILTERED_LIST", filteredBooks);
       return filteredBooks;
@@ -202,7 +177,8 @@ export default {
 <style>
 #bookFilterForm {
   display: flex;
-  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
   background-color: #C8DAAA;
   flex-direction: column;
   padding: 10px;
@@ -225,11 +201,13 @@ export default {
   height: 20px;
   width: 50px;
   margin-left: 23%;
+  font-weight: 700;
 }
 
 #filterDates span p {
-  font-family: 'Sans-serif';
+  font-family: sans-serif;
   font-size: 0.8rem;
+  font-weight: 700;
 }
 
 #filterGenres {
@@ -239,6 +217,6 @@ export default {
 
 #filterGenres div {
   width: 90px;
-  
+  font-weight: 700;
 }
 </style>

@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 
 
-
+DROP table if exists time_accessed;
 DROP table if exists reading_list;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS seq_user_id;
@@ -18,6 +18,9 @@ CREATE SEQUENCE seq_user_id
   CACHE 1;
 
 
+
+
+
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
 	username varchar(50) NOT NULL UNIQUE,
@@ -26,8 +29,14 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+
+Create table time_accessed (
+	user_id bigint not null references users (user_id),
+	time_update timestamp not null
+);
 
 Create table books (
 	book_id serial primary key,
@@ -39,7 +48,7 @@ Create table books (
 	keyword varchar(512),
 	publishing_date date not null,
 	cover_image_url varchar(128),
-	date_added timestamp 
+	date_added timestamp not null
 	);
 	
 Create table reading_list (
@@ -105,6 +114,10 @@ values (6, 1), (6, 5);
 
 Insert into reading_list (user_id, book_id)
 values (1, 2), (1, 5), (1, 1), (1, 6);
+
+Insert into time_accessed (user_id, time_update)
+values (1, current_timestamp), (2, current_timestamp);
+
 	
 COMMIT TRANSACTION;
 

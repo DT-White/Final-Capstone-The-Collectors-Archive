@@ -60,6 +60,7 @@ public class AuthenticationController {
             throw new UserAlreadyExistsException();
         } catch (UsernameNotFoundException e) {
             userDao.create(newUser.getUsername(),newUser.getPassword(), newUser.getRole());
+            userDao.addTimeAccessed(newUser.getUsername());
         }
     }
 

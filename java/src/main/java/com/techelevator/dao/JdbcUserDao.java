@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import java.sql.PreparedStatement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +104,32 @@ public class JdbcUserDao implements UserDao {
         return userCreated;
     }
 
+    @Override
+    public void addTimeAccessed(String username) {
+
+        String sql = "insert into time_accessed (user_id, time_update) " +
+                "values (?, current_timestamp)";
+
+        int userId = findIdByUsername(username);
+
+        jdbcTemplate.update(sql, userId);
+
+    }
+
+    @Override
+    public void updateTimeAccessed(String username) {
+        String sql = "update time_accessed SET time_update = current_timestamp WHERE user_id = ?";
+        int userId = findIdByUsername(username);
+        jdbcTemplate.update(sql, userId);
+    }
+
+    private LocalDateTime getTimeAccessed(Long userId) {
+
+        String sql = "select time_update from time_accessed where user_id = ?";
+
+        return jdbcTemplate.queryForObject(sql, LocalDateTime.class, userId);
+    }
+
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getLong("user_id"));
@@ -110,6 +137,7 @@ public class JdbcUserDao implements UserDao {
         user.setPassword(rs.getString("password_hash"));
         user.setAuthorities(rs.getString("role"));
         user.setActivated(true);
+        user.setTimeAccessed(getTimeAccessed(rs.getLong("user_id")));
         return user;
     }
 }
