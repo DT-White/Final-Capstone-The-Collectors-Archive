@@ -1,6 +1,10 @@
 <template>
-  <div id="bookList" v-if="this.books.length > 0">
-    <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList">
+  <div id="bookList" v-if="this.books.length > 0" droppable @drop="onDrop($event)" 
+  class="drop-zone"
+  @dragover.prevent
+  @dragenter.prevent>
+    <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
+      v-show="!checkForBookInReadingList(currentBook)">
       <h2>{{ currentBook.title }}</h2>
       <div id="divider"></div>
       <h3>{{ currentBook.author }}</h3>
@@ -50,7 +54,17 @@ export default {
       }
     });
   },
+
   methods: {
+    updateStoreReadingList(){
+      bookService.getReadingList().then((response) => {
+      if (response.status === 200) {
+        this.$store.commit("GET_READING_LIST", response.data);
+        this.books = response.data;
+      }
+    });
+    },
+
     checkKeyWords(book) {
       for (let word of this.$store.state.storeFilter.keyword.split(",")) {
         if (book.keyword){
@@ -61,6 +75,7 @@ export default {
       }
       return false;
     },
+    
     checkGenres(book) {
       let noneSelected = true;
       let matchesAll = true;
@@ -73,6 +88,35 @@ export default {
         }
       }
       return noneSelected || matchesAll;
+    },
+
+    checkForBookInReadingList(book){
+      let bookInList = false;
+      for (let currentBook of this.$store.state.readingList){
+        if (currentBook.isbn === book.isbn){
+          bookInList = true;
+        }
+      }
+      return bookInList;
+    },
+
+    startDrag(evt, book) {
+      console.log(book.bookId)
+      evt.dataTransfer.dropEffect = 'move'
+      evt.dataTransfer.effectAllowed = 'move'
+      evt.dataTransfer.setData('bookId', book.bookId)
+      evt.dataTransfer.setData('fromList', "library")
+    },
+    onDrop(evt) {
+      const bookId = evt.dataTransfer.getData('bookId')
+      const fromList = evt.dataTransfer.getData('fromList')
+      if (fromList !== "library"){
+        bookService.removeBookFromReadingList(bookId).then(response => {
+          if (response.status === 204){
+            this.updateStoreReadingList();
+          }
+        })
+      }
     },
   },
 };

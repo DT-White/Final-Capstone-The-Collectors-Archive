@@ -15,6 +15,14 @@ export default {
 
     getReadingList(){
         return axios.get("http://localhost:8080/reading-list")
+    },
+
+    addBookToReadingList(book){
+        return axios.post("http://localhost:8080/reading-list", book)
+    },
+
+    removeBookFromReadingList(id){
+        return axios.delete(`http://localhost:8080/reading-list/${id}`,);
     }
 
 }
