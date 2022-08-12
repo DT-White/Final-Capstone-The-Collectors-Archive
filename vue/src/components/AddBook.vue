@@ -191,15 +191,21 @@ export default {
 </script>
 
 <style>
+
 #addBookForm > * {
   /* display: block; */
   width: 100%;
   min-width: 220px;
+ 
 }
 
 #addBookForm > input {
   width: 98%;
   max-width: 500px;
+  margin-bottom: 8px;
+  margin-top: 5px;
+  justify-content: space-between;
+  
 }
 
 textarea {
@@ -209,7 +215,8 @@ textarea {
 
 #addBookForm {
   background-color:#C8DAAA;
-  width: 50%;
+  width: 60%;
+  border-style: inset;
   
 }
 
@@ -263,6 +270,7 @@ textarea {
   height: 30px;
   font-size: 0.85rem;
   font-family: sans-serif;
+  
 }
 
 .genres div:hover {

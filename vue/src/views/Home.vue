@@ -11,9 +11,9 @@ export default {
 };
 </script>
 <style>
-div{
+/* div{
 
-}
+} */
 
 
 
