@@ -1,7 +1,11 @@
 <template>
-  <div id="readingList" droppable @drop="onDrop($event, 1)">
+  <div id="readingList" droppable @drop="onDrop($event)"
+  class="drop-zone"
+  @dragover.prevent
+  @dragenter.prevent>
     <h2>Reading List</h2>
-    <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, item)">
+    <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
+      v-show="!currentBook.hide">
       <h2>{{ currentBook.title }}</h2>
       <div id="divider"></div>
       <h3>{{ currentBook.author }}</h3>
@@ -25,23 +29,36 @@ export default {
     },
   },
   created() {
-    bookService.getReadingList().then((response) => {
+    this.updateStoreReadingList();
+  },
+  methods: {
+    updateStoreReadingList(){
+      bookService.getReadingList().then((response) => {
       if (response.status === 200) {
         this.$store.commit("GET_READING_LIST", response.data);
         this.books = response.data;
       }
     });
-  },
-  methods: {
-    startDrag(evt, item) {
+    },
+
+    startDrag(evt, book) {
+      console.log(book.bookId)
       evt.dataTransfer.dropEffect = 'move'
       evt.dataTransfer.effectAllowed = 'move'
-      evt.dataTransfer.setData('itemID', item.id)
+      evt.dataTransfer.setData('bookId', book.bookId)
+      evt.dataTransfer.setData('fromList', "readingList")
     },
-    onDrop(evt, list) {
-      const itemID = evt.dataTransfer.getData('itemID')
-      const item = this.items.find((item) => item.id == itemID)
-      item.list = list
+    onDrop(evt) {
+      const book = {bookId: evt.dataTransfer.getData('bookId')}
+      console.log(book)
+      const fromList = evt.dataTransfer.getData('fromList')
+      if (fromList !== "readingList"){
+        bookService.addBookToReadingList(book).then(response => {
+          if (response.status === 201){
+            this.updateStoreReadingList();
+          }
+        })
+      }
     },
   },
 }

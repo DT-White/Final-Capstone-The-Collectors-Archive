@@ -44,8 +44,8 @@ Create table books (
 	
 Create table reading_list (
 	user_id bigint not null references users (user_id),
-	book_id bigint not null references books (book_id)
-	
+	book_id bigint not null references books (book_id),
+	Constraint pk_book_user primary key (book_id, user_id)
 );
 
 Create table genres (
@@ -107,3 +107,5 @@ Insert into reading_list (user_id, book_id)
 values (1, 2), (1, 5), (1, 1), (1, 6);
 	
 COMMIT TRANSACTION;
+
+select * from reading_list
