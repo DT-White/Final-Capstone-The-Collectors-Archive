@@ -8,7 +8,7 @@
       <span class="shelf topShelf">
         <h2>Library</h2>
       </span>
-      <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
+      <div v-bind:key="currentBook.isbn"  v-for="currentBook in booksList" v-bind:class="{new_book: isNewBook(currentBook)}" draggable @dragstart="startDrag($event, currentBook)"
         v-show="!checkForBookInReadingList(currentBook)">
         <h2>{{ currentBook.title }}</h2>
         <div id="divider"></div>
@@ -29,6 +29,8 @@ export default {
     };
   },
   computed: {
+    
+
     booksList() {
       return this.$store.state.books.filter((book) => {
         return (
@@ -62,6 +64,9 @@ export default {
   },
 
   methods: {
+    isNewBook(book) {
+      return book.dateAdded > this.$store.state.user.timeAccessed
+    },
     updateStoreReadingList(){
       bookService.getReadingList().then((response) => {
       if (response.status === 200) {
@@ -220,4 +225,9 @@ body {
 .topShelf{
   margin-bottom: 50px;
 }
+
+/* div.new_book {
+  
+  
+} */
 </style>
