@@ -69,7 +69,13 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/reading-list", method = RequestMethod.POST)
-    public void addBookToReadingList(@RequestBody Book book, Principal principal) {
+    public void addBookToReadingList(Principal principal, @RequestBody Book book) {
         bookDao.addBookToReadingList(principal.getName(), book);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(path = "/reading-list/{id}", method = RequestMethod.DELETE)
+    public void removeBookFromReadingList(Principal principal, @PathVariable int id) {
+        bookDao.removeBookFromReadingList(principal.getName(), id);
     }
 }

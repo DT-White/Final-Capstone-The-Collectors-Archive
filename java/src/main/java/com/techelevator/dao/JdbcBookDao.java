@@ -180,7 +180,7 @@ public class JdbcBookDao implements BookDao {
                 "from books " +
                 "join reading_list on reading_list.book_id = books.book_id " +
                 "join users on users.user_id = reading_list.user_id " +
-                "where username = ?";
+                "where username = ? order by books.book_id desc";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, username);
 
@@ -200,6 +200,13 @@ public class JdbcBookDao implements BookDao {
         int userId = userDao.findIdByUsername(username);
 
         jdbcTemplate.update(sql, userId, book.getBookId());
+    }
+
+    @Override
+    public void removeBookFromReadingList(String username, int bookId) {
+        String sql = "delete from reading_list where user_id = ? and book_id = ?";
+        int userId = userDao.findIdByUsername(username);
+        jdbcTemplate.update(sql, userId, bookId);
     }
 
     private Book mapRowToBook(SqlRowSet rowSet) {
