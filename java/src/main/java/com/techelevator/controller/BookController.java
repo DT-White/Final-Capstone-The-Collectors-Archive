@@ -26,8 +26,8 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/books", method = RequestMethod.GET)
-    public List<Book> getBookList() {
-        return bookDao.getBookList();
+    public List<Book> getBookList(Principal principal) {
+        return bookDao.getBookList(principal.getName());
     }
 
     @ResponseStatus(HttpStatus.CREATED)

@@ -9,12 +9,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class JdbcUserDaoTests extends BaseDaoTests {
-    protected static final User USER_1 = new User(1L, "user1", "user1", "ROLE_USER");
-    protected static final User USER_2 = new User(2L, "user2", "user2", "ROLE_USER");
-    private static final User USER_3 = new User(3L, "user3", "user3", "ROLE_USER");
+    protected static final User USER_1 = new User(1L, "user1", "user1", "ROLE_USER", LocalDateTime.now());
+    protected static final User USER_2 = new User(2L, "user2", "user2", "ROLE_USER", LocalDateTime.now());
+    private static final User USER_3 = new User(3L, "user3", "user3", "ROLE_USER", LocalDateTime.now());
 
     private JdbcUserDao sut;
 
@@ -103,7 +104,7 @@ public class JdbcUserDaoTests extends BaseDaoTests {
 
     @Test
     public void create_user_creates_a_user() {
-        User newUser = new User(-1L, "new", "user", "ROLE_USER");
+        User newUser = new User(-1L, "new", "user", "ROLE_USER", LocalDateTime.now());
 
         boolean userWasCreated = sut.create(newUser.getUsername(), newUser.getPassword(), "ROLE_USER");
 

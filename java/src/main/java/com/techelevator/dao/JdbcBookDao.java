@@ -28,7 +28,7 @@ public class JdbcBookDao implements BookDao {
 
         Book book = null;
 
-        String sql = "select book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url " +
+        String sql = "select book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added " +
                 "from books " +
                 "where book_id = ?";
 
@@ -42,7 +42,7 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public List<Book> getBookList() {
+    public List<Book> getBookList(String username) {
 
         List<Book> bookList = new ArrayList<>();
 
@@ -55,14 +55,15 @@ public class JdbcBookDao implements BookDao {
             bookList.add(mapRowToBook(rowSet));
         }
 
+        userDao.updateTimeAccessed(username);
         return bookList;
     }
 
     @Override
     public Book addBook(Book book) {
 
-        String sql = "insert into books (book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url) " +
-                "values (default, ?, ?, ?, ?, ?, ?, ?, ?) returning book_id";
+        String sql = "insert into books (book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added) " +
+                "values (default, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp) returning book_id";
 
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, book.getTitle(), book.getAuthor(), book.getIsbn(), book.isBestSeller(), book.getSummary(), book.getKeyword(), book.getPublishingDate(), book.getCoverImageUrl());
 

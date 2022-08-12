@@ -1,6 +1,6 @@
 <template>
   <div id="bookList" v-if="this.books.length > 0">
-    <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList">
+    <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" v-bind:class="{new_book: isNewBook(currentBook)}">
       <h2>{{ currentBook.title }}</h2>
       <div id="divider"></div>
       <h3>{{ currentBook.author }}</h3>
@@ -19,6 +19,8 @@ export default {
     };
   },
   computed: {
+    
+
     booksList() {
       return this.$store.state.books.filter((book) => {
         return (
@@ -51,6 +53,9 @@ export default {
     });
   },
   methods: {
+    isNewBook(book) {
+      return book.dateAdded > this.$store.state.user.timeAccessed
+    },
     checkKeyWords(book) {
       for (let word of this.$store.state.storeFilter.keyword.split(",")) {
         if (book.keyword){
@@ -163,4 +168,9 @@ body {
   border-radius: 50%;
   box-shadow: 5px 10px 18px #1d1611;
 }
+
+/* div.new_book {
+  
+  
+} */
 </style>

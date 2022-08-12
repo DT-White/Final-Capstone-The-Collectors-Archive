@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface UserDao {
@@ -15,4 +16,11 @@ public interface UserDao {
     int findIdByUsername(String username);
 
     boolean create(String username, String password, String role);
+
+    void addTimeAccessed(String username);
+
+    void updateTimeAccessed(String username);
+
+
+
 }
