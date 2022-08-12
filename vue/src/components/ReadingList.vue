@@ -3,15 +3,21 @@
   class="drop-zone"
   @dragover.prevent
   @dragenter.prevent>
-    <h2>Reading List</h2>
-    <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
-      v-show="!currentBook.hide">
-      <h2>{{ currentBook.title }}</h2>
-      <div id="divider"></div>
-      <h3>{{ currentBook.author }}</h3>
-    </div>
-      <div id="shelf">
-    </div>
+    <span class="shelf topShelf">
+      <h2>Reading List</h2>
+    </span>
+    <section id="books">
+      <span class="pillar"></span>
+      <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
+        v-show="!currentBook.hide">
+        <h2>{{ currentBook.title }}</h2>
+        <div id="divider"></div>
+        <h3>{{ currentBook.author }}</h3>
+      </div>
+      <span class="pillar"></span>
+    </section>
+      <span class="shelf">
+    </span>
   </div>
 </template>
 
@@ -128,11 +134,5 @@ export default {
   margin-right: 20px;
 }
 
-#shelf {
-  border-top: 22px solid #755D44;
-  max-width: 90%;
-  border-radius: 50%;
-  box-shadow: 5px 10px 18px #1d1611;
-}
 
 </style>

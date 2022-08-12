@@ -3,14 +3,20 @@
   class="drop-zone"
   @dragover.prevent
   @dragenter.prevent>
-    <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
-      v-show="!checkForBookInReadingList(currentBook)">
-      <h2>{{ currentBook.title }}</h2>
-      <div id="divider"></div>
-      <h3>{{ currentBook.author }}</h3>
-    </div>
-      <div id="shelf">
+    
+    <section id="books">
+      <span class="shelf topShelf">
+        <h2>Library</h2>
+      </span>
+      <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
+        v-show="!checkForBookInReadingList(currentBook)">
+        <h2>{{ currentBook.title }}</h2>
+        <div id="divider"></div>
+        <h3>{{ currentBook.author }}</h3>
       </div>
+      <span class="shelf">
+    </span>
+    </section>
   </div>
 </template>
 
@@ -139,14 +145,14 @@ body {
   
 }
 
-#bookList {
+#books {
   display: flex;
   flex-direction: column;
   align-items: center;
   
 }
 
-#bookList > div {
+#books > div {
   padding-left: 10px;
   padding-right: 20px;
   display: flex;
@@ -157,37 +163,37 @@ body {
   
 }
 
-#bookList > div:nth-child(5n) {
+#books > div:nth-child(5n) {
   background: linear-gradient(#662358, #a37399 55%, #662358);
   min-width: 95%;
 
   
 }
 
-#bookList > div:nth-child(5n + 1) {
+#books > div:nth-child(5n + 1) {
   background: linear-gradient(#ac6027, #ffcba3 55%, #ac6027);
   min-width: 90%;
   
 }
 
-#bookList > div:first-child {
+#books > div:first-child {
   background: linear-gradient(#b96c30, #ffcba3 55%, #ac6027);
   min-width: 90%;
   
 }
 
-#bookList > div:nth-child(5n + 2) {
+#books > div:nth-child(5n + 2) {
   background: linear-gradient(#17305f, #829cce 55%, #132850);
   min-width: 85%;
   color: #fdfdfd;
   
 }
-#bookList > div:nth-child(5n + 3) {
+#books > div:nth-child(5n + 3) {
   background: linear-gradient(#253f1a, #8bc473 55%, #253f1a);
   min-width: 95%;
   color: #ffffff;
 }
-#bookList > div:nth-child(5n + 4) {
+#books > div:nth-child(5n + 4) {
   background: linear-gradient(#791c1c, #b66a6a 55%, #791c1c);
   min-width: 92%;
   color: #ffffff;
@@ -201,10 +207,17 @@ body {
   margin-right: 20px;
 }
 
-#shelf {
-  border-top: 22px solid #755D44;
-  max-width: 90%;
-  border-radius: 50%;
+.shelf {
+  background-color: #755D44;
+  height: 22px;
+  width: 110%;
   box-shadow: 5px 10px 18px #1d1611;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topShelf{
+  margin-bottom: 50px;
 }
 </style>
