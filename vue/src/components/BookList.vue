@@ -149,6 +149,7 @@ body {
   width: 3px;
   margin-left: 20px;
   margin-right: 20px;
+  background-image: ;
 }
 
 #shelf {
