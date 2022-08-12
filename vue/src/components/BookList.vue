@@ -82,7 +82,6 @@ export default {
 body {
   background-color: white;
   display: block;
-  background-image: url("");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
