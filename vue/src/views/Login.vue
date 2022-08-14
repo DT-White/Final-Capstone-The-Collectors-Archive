@@ -1,7 +1,8 @@
 <template>
   <div id="login" class="text-center">
+    
     <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Login</h1>
       <div
         class="alert alert-danger"
         role="alert"
@@ -12,7 +13,7 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
+      <!-- <label for="username" class="sr-only">Username</label> -->
       <input
         type="text"
         id="username"
@@ -22,7 +23,7 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only">Password</label>
+      <!-- <label for="password" class="sr-only">Password</label> -->
       <input
         type="password"
         id="password"
@@ -40,9 +41,11 @@
 <script>
 import authService from "../services/AuthService";
 
+
 export default {
   name: "login",
   components: {},
+ 
   data() {
     return {
       user: {
@@ -60,7 +63,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
+            this.$router.push("/books");
           }
         })
         .catch(error => {
@@ -74,3 +77,69 @@ export default {
   }
 };
 </script>
+
+<style>
+div#login {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.form-signin {
+  width:300px;
+  padding: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+}
+
+.form-signin h1{
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+ .form-signin input[type=text], .form-signin input[type=password] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 3px solid blue;
+  padding: 14px 10px;
+  width: 220px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition:0.25px;
+}
+.form-signin input[type=text]:focus, .form-signin input[type=password]:focus {
+  width:270px;
+  border-color: #ffc400ec;
+}
+
+.form-signin button[type=submit] {
+  border: 0;
+  background: white;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 3px solid #ffc400ec;
+  padding: 14px 10px;
+  outline: none;
+  color: gray;
+  border-radius: 24px;
+  transition:0.25px;
+  cursor: pointer;
+}
+
+.form-signin button[type=submit]:hover {
+  background: #ffc400ec;
+  color: black;
+}
+
+router-link {
+border: 3px solid #ffc400ec;
+}
+</style>
