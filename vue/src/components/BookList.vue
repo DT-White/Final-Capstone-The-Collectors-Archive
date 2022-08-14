@@ -247,14 +247,13 @@ body {
   width: 4px;
   margin-left: 20px;
   margin-right: 20px;
-  background-image: ;
 }
 
 
 
 .shelf {
   background-color: #946d3e;
-background-image: url("https://www.transparenttextures.com/patterns/retina-wood.png");
+  background-image: url("https://www.transparenttextures.com/patterns/retina-wood.png");
   height: 22px;
   width: 110%;
   box-shadow: 5px 10px 18px #1d1611;

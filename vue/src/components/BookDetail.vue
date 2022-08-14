@@ -11,7 +11,9 @@
      <section>
          <img id="cover" :src="book.coverImageUrl ? book.coverImageUrl : '@/resources/no-image'" alt="Book cover image">
      </section>
-     <section>
+
+
+     <section for="page-1" class="book_page book_page--1">
         <h2>{{book.title ? book.title : 'title'}}</h2>
         <h3>{{book.author ? book.author : 'author'}}</h3>
         <p>
@@ -25,9 +27,77 @@
         </p>
         <p v-for="genre in book.genres" :key="genre.id">{{genre}}</p>
      </section>
-    
+     <section for="page-2" class="book_page book_page--4">
+       <div class="page_content">
+         <h1 class="page_content-title">I</h1>
+         <div class="page_content-blockquote">
+           <p class ="page_content-blockquote-text">comment comment</p>
+            <p class="page__content-blockquote-text">comment comment</p>
+            <p class="page__content-blockquote-text">comment comment</p>
+            <span class="page__content-blockquote-reference">Encyclopedia Galactica*</span>
+      </div>
+      <div class="page__content-text">
+        <p class="page__content-blockquote-text">comment comment</p>
+        <p class="page__content-blockquote-text">comment comment</p>
+        <p class="page__content-blockquote-text">comment comment</p>
+       </div>
+       <div class="page_number">3</div>
+     </section>
+      <input type="radio" name="page" id="page-1"/>
+
+       <input type="radio" name="page" id="page-2"/>
+
+        <label class="book__page book__page--2">
+    <div class="book__page-front">
+      <div class="page__content">
+        <h1 class="page__content-book-title">Foundation</h1>
+        <h2 class="page__content-author">Isaac Asimov</h2>
+        
+        <p class="page__content-credits">
+          Introduction by 
+          <span>Paul Krugman</span>
+        </p>
+        
+        <p class="page__content-credits">
+          Illustrations by 
+          <span>Alex Wells</span>
+        </p>
+        
+        <div class="page__content-copyright">
+          <p>The Folio Society</p>
+          <p>London - MMXII</p>
+        </div>
+      </div>
+    </div>
+    <div class="book__page-back">
+      <div class="page__content">
+        <h1 class="page__content-title">Contents</h1>
+        <table class="page__content-table">
+          <tr>
+            <td align="left">Part I</td><td align="left">The Psycohistorians</td><td align="right">3</td>
+          </tr>
+          <tr>
+            <td align="left">Part II</td><td align="left">The Encyclopedists</td><td align="right">43</td>
+          </tr>
+          <tr>
+            <td align="left">Part III</td><td align="left">The Mayors</td><td align="right">87</td>
+          </tr>
+          <tr>
+            <td align="left">Part IV</td><td align="left">The Traders</td><td align="right">147</td>
+          </tr>
+          <tr>
+            <td align="left">Part V</td><td align="left">The Merchant Princes</td><td align="right">173</td>
+          </tr>
+        </table>
+        
+        <div class="page__number">2</div>
+      </div>
+    </div>
+  </label>
     </div>
   </div>
+  
+
 </template>
 
 <script>
