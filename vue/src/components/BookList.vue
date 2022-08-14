@@ -16,6 +16,7 @@
       </div>
       <span class="shelf">
     </span>
+    
     </section>
   </div>
 </template>
@@ -213,8 +214,11 @@ body {
   background-image: ;
 }
 
+
+
 .shelf {
-  background-color: #755D44;
+  background-color: #946d3e;
+background-image: url("https://www.transparenttextures.com/patterns/retina-wood.png");
   height: 22px;
   width: 110%;
   box-shadow: 5px 10px 18px #1d1611;
