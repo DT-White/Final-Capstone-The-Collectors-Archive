@@ -8,7 +8,9 @@
     </span>
     <section id="books">
       <span class="pillar"></span>
-      <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
+      <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable 
+        @dragstart="startDrag($event, currentBook)"
+        @dblclick="$emit('openBook',$event, currentBook)"
         v-bind:class="{purple: currentBook.color == 'purple',
         blue: currentBook.color == 'blue',
         orange: currentBook.color == 'orange',

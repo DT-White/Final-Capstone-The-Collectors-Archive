@@ -1,11 +1,29 @@
 <template>
   <div @click="close" class="modal-backdrop">
-    <div class="modal">
+    <div class="modal"
+    @click.stop
+    v-bind:class="{ 
+        purpleOpen: book.color == 'purple',
+        blueOpen: book.color == 'blue',
+        orangeOpen: book.color == 'orange',
+        redOpen: book.color == 'red',
+        greenOpen: book.color == 'green'}">
      <section>
-         <h2>{{book.title}}</h2>
+         <img id="cover" :src="book.coverImageUrl ? book.coverImageUrl : '@/resources/no-image'" alt="Book cover image">
      </section>
      <section>
-
+        <h2>{{book.title ? book.title : 'title'}}</h2>
+        <h3>{{book.author ? book.author : 'author'}}</h3>
+        <p>
+            {{book.isbn ? book.isbn : 'isbn'}}
+        </p>
+        <p>
+            {{book.summary ? book.summary : 'summary'}}
+        </p>
+        <p>
+            {{book.publishingDate ? book.publishingDate : 'publishing date'}}
+        </p>
+        <p v-for="genre in book.genres" :key="genre.id">{{genre}}</p>
      </section>
     
     </div>
@@ -16,22 +34,7 @@
   export default {
     name: 'Modal',
     props: {
-        book: {
-            default: {
-                author:"Kim E. Nielsen",
-                bestSeller:false,
-                bookId:7,
-                color:"blue",
-                coverImageUrl:"http://books.google.com/books/content?id=_q9KEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
-                dateAdded:"2022-08-12T13:13:16.76802",
-                genres:[],
-                isbn:9780807022047,
-                keyword:"disablility",
-                publishingDate:"2013-10-01",
-                summary:"The first book to cover the entirety of disability history, from pre-1492 to the present Disability is not only the story of someone we love or the scholars that reconstruct and reinterpret US history from diverse perspectives.",
-                title:"A Disability History of the United States"
-            }
-        }
+        book: {}
     },
     methods: {
       close() {
@@ -76,55 +79,41 @@
       border-style: hidden;
       border-width: 0px 1px 0px 0px;
       box-shadow: 5px 0px 40px #1d1611;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
-  .modal > section:last-child{
-      border-left: rgb(141, 141, 141);
-      border-style:hidden;
+
+    .modal > section:last-child{
+      border-right: rgb(141, 141, 141);
+      border-style: hidden;
       border-width: 0px 0px 0px 1px;
       box-shadow: -5px 0px 40px #1d1611;
   }
 
-  .modal-header,
-  .modal-footer {
-    padding: 15px;
-    display: flex;
+  #cover{
+      height: 90%;
+      max-width: 90%;
+      object-fit: contain;
   }
 
-  .modal-header {
-    position: relative;
-    border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
-    justify-content: space-between;
+  .redOpen{
+      border-color:#791c1c;
   }
 
-  .modal-footer {
-    border-top: 1px solid #eeeeee;
-    flex-direction: column;
-    justify-content: flex-end;
+  .orangeOpen{
+      border-color:#ac6027;
   }
 
-  .modal-body {
-    position: relative;
-    padding: 20px 10px;
+  .greenOpen{
+      border-color:#253f1a;
   }
 
-  .btn-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: none;
-    font-size: 20px;
-    padding: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #4AAE9B;
-    background: transparent;
+  .blueOpen{
+      border-color:#17305f;
   }
 
-  .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
+  .purpleOpen{
+      border-color:#662358;
   }
 </style>
