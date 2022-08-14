@@ -4,19 +4,12 @@
       <section>
         <add-book />
         <section>
-          <bookList @click="showModal($event)"/>
-          <reading-list @dblclick="showModal($event)"/>
+          <bookList @openBook="openBook"/>
+          <reading-list @openBook="openBook"/>
         </section>
       </section>
-      <button
-      type="button"
-      class="btn"
-      @click="showModal($event)"
-    >
-      Open Modal!
-    </button>
 
-    <Modal
+    <Modal :book="bookToOpen"
       v-show="isModalVisible"
       @close="closeModal"
     />
@@ -39,9 +32,9 @@ export default {
   },
 
   methods: {
-    showModal(event) {
-        // this.isModalVisible = true;
-        console.log(event.target)
+    openBook(event, book) {
+        this.bookToOpen = book;
+        this.isModalVisible = true;
       },
       closeModal() {
         this.isModalVisible = false;
@@ -51,7 +44,7 @@ export default {
   data(){
     return {
       isModalVisible: false,
-      bookToOpen: 0,
+      bookToOpen: {}
     }
   }
 };
@@ -72,7 +65,7 @@ export default {
 
 #booksView > section > section{
   display: flex;
-  gap: 50px;
+  gap:50px;
 }
 
 

@@ -1,15 +1,19 @@
 <template>
-  <div id="bookList" v-if="this.books.length > 0" droppable @drop="onDrop($event)" 
+  <div id="bookList" v-if="this.books.length > 0" droppable 
+  @drop="onDrop($event)" 
   class="drop-zone"
   @dragover.prevent
   @dragenter.prevent>
-    
-    <section id="books">
-      <span class="shelf topShelf">
+    <div class="shelf">
+      <span class="shelf-label">
         <h2>Library</h2>
       </span>
-      <div v-bind:key="currentBook.isbn"  v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
-        v-show="!checkForBookInReadingList(currentBook)"
+    <section id="books" >
+      
+      <div v-bind:key="currentBook.bookId"  v-for="currentBook in booksList" draggable 
+        @dragstart="startDrag($event, currentBook)"
+        v-show="!checkForBookInReadingList(currentBook) " 
+        @dblclick="$emit('openBook',$event, currentBook)"
         v-bind:class="{new_book: isNewBook(currentBook), 
         purple: currentBook.color == 'purple',
         blue: currentBook.color == 'blue',
@@ -21,23 +25,22 @@
         <div id="divider"></div>
         <h3>{{ currentBook.author }}</h3>
       </div>
-      <span class="shelf">
-    </span>
     </section>
+    </div>
   </div>
 </template>
 
 <script>
 import bookService from "@/services/BookService";
+
 export default {
   data() {
     return {
       books: [],
+      draggingBook: null,
     };
   },
   computed: {
-    
-
     booksList() {
       return this.$store.state.books.filter((book) => {
         return (
@@ -61,44 +64,21 @@ export default {
       });
     },
   },
+
   created() {
     bookService.getBooks().then((response) => {
       if (response.status === 200) {
-        const books = response.data;
-        for (let book of books){
-          switch (book.bookId % 5){
-            case 0:
-              book.color = "purple"
-              break;
-            case 1:
-              book.color = "orange"
-              break;
-            case 2:
-              book.color = "blue"
-              break;
-            case 3:
-              book.color = "green"
-              break;
-            case 4:
-              book.color = "red"
-              break;
-          }
-        }
+        const books = this.setBookColors(response.data);
         this.$store.commit("GET_BOOK_LIST", books);
         this.books = books;
       }
     });
   },
 
+
   methods: {
-    isNewBook(book) {
-      return book.dateAdded > this.$store.state.user.timeAccessed
-    },
-    updateStoreReadingList(){
-      bookService.getReadingList().then((response) => {
-      if (response.status === 200) {
-        const books = response.data;
-        for (let book of books){
+    setBookColors(books){
+      for (let book of books){
           switch (book.bookId % 5){
             case 0:
               book.color = "purple"
@@ -117,6 +97,20 @@ export default {
               break;
           }
         }
+      return books;
+    },
+
+    isDragging(book){
+      return this.draggingBook && this.draggingBook.isbn === book.isbn;
+    },
+
+    isNewBook(book) {
+      return book.dateAdded > this.$store.state.user.timeAccessed
+    },
+    updateStoreReadingList(){
+      bookService.getReadingList().then((response) => {
+      if (response.status === 200) {
+        const books = this.setBookColors(response.data);
         this.$store.commit("GET_READING_LIST", books);
         this.books = books;
       }
@@ -161,6 +155,7 @@ export default {
     startDrag(evt, book) {
       evt.dataTransfer.dropEffect = 'move'
       evt.dataTransfer.effectAllowed = 'move'
+      this.draggingBook = book;
       evt.dataTransfer.setData('bookId', book.bookId)
       evt.dataTransfer.setData('fromList', "library")
     },
@@ -174,12 +169,25 @@ export default {
           }
         })
       }
+      this.draggingBook = null;
     },
   },
 };
 </script>
 
 <style>
+
+.shelf{
+  border-width:25px;
+  border-color:#755D44;
+  border-style: solid;
+  box-shadow: 0px 10px 18px #1d1611;
+}
+
+#bookList{
+  
+}
+
 body {
   background-color: white;
   display: block;
@@ -202,7 +210,8 @@ img#newSticker {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+  padding-left:10px;
+  padding-right:10px;
 }
 
 #books > div {
@@ -213,7 +222,6 @@ img#newSticker {
   background-color: seagreen;
   border-radius: 2px;
   max-width: 98%;
-  
 }
 
 .purple {
@@ -255,14 +263,17 @@ img#newSticker {
   margin-right: 20px;
 }
 
-.shelf {
-  background-color: #755D44;
-  height: 22px;
-  width: 110%;
-  box-shadow: 5px 10px 18px #1d1611;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+
+.shelf-label{
+  width:auto;
+  background-color:grey;
+  height:30px;
+  margin-bottom:20px;
+}
+
+.shelf-label h2{
+  margin:1px 3px 1px 3px;
 }
 
 .topShelf{
@@ -271,8 +282,8 @@ img#newSticker {
 
 img {
   height: 40px;
- 
-
-  
 }
+
+
+
 </style>

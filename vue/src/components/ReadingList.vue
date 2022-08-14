@@ -3,26 +3,26 @@
   class="drop-zone"
   @dragover.prevent
   @dragenter.prevent>
-    <span class="shelf topShelf">
-      <h2>Reading List</h2>
-    </span>
+  <div class="shelf" id="readingListShelf">
+    <span class="shelf-label">
+        <h2>Reading List</h2>
+      </span>
     <section id="books">
-      <span class="pillar"></span>
-      <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
+      <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable 
+        @dragstart="startDrag($event, currentBook)"
+        @dblclick="$emit('openBook',$event, currentBook)"
         v-bind:class="{purple: currentBook.color == 'purple',
         blue: currentBook.color == 'blue',
         orange: currentBook.color == 'orange',
         red: currentBook.color == 'red',
-        green: currentBook.color == 'green'}"
-        v-show="!currentBook.hide">
+        green: currentBook.color == 'green'}">
+        <!-- v-show="!currentBook.hide"> -->
         <h2>{{ currentBook.title }}</h2>
         <div id="divider"></div>
         <h3>{{ currentBook.author }}</h3>
       </div>
-      <span class="pillar"></span>
     </section>
-      <span class="shelf">
-    </span>
+    </div>
   </div>
 </template>
 
@@ -94,9 +94,9 @@ export default {
 </script>
 
 <style>
-#readingList{
-    background-color:transparent;
-}
+/* #readingListShelf{
+  border-left-width: 0;
+} */
 
 #readingList h2 {
   text-align: center;
@@ -109,7 +109,7 @@ export default {
   align-items: center;
 }
 
-#readingList > div {
+#readingList > div > div {
   padding-left: 10px;
   padding-right: 20px;
   display: flex;
@@ -119,32 +119,32 @@ export default {
   max-width: 98%;
 }
 
-#readingList > div:nth-child(5n) {
+#readingList > div > div:nth-child(5n) {
   background: linear-gradient(#662358, #a37399 55%, #662358);
   min-width: 95%;
 }
 
-#readingList > div:nth-child(5n + 1) {
+#readingList > div > div:nth-child(5n + 1) {
   background: linear-gradient(#ac6027, #ffcba3 55%, #ac6027);
   min-width: 90%;
 }
 
-#readingList > div:first-child {
+#readingList > div > div:first-child {
   background: linear-gradient(#b96c30, #ffcba3 55%, #ac6027);
   min-width: 90%;
 }
 
-#readingList > div:nth-child(5n + 2) {
+#readingList > div > div:nth-child(5n + 2) {
   background: linear-gradient(#17305f, #829cce 55%, #132850);
   min-width: 85%;
   color: #fdfdfd;
 }
-#readingList > div:nth-child(5n + 3) {
+#readingList > div > div:nth-child(5n + 3) {
   background: linear-gradient(#253f1a, #8bc473 55%, #253f1a);
   min-width: 95%;
   color: #ffffff;
 }
-#readingList > div:nth-child(5n + 4) {
+#readingList > div > div:nth-child(5n + 4) {
   background: linear-gradient(#791c1c, #b66a6a 55%, #791c1c);
   min-width: 92%;
   color: #ffffff;

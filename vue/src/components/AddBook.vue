@@ -114,13 +114,33 @@ export default {
       bookService.createBook(newBook).then((response) => {
         if (response.status === 201) {
           this.showAddBook=false;
+          this.book = this.setBookColor(this.book);
           this.$store.commit("ADD_BOOK", this.book);
           this.book={genres:[]};
         }
       });
     },
 
-    
+    setBookColor(book){
+      switch (book.bookId % 5){
+            case 0:
+              book.color = "purple"
+              break;
+            case 1:
+              book.color = "orange"
+              break;
+            case 2:
+              book.color = "blue"
+              break;
+            case 3:
+              book.color = "green"
+              break;
+            case 4:
+              book.color = "red"
+              break;
+          }
+        return book;
+    },
 
     getBookFromGoogle() {
       googleService.getBook(this.book.isbn).then((response) => {
