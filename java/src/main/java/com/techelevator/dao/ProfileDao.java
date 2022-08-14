@@ -5,9 +5,8 @@ import com.techelevator.model.Profile;
 import java.util.List;
 
 public interface ProfileDao {
-    Profile getProfileByUserId(String userId);
+    Profile getProfileByUserId(int userId);
     List<Profile> getProfiles();
-    void addProfile();
-    void updateProfile();
-    void deleteProfile();
+    void addProfile(int userId);
+    void updateProfile(Profile profile);
 }
