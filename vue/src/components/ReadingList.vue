@@ -9,6 +9,11 @@
     <section id="books">
       <span class="pillar"></span>
       <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable @dragstart="startDrag($event, currentBook)"
+        v-bind:class="{purple: currentBook.color == 'purple',
+        blue: currentBook.color == 'blue',
+        orange: currentBook.color == 'orange',
+        red: currentBook.color == 'red',
+        green: currentBook.color == 'green'}"
         v-show="!currentBook.hide">
         <h2>{{ currentBook.title }}</h2>
         <div id="divider"></div>
@@ -41,14 +46,33 @@ export default {
     updateStoreReadingList(){
       bookService.getReadingList().then((response) => {
       if (response.status === 200) {
-        this.$store.commit("GET_READING_LIST", response.data);
-        this.books = response.data;
+        const books = response.data;
+        for (let book of books){
+          switch (book.bookId % 5){
+            case 0:
+              book.color = "purple"
+              break;
+            case 1:
+              book.color = "orange"
+              break;
+            case 2:
+              book.color = "blue"
+              break;
+            case 3:
+              book.color = "green"
+              break;
+            case 4:
+              book.color = "red"
+              break;
+          }
+        }
+        this.$store.commit("GET_READING_LIST", books);
+        this.books = books;
       }
     });
     },
 
     startDrag(evt, book) {
-      console.log(book.bookId)
       evt.dataTransfer.dropEffect = 'move'
       evt.dataTransfer.effectAllowed = 'move'
       evt.dataTransfer.setData('bookId', book.bookId)
@@ -56,7 +80,6 @@ export default {
     },
     onDrop(evt) {
       const book = {bookId: evt.dataTransfer.getData('bookId')}
-      console.log(book)
       const fromList = evt.dataTransfer.getData('fromList')
       if (fromList !== "readingList"){
         bookService.addBookToReadingList(book).then(response => {
