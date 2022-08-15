@@ -1,6 +1,8 @@
 <template>
   <div>
-    <button v-on:click="hidden=!hidden" >{{ hidden === true ? "Search Books" : "Hide Search" }}</button>
+    <button v-on:click="hidden = !hidden">
+      {{ hidden === true ? "Search Books" : "Hide Search" }}
+    </button>
     <form id="bookFilterForm" v-bind:class="{ hidden }">
       <h2>Filter Books</h2>
 
@@ -73,8 +75,10 @@
 <script>
 import bookService from "@/services/BookService";
 export default {
+  // components: { Multiselect },
   data() {
     return {
+      value: [],
       filter: {
         title: "",
         author: "",
@@ -177,6 +181,7 @@ export default {
   },
 };
 </script>
+// 
 
 <style>
 #bookFilterForm {

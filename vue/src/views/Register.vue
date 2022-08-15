@@ -90,4 +90,70 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+div#register {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.form-register {
+  width:300px;
+  padding: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  background: blueviolet;
+  border-radius: 15px;
+}
+
+.form-register h1{
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.form-register input[type=text], .form-register input[type=password] {
+  border: 0;
+  background: white;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 3px solid blue;
+  padding: 14px 10px;
+  width: 220px;
+  outline: none;
+  color: rgb(17, 17, 17);
+  border-radius: 24px;
+  transition:0.25px;
+}
+
+.form-register input[type=text]:focus, .form-register input[type=password]:focus {
+  width:270px;
+  border-color: #ffc400ec;
+}
+
+.form-register button[type=submit] {
+  border: 0;
+  background: white;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 3px solid #ffc400ec;
+  padding: 14px 10px;
+  outline: none;
+  color: gray;
+  border-radius: 24px;
+  transition:0.25px;
+  cursor: pointer;
+}
+
+.form-register button[type=submit]:hover {
+  background: #ffc400ec;
+  color: black;
+}
+</style>
+
+

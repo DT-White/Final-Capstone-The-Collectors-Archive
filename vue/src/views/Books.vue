@@ -60,7 +60,7 @@ export default {
 
 #booksView > section{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 #booksView > section > section{
