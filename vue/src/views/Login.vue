@@ -40,7 +40,7 @@
 
 <script>
 import authService from "../services/AuthService";
-
+import profileService from '../services/ProfileService';
 
 export default {
   name: "login",
@@ -63,7 +63,15 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/books");
+            let profile = {
+            username:this.username
+          };
+          profileService.createProfile(profile).then(response => {
+            if (response.status === 201){
+              console.log("profile created")
+            }
+          })
+          this.$router.push("/books");
           }
         })
         .catch(error => {

@@ -43,7 +43,7 @@ create table profiles (
 	first_name varchar(16),
 	last_name varchar(16),
 	email varchar(32),
-	profile_picture_url varchar(128),
+	profile_picture_url varchar(1024),
 	user_id bigint not null unique references users (user_id)
 );
 
@@ -127,7 +127,9 @@ values (1, 2), (1, 5), (1, 1), (1, 6);
 Insert into time_accessed (user_id, time_update)
 values (1, current_timestamp), (2, current_timestamp);
 
+insert into profiles (user_id, first_name, last_name, profile_picture_url, email)
+values (1, 'John', 'Doe', 'https://www.nicepng.com/png/detail/8-88271_madagascar-penguin-png-image-penguins-of-madagascar.png', 'john@gmail.com');
 	
 COMMIT TRANSACTION;
 
-select * from reading_list
+select * from profiles

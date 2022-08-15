@@ -12,7 +12,7 @@
           <div class="nail"></div>
         </div>
       </div>
-    <section id="books" >
+    <section class="books" >
       
       <div v-bind:key="currentBook.bookId"  v-for="currentBook in booksList" draggable 
         @dragstart="startDrag($event, currentBook)"
@@ -24,7 +24,7 @@
         orange: currentBook.color == 'orange',
         red: currentBook.color == 'red',
         green: currentBook.color == 'green'}">
-        <img id="newSticker" v-if="isNewBook(currentBook)" src="../../resources/new_icon.jpg"/>
+          <img id="newSticker" v-if="isNewBook(currentBook)" src="../../resources/new_icon.jpg"/>
           <h2>{{ currentBook.title }}</h2>
           <div id="divider"></div>
           <h3>{{ currentBook.author }}</h3>
@@ -233,6 +233,8 @@ body {
 
 img#newSticker {
   height: 80px;
+  margin-left: -20px;
+  margin-right: -20px;
 }
 
 .bookList h2 {
@@ -241,7 +243,7 @@ img#newSticker {
   
 }
 
-#books {
+.books {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -249,7 +251,7 @@ img#newSticker {
   padding-right:10px;
 }
 
-#books > div {
+.books > div {
   padding-left: 10px;
   padding-right: 20px;
   display: flex;

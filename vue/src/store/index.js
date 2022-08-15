@@ -32,7 +32,7 @@ export default new Vuex.Store({
       isbn: ""
     },
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
   },
   mutations: {
 
