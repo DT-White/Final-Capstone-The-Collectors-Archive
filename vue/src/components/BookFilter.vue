@@ -58,14 +58,37 @@
         </span>
       </div>
 
-      <div class="genres" id="filterGenres">
+      <div class="multi-selector">
+        <div class="select-field">
+          <input
+            type="text"
+            name="genreName"
+            placeholder="Select Genres"
+            id="genreName"
+            class="input-select"
+            disabled
+            v-model="genreTextField"
+          />
+          <span class="downArrow" v-on:click="showGenres = !showGenres">{{
+            showGenres ? "&blacktriangle;" : "&blacktriangledown;"
+          }}</span>
+        </div>
         <div
-          v-on:click="toggleSelected(genre)"
+          class="genreList"
           v-for="genre in filter.genres"
+          v-show="showGenres"
           v-bind:key="genre.id"
           v-bind:class="{ selected: genre.selected }"
         >
-          {{ genre.name }}
+          <label for="genreName" class="genreOption">
+            <input
+              type="checkbox"
+              v-on:click="toggleSelected(genre)"
+              name="genreName"
+              id="genreName"
+            />
+            {{ genre.name }}
+          </label>
         </div>
       </div>
     </form>
@@ -74,11 +97,10 @@
 
 <script>
 import bookService from "@/services/BookService";
+
 export default {
-  // components: { Multiselect },
   data() {
     return {
-      value: [],
       filter: {
         title: "",
         author: "",
@@ -89,12 +111,11 @@ export default {
         isbn: "",
       },
       hidden: true,
+      showGenres: false,
+      //textField: "",
     };
   },
   methods: {
-    // updateKeywordFilter() {
-    //     this.$store.commit("SET_KEYWORD", this.filter.keyword)
-    // }
     updateStoreFilter() {
       this.$store.commit("SET_STORE_FILTER", this.filter);
     },
@@ -139,34 +160,20 @@ export default {
   },
 
   computed: {
-    filteredList() {
-      let filteredBooks = this.$store.state.books;
-      if (
-        this.filter.title != "" ||
-        this.filter.author != "" ||
-        this.filter.keyword != ""
-      ) {
-        filteredBooks = filteredBooks.filter(
-          (book) =>
-            book.title
-              .toLowerCase()
-              .includes(this.filter.title.toLowerCase()) &&
-            book.author.toLowerCase().includes(this.filter.author.toLowerCase())
-        );
-      }
-      if (this.filter.keyword != "") {
-        let keywordArray = this.filter.keyword.split(",");
-        for (let word in keywordArray) {
-          filteredBooks = filteredBooks.filter((book) => {
-            if (book.keyword.includes(word.toLowerCase())) {
-              return true;
-            }
-          });
+    
+    genreTextField() {
+      let textField = "";
+      this.filter.genres.forEach((genre) => {
+        if (genre.selected === true) {
+          if (textField === "") {
+            textField = genre.name;
+          } else {
+            textField =textField + ", " + genre.name
+          }
         }
-      }
+      });
 
-      this.$store.commit("GET_FILTERED_LIST", filteredBooks);
-      return filteredBooks;
+      return textField;
     },
   },
 
@@ -181,7 +188,7 @@ export default {
   },
 };
 </script>
-// 
+
 
 <style>
 #bookFilterForm {
@@ -218,17 +225,53 @@ export default {
   font-weight: 700;
 }
 
-#filterGenres {
-  width: 100%;
-  border-style: inset;
-}
 
-#filterGenres div {
-  width: 90px;
-  font-weight: 700;
-}
 
 #bookFilterForm.hidden {
   display: none;
+}
+
+.input-select {
+  outline: none;
+  border: none;
+}
+
+.multi-selector {
+  width: max-content;
+}
+
+.select-field {
+  border: 1px solid black;
+}
+
+.select-field,
+.genreList,
+.genreName {
+  width: 100%;
+  background-color: white;
+  padding: 0.3rem;
+}
+
+.genreList {
+  box-shadow: 0 30px 60px rgb(0, 0, 0, 0.2);
+}
+
+.genreOption {
+  display: block;
+}
+
+.downArrow {
+  font-size: 1.2rem;
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+
+.downArrow .showGenres {
+  transform: rotate(180deg);
+}
+
+.genreOption:hover {
+  background-color: aliceblue;
 }
 </style>

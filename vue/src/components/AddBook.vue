@@ -1,6 +1,7 @@
 <template>
-<div>
-  <button v-on:click ="showAddBook =!showAddBook">{{showAddBook?"Cancel":"Add Book"}}</button>
+  <div>
+    <span class="icon" v-on:click ="showAddBook =!showAddBook"></span>
+  <!-- <button v-on:click ="showAddBook =!showAddBook">{{showAddBook?"Cancel":"Add Book"}}</button> -->
   <form id ="addBookForm" v-if="showAddBook"  v-on:click="showError = false">
     <span>
       <input
@@ -45,7 +46,7 @@
       />
     </span>
 
-    <div class="genres" v-if="this.$store.state.genres.length > 0">
+    <!-- <div class="genres" v-if="this.$store.state.genres.length > 0">
       <div
       
         v-on:click="toggleSelected(genre)"
@@ -55,7 +56,41 @@
       >
         {{ genre.name }}
       </div>
-    </div>
+    </div> -->
+
+    <div class="multi-selector">
+        <div class="select-field">
+          <input
+            type="text"
+            name="genreName"
+            placeholder="Select Genres"
+            id="genreName"
+            class="input-select"
+            disabled
+            v-model="genreTextField"
+          />
+          <span class="downArrow" v-on:click="showGenres = !showGenres">{{
+            showGenres ? "&blacktriangle;" : "&blacktriangledown;"
+          }}</span>
+        </div>
+        <div
+          class="genreList"
+          v-for="genre in $store.state.genres"
+          v-show="showGenres"
+          v-bind:key="genre.id"
+          v-bind:class="{ selected: genre.selected }"
+        >
+          <label for="genreName" class="genreOption">
+            <input
+              type="checkbox"
+              v-on:click="toggleSelected(genre)"
+              name="genreName"
+              id="genreName"
+            />
+            {{ genre.name }}
+          </label>
+        </div>
+      </div>
     <button v-on:click.prevent="createBook" type="submit">Submit</button>
   </form>
   </div>
@@ -74,7 +109,7 @@ export default {
 
     return {
       showAddBook:false,
-
+      showGenres: false,
 
       showError: false,
 
@@ -85,6 +120,23 @@ export default {
       }
     };
   },
+
+  computed: {
+    genreTextField() {
+      let textField = "";
+      this.$store.state.genres.forEach((genre) => {
+        if (genre.selected === true) {
+          if (textField === "") {
+            textField = genre.name;
+          } else {
+            textField =textField + ", " + genre.name
+          }
+        }
+      });
+
+      return textField;
+    }
+  }, 
 
   created(){
     bookService.getGenres().then(response =>{
@@ -100,6 +152,10 @@ export default {
   },
   
   methods: {
+    close() {
+        this.$emit('close');
+      },
+
     createBook() {
       let newBook = {
         title: this.book.title,
@@ -109,7 +165,7 @@ export default {
         summary: this.book.summary,
         publishingDate: this.book.publishingDate,
         coverImageUrl: this.book.coverImageUrl,
-        genres: this.book.genres.filter(g => g.selected).map((g) => g.name)
+        genres: this.$store.state.genres.filter(g => g.selected).map((g) => g.name)
       }
       bookService.createBook(newBook).then((response) => {
         if (response.status === 201) {
@@ -300,5 +356,59 @@ textarea {
 .genres div.selected {
   background-color: #5cc461;
   border-width: 2px;
+}
+
+input-select {
+  outline: none;
+  border: none;
+}
+
+.multi-selector {
+  width: max-content;
+}
+
+.select-field {
+  border: 1px solid black;
+}
+
+.select-field,
+.genreList,
+.genreName {
+  width: 100%;
+  background-color: white;
+  padding: 0.3rem;
+}
+
+.genreList {
+  box-shadow: 0 30px 60px rgb(0, 0, 0, 0.2);
+}
+
+.genreOption {
+  display: block;
+}
+
+.downArrow {
+  font-size: 1.2rem;
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+
+.downArrow .showGenres {
+  transform: rotate(180deg);
+}
+
+.genreOption:hover {
+  background-color: aliceblue;
+}
+
+.icon {
+  background: url('../../resources/newBook.png');
+  height: 200px;
+  width: 200px;
+  display: block;
+  border:1px solid black;
+  margin: 5px;
+  
 }
 </style>

@@ -40,7 +40,7 @@
 
 <script>
 import authService from "../services/AuthService";
-
+import profileService from '../services/ProfileService';
 
 export default {
   name: "login",
@@ -63,7 +63,15 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/books");
+            let profile = {
+            username:this.username
+          };
+          profileService.createProfile(profile).then(response => {
+            if (response.status === 201){
+              console.log("profile created")
+            }
+          })
+          this.$router.push("/books");
           }
         })
         .catch(error => {
@@ -83,6 +91,7 @@ div#login {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: brown;
 }
 
 .form-signin {
@@ -93,6 +102,7 @@ div#login {
   left: 50%;
   transform: translate(-50%,-50%);
   text-align: center;
+  background-color: lightgray;
 }
 
 .form-signin h1{
@@ -110,7 +120,7 @@ div#login {
   padding: 14px 10px;
   width: 220px;
   outline: none;
-  color: white;
+  color: black;
   border-radius: 24px;
   transition:0.25px;
 }
