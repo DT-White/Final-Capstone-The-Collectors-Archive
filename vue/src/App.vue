@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="appheader">
-      <img id="logoImage" src="../resources/logo.jpg" alt="" />
+      <img id="logoImage" src="../resources/logo6.jpg" alt="" />
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
         <button id="buttons">
@@ -24,7 +24,6 @@
     <router-view />
   </div>
 </template>
-
 <style>
 div#app {
   display: flex;
@@ -33,18 +32,15 @@ div#app {
 div#appheader {
   display: flex;
   justify-content: space-between;
-
 }
 h1#header {
   text-align: center;
 }
-
 img#logoImage {
   height: 200px;
   border-radius: 100px;
   justify-content: flex-start;
 }
-
 div#nav {
   justify-content: flex-end;
 }

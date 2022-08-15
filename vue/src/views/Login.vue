@@ -96,7 +96,7 @@ div#login {
 }
 
 .form-signin h1{
-  color: white;
+  color: black;
   text-transform: uppercase;
   font-weight: 600;
 }
