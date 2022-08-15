@@ -66,6 +66,7 @@ export default {
 #booksView > section > section{
   display: flex;
   gap:50px;
+  margin-right: 30px;
 }
 
 

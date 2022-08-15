@@ -1,13 +1,17 @@
 <template>
   <div id="bookList" v-if="this.books.length > 0" droppable 
   @drop="onDrop($event)" 
-  class="drop-zone"
+  class="drop-zone bookList"
   @dragover.prevent
   @dragenter.prevent>
     <div class="shelf">
-      <span class="shelf-label">
-        <h2>Library</h2>
-      </span>
+      <div class="shelf-top">
+        <div class="shelf-label">
+          <div class="nail"></div>
+            <h2>LIBRARY</h2>
+          <div class="nail"></div>
+        </div>
+      </div>
     <section id="books" >
       
       <div v-bind:key="currentBook.bookId"  v-for="currentBook in booksList" draggable 
@@ -178,14 +182,45 @@ export default {
 <style>
 
 .shelf{
-  border-width:25px;
+  border-width:0px 25px 25px 25px;
   border-color:#755D44;
   border-style: solid;
   box-shadow: 0px 10px 18px #1d1611;
+  background: linear-gradient(#3b2f23 10%, #534331 20%, #4e3e2d);
 }
 
-#bookList{
-  
+.shelf-top{
+  background-color: #755D44;
+  margin: 0px 1px 30px 1px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 10px 18px -12px #1d1611;
+  ;
+}
+
+.shelf-label{
+  background-color: rgb(211, 187, 55);
+  width: 175px;
+  border-radius: 10% / 50%;
+  margin: 5px 0px 5px 0px;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px 0px 10px;
+}
+
+.shelf-label h2{
+  font-size: 1.2rem;
+  color: rgb(77, 68, 18);
+}
+
+.nail{
+  background-color: rgb(156, 138, 37);
+  width: 5px;
+  height: 5px;
+  border-width: 2.5px;
+  border-style: solid;
+  border-color: rgb(150, 132, 35);;
+  border-radius: 50%;
 }
 
 body {
@@ -196,7 +231,7 @@ body {
   background-position: center;
 }
 
-#bookList h2 {
+.bookList h2 {
   text-align: center;
   flex-grow: 2;
   
@@ -259,21 +294,8 @@ body {
   margin-right: 20px;
 }
 
-
-
-.shelf-label{
-  width:auto;
-  background-color:grey;
-  height:30px;
-  margin-bottom:20px;
-}
-
 .shelf-label h2{
   margin:1px 3px 1px 3px;
-}
-
-.topShelf{
-  margin-bottom: 50px;
 }
 
 img {
