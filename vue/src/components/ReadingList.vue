@@ -11,7 +11,7 @@
           <div class="nail"></div>
         </div>
       </div>
-    <section id="books">
+    <section class="books">
       <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable 
         @dragstart="startDrag($event, currentBook)"
         @dblclick="$emit('openBook',$event, currentBook)"
