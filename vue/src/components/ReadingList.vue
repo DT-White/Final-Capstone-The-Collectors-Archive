@@ -40,7 +40,26 @@ export default {
   },
   computed: {
     booksList() {
-      return this.$store.state.readingList;
+      return this.$store.state.readingList.filter((book) => {
+        return (
+          book.title
+            .toLowerCase()
+            .includes(this.$store.state.storeFilter.title.toLowerCase()) &&
+          book.author
+            .toLowerCase()
+            .includes(this.$store.state.storeFilter.author.toLowerCase()) &&
+          (book.isbn == this.$store.state.storeFilter.isbn ||
+            !this.$store.state.storeFilter.isbn) &&
+          (Date.parse(book.publishingDate) >
+            Date.parse(this.$store.state.storeFilter.startDate) ||
+            !this.$store.state.storeFilter.startDate) &&
+          (Date.parse(book.publishingDate) <
+            Date.parse(this.$store.state.storeFilter.endDate) ||
+            !this.$store.state.storeFilter.endDate) &&
+          this.checkKeyWords(book) &&
+          this.checkGenres(book)
+        );
+      });
     },
   },
   created() {
@@ -92,6 +111,30 @@ export default {
           }
         })
       }
+    },
+    checkKeyWords(book) {
+      for (let word of this.$store.state.storeFilter.keyword.split(",")) {
+        if (book.keyword){
+          if (book.keyword.toLowerCase().includes(word.toLowerCase().trim())) {
+            return true;
+          }
+        }
+      }
+      return false;
+    },
+    
+    checkGenres(book) {
+      let noneSelected = true;
+      let matchesAll = true;
+      for (let genre of this.$store.state.storeFilter.genres) {
+        if (genre.selected) {
+          noneSelected = false;
+          if (!book.genres.includes(genre.name)) {
+            matchesAll = false;
+          }
+        }
+      }
+      return noneSelected || matchesAll;
     },
   },
 }

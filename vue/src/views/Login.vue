@@ -83,6 +83,7 @@ div#login {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: brown;
 }
 
 .form-signin {
@@ -93,6 +94,7 @@ div#login {
   left: 50%;
   transform: translate(-50%,-50%);
   text-align: center;
+  background-color: lightgray;
 }
 
 .form-signin h1{
@@ -110,7 +112,7 @@ div#login {
   padding: 14px 10px;
   width: 220px;
   outline: none;
-  color: white;
+  color: black;
   border-radius: 24px;
   transition:0.25px;
 }
