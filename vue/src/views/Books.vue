@@ -2,9 +2,9 @@
   <div id="booksView">
       <book-filter/>
       <section>
-        <add-book />
+        
         <section>
-          <bookList @openBook="openBook"/>
+          <bookList @openBook="openBook" />
           <reading-list @openBook="openBook"/>
         </section>
       </section>
@@ -17,18 +17,20 @@
 </template>
 
 <script>
-import addBook from "@/components/AddBook";
+
 import bookList from "@/components/BookList";
 import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
 import Modal from "@/components/BookDetail"
+
 export default {
   components: { 
-    addBook,
+    
     bookList,
     bookFilter,
     readingList,
-    Modal 
+    Modal
+    
   },
 
   methods: {
@@ -68,6 +70,8 @@ export default {
   gap:50px;
   margin-right: 30px;
 }
+
+
 
 
 </style>

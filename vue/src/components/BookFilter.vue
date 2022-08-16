@@ -234,6 +234,7 @@ export default {
 .input-select {
   outline: none;
   border: none;
+  background: white;
 }
 
 .multi-selector {

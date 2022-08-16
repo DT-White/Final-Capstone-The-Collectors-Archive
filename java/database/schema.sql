@@ -2,6 +2,7 @@ BEGIN TRANSACTION;
 
 
 DROP table if exists time_accessed;
+DROP table if exists user_collection;
 DROP table if exists reading_list;
 drop table if exists profiles;
 DROP TABLE IF EXISTS users;
@@ -47,6 +48,7 @@ create table profiles (
 	user_id bigint not null unique references users (user_id)
 );
 
+
 Create table books (
 	book_id serial primary key,
 	title varchar(128) not null,
@@ -59,6 +61,12 @@ Create table books (
 	cover_image_url varchar(128),
 	date_added timestamp not null
 	);
+	
+Create table user_collection (
+	book_id bigint not null references books (book_id),
+	user_id bigint not null references users (user_id),
+	Constraint pk_user_collection primary key (book_id, user_id)
+);
 	
 Create table reading_list (
 	user_id bigint not null references users (user_id),
@@ -132,4 +140,3 @@ values (1, 'John', 'Doe', 'https://www.nicepng.com/png/detail/8-88271_madagascar
 	
 COMMIT TRANSACTION;
 
-select * from profiles

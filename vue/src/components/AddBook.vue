@@ -46,18 +46,6 @@
       />
     </span>
 
-    <!-- <div class="genres" v-if="this.$store.state.genres.length > 0">
-      <div
-      
-        v-on:click="toggleSelected(genre)"
-        v-for="genre in this.$store.state.genres"
-        v-bind:key="genre.id"
-        v-bind:class="{ selected: genre.selected }"
-      >
-        {{ genre.name }}
-      </div>
-    </div> -->
-
     <div class="multi-selector">
         <div class="select-field">
           <input
@@ -284,6 +272,10 @@ export default {
   
 }
 
+input textarea {
+  border: none;
+}
+
 textarea {
   width: 98%;
   max-width: 500px;
@@ -300,12 +292,13 @@ textarea {
   align-items: center;
   justify-content: space-between;
   display: flex;
-  /* border: 1px;
-  border-style: solid;
-  border-color: rgb(109, 106, 106); */
   min-width: 225px;
   max-width: 500px;
   
+}
+
+textarea {
+  max-width: 98%;
 }
 
 #date {
@@ -335,32 +328,10 @@ textarea {
   flex-wrap: wrap;
 }
 
-.genres div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-style: solid;
-  border-color: rgb(109, 106, 106);
-  border-width: 1px;
-  width: 30%;
-  height: 30px;
-  font-size: 0.85rem;
-  font-family: sans-serif;
-  
-}
-
-.genres div:hover {
-  cursor: pointer;
-}
-
-.genres div.selected {
-  background-color: #5cc461;
-  border-width: 2px;
-}
-
-input-select {
+.input-select {
   outline: none;
   border: none;
+  background: white;
 }
 
 .multi-selector {
@@ -369,12 +340,14 @@ input-select {
 
 .select-field {
   border: 1px solid black;
+  
 }
 
 .select-field,
 .genreList,
 .genreName {
-  width: 100%;
+  max-width: 97%;
+  max-height: 40px;
   background-color: white;
   padding: 0.3rem;
 }
@@ -403,12 +376,19 @@ input-select {
 }
 
 .icon {
-  background: url('../../resources/newBook.png');
-  height: 200px;
-  width: 200px;
+  background: url('../../resources/newBook2.jpg');
+  background-repeat: no-repeat;
+  height: 25px;
+  width: 25px;
   display: block;
-  border:1px solid black;
+  border:2px solid black;
+  border-radius: 50%;
   margin: 5px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  background: lightskyblue;
   
 }
 </style>

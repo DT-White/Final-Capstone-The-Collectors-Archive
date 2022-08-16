@@ -1,5 +1,5 @@
 <template>
-  <div id="bookList" v-if="this.books.length > 0" droppable 
+  <div id="bookList"  droppable 
   @drop="onDrop($event)" 
   class="drop-zone bookList"
   @dragover.prevent
@@ -11,6 +11,7 @@
             <h2>LIBRARY</h2>
           <div class="nail"></div>
         </div>
+        <add-book/>
       </div>
     <section class="books" >
       
@@ -36,8 +37,10 @@
 
 <script>
 import bookService from "@/services/BookService";
+import AddBook from './AddBook.vue';
 
 export default {
+  components: { AddBook },
   data() {
     return {
       books: [],
@@ -202,7 +205,7 @@ export default {
   background-color: rgb(211, 187, 55);
   width: 175px;
   border-radius: 10% / 50%;
-  margin: 5px 0px 5px 0px;
+  margin: 5px 5px 5px 5px;
   display: flex;
   align-items: center;
   padding: 0px 10px 0px 10px;

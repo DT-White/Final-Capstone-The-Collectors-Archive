@@ -25,6 +25,7 @@
   </div>
 </template>
 <style>
+
 div#app {
   display: flex;
   flex-direction: column;
@@ -35,6 +36,8 @@ div#appheader {
 }
 h1#header {
   text-align: center;
+  
+  font-size: 70px;
 }
 img#logoImage {
   height: 200px;

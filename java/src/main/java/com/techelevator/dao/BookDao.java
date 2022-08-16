@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface BookDao {
 
-    Book getBook(int bookId);
+    Book getBook(long isbn);
     List<Book> getBookList(String username);
-    Book addBook(Book book);
+    Book addBook(Book book, String username);
     void deleteBook(int bookId);
     List<String> getGenreListByBookId(int bookId);
     void addGenres(int bookId);
