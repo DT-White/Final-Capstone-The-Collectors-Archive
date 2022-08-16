@@ -1,9 +1,9 @@
 BEGIN TRANSACTION;
 
 
-
 DROP table if exists time_accessed;
 DROP table if exists reading_list;
+drop table if exists profiles;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS seq_user_id;
 DROP table if exists book_genre;
@@ -36,6 +36,15 @@ INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpUL
 Create table time_accessed (
 	user_id bigint not null references users (user_id),
 	time_update timestamp not null
+);
+
+create table profiles (
+	profile_id serial primary key,
+	first_name varchar(16),
+	last_name varchar(16),
+	email varchar(32),
+	profile_picture_url varchar(128),
+	user_id bigint not null unique references users (user_id)
 );
 
 Create table books (
