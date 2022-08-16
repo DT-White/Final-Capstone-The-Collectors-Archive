@@ -211,6 +211,7 @@ export default {
 .shelf-label h2{
   font-size: 1.2rem;
   color: rgb(77, 68, 18);
+  margin:1px 3px 1px 3px;
 }
 
 .nail{
@@ -298,10 +299,6 @@ img#newSticker {
   width: 4px;
   margin-left: 20px;
   margin-right: 20px;
-}
-
-.shelf-label h2{
-  margin:1px 3px 1px 3px;
 }
 
 img {

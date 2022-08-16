@@ -1,38 +1,36 @@
 <template>
 <div id="profile-page">
-    <section>
-        <div id="profile">
-            <div id="picture-div">
-                <img :src="pictureAddress" alt="Profile picture" class="profile-picture">
-                <input type="file" id="selectedFile" v-if="isEditing" style="display: none;" accept="image/*" @change="onFileChange">
-                <input type="button" value="Browse" onclick="document.getElementById('selectedFile').click();" v-if="isEditing"/>
+    <section class="portrait-wall">
+            <div class="portrait">
+                <img :src="pictureAddress" alt="Profile picture" class="profile-picture" v-show="!isWebcamVisible">
+                <webcam v-if="isWebcamVisible" :isCameraOpen="isWebcamVisible" @photoTaken="useWebcamPhoto"/>
+                <input type="file" id="selectedFile" ref="selectedFile" v-if="isEditing" style="display: none;" accept="image/*" @change="onFileChange">
+                <div id="image-icons">
+                    <img src="../../resources/upload.png" alt="Upload icon" class="confirm-btn btn" @click="$refs.selectedFile.click()" v-if="isEditing">
+                    <img src="../../resources/camera.png" alt="Camera icon" class="confirm-btn btn" @click="isWebcamVisible = true" v-if="isEditing">
+                </div>
             </div>
-            <section>
+            <div class="plaque">
                 <h2 v-if="!isEditing">{{profile.firstName}} {{profile.lastName}}</h2>
                 <input type="text" v-model="profile.firstName" v-if="isEditing" placeholder="First name">
                 <input type="text" v-model="profile.lastName" v-if="isEditing" placeholder="Last name">
                 <h3 v-if="!isEditing">{{profile.email}}</h3>
                 <input type="text" v-model="profile.email" v-if="isEditing" placeholder="Email address">
-            </section>
-        </div>
-        <img src="../../resources/edit.png" alt="Edit icon" class="edit-btn btn" @click="isEditing = !isEditing" v-if="!isEditing">
-        <div id='two-buttons'>
-            <img src="../../resources/confirm.png" alt="Confirm icon" class="confirm-btn btn" @click="saveProfileChanges" v-if="isEditing">
-            <img src="../../resources/cancel.png" alt="Cancel icon" class="cancel-btn btn" @click="cancelEdit" v-if="isEditing">
-        </div>
-    </section>
-    <library @openBook="openBook"/>
-    <Modal :book="bookToOpen"
-      v-show="isModalVisible"
-      @close="closeModal"
-    />
+                <div id='edit-icons'>
+                    <img src="../../resources/edit.png" alt="Edit icon" class="edit-btn btn" @click="isEditing = !isEditing" v-if="!isEditing">
+                    <img src="../../resources/confirm.png" alt="Confirm icon" class="confirm-btn btn" @click="saveProfileChanges" v-if="isEditing">
+                    <img src="../../resources/cancel.png" alt="Cancel icon" class="cancel-btn btn" @click="cancelEdit" v-if="isEditing">
+                </div>
+            </div>
+        
+        
+    </section>       
 </div>
 </template>
 
 <script>
 import profileService from '@/services/ProfileService';
-import library from '@/components/BookList';
-import Modal from "@/components/BookDetail"
+import webcam from "@/components/Webcam"
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -63,8 +61,7 @@ const storage = getStorage(firebaseApp, "gs://collectors-archive.appspot.com");
 
 export default {
     components:{
-        library,
-        Modal
+        webcam
     },
 
     computed:{
@@ -75,14 +72,15 @@ export default {
             return ref(storage, this.fileName);
         },
         pictureAddress(){
-            return this.updatingPicture ? URL.createObjectURL(this.updatingPicture) : this.profile.profilePictureUrl ? this.profile.profilePictureUrl : require('../../resources/default-user.png')
+            return this.webcamPicture ? this.webcamPicture : this.updatingPicture ? URL.createObjectURL(this.updatingPicture) : this.profile.profilePictureUrl ? this.profile.profilePictureUrl : require('../../resources/default-user.png')
         }
     },
 
     data(){
         return{
             isEditing:true,
-            isModalVisible: false,
+            isBookDetailVisible: false,
+            isWebcamVisible: false,
             profile:{
                 profilePictureUrl:"",
                 firstName:"",
@@ -90,38 +88,47 @@ export default {
                 email:""
             },
             bookToOpen: {},
-            updatingPicture: null
+            updatingPicture: null,
+            webcamPicture: null,
+            metadata:{
+                contentType: 'image/jpg'
+            }
         }
     },
 
     methods: {
     openBook(event, book) {
         this.bookToOpen = book;
-        this.isModalVisible = true;
+        this.isBookDetailVisible = true;
     },
 
-    closeModal() {
-      this.isModalVisible = false;
+    closeBook() {
+      this.isBookDetailVisible = false;
+    },
+
+    useWebcamPhoto(event, image){
+        console.log(image)
+        fetch(image.url).then(response => {
+            this.webcamPicture = response.data;
+        }) ;
     },
 
     cancelEdit(){
         this.isEditing = false;
         this.updatingPicture = null;
-        profileService.getProfile(this.$store.state.user.id).then(response => {
-            if (response.status === 200){
-                this.profile = response.data;
-            }
-        })
+        this.webcamPicture = null;
+        this.isWebcamVisible = false;
     },
 
     uploadProfilePicture(file){
-        uploadBytes(this.storageRef, file).then((snapshot) => {
+        uploadBytes(this.storageRef, file, this.metadata).then((snapshot) => {
         console.log(snapshot);
         });
     },
 
+
     saveProfileChanges(){
-        this.uploadProfilePicture(this.updatingPicture);
+        this.uploadProfilePicture(this.webcamPicture ? this.webcamPicture : this.updatingPicture);
         getDownloadURL(ref(storage, this.fileName)).then((url) => {
                 this.profile.profilePictureUrl = url;
                 let profile = {
@@ -134,6 +141,7 @@ export default {
             console.log(profile);
             this.isEditing = false;
             this.updatingPicture = null;
+            this.webcamPicture = null;
             profileService.updateProfile(profile).then(response => {
                 if (response.status === 200){
                     console.log("Profile updated")
@@ -155,7 +163,7 @@ export default {
         profileService.getProfile(this.$store.state.user.id).then(response => {
             if (response.status === 200 && response.data){
                 this.profile = response.data;
-                this.isEditing = false;
+                this.isEditing = true;
             }
         })
     },
@@ -164,79 +172,75 @@ export default {
 
 <style>
 
-#picture-div{
+.portrait-wall{
     display: flex;
+    align-items: center;
     flex-direction: column;
+    gap: 20px;
 }
 
-input[type="button"]{
-    margin-top: -22px;
-}
-
-.profile-picture{
-    width:100px;
-    height: auto;
-}
-
-#profile-page{
+.portrait{
+    border-color: rgb(211, 187, 55);
+    background-color: rgb(231, 229, 213);
+    border-width: 30px;
+    border-style: solid;
+    width: 150px;
+    height: 200px;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: space-between;
     flex-direction: column;
-    padding-left:50px;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0px 5px 12px #8b824a;
 }
 
-#profile-page > section{
+.portrait > img{
+    width: auto;
+    height: auto;
+    max-width: 150px;
+    max-height: 200px;
+}
+
+#image-icons{
+    top: 0;
+    position: absolute;
+}
+
+#edit-icons{
     display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+    width: 100%;
 }
 
-#profile{
-    display: flex;
-    background-color: cadetblue;
-    padding: 10px;
-    gap:10px
-}
-
-#profile section{
+.plaque{
+    background-color: rgb(151, 65, 32);
+    border-radius: 10px;
+    padding: 10px 10px 5px 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    padding-top: 20px;
+    align-items: center;
+    color: cornsilk;
+    box-shadow: 0px 5px 12px rgb(110, 64, 47);
 }
 
-#profile h2{
-    line-height: 12px;
-}
-
-#profile h3{
-    line-height: 12px;
-}
-
-.edit-btn{
-    width: 20px;
-    height: 20px;
-    background-color: cadetblue;
-    margin-left: -30px;
+.plaque h2{
+    line-height: 0px;
+    font-size: 20px;
     margin-top: 10px;
 }
 
-.confirm-btn{
-    width: 20px;
-    height: 20px;
-    background-color: cadetblue;
-}
-
-.cancel-btn{
-    width: 20px;
-    height: 20px;
-    background-color: cadetblue;
-}
-
-#two-buttons{
+.plaque h3{
+    line-height: 0px;
+    font-size: 18px;
     margin-top: 10px;
-    margin-left: -55px;
-    display: flex;
-    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.btn{
+    width: 20px;
+    height: 20px;
 }
 
 .btn:hover{
