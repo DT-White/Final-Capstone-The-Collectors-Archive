@@ -129,8 +129,7 @@ values ('Trouble Don''t Last', 'Shelley Pearsall', '9780440418115', 'false', 'Dr
 Insert into book_genre (book_id, genre_id)
 values (6, 1), (6, 5);
 
-Insert into reading_list (user_id, book_id)
-values (1, 2), (1, 5), (1, 1), (1, 6);
+
 
 Insert into time_accessed (user_id, time_update)
 values (1, current_timestamp), (2, current_timestamp);

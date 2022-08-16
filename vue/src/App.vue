@@ -25,6 +25,7 @@
   </div>
 </template>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap');
 
 div#app {
   display: flex;
@@ -36,7 +37,7 @@ div#appheader {
 }
 h1#header {
   text-align: center;
-  
+  font-family: 'Fredoka One', cursive;
   font-size: 70px;
 }
 img#logoImage {

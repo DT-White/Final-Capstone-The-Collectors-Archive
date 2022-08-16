@@ -1,6 +1,5 @@
 <template>
   <div id="login" class="text-center">
-    
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Login</h1>
       <div
@@ -87,11 +86,14 @@ export default {
 </script>
 
 <style>
+
+
+
 div#login {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: brown;
+  background: url('../../resources/upload.png');
 }
 
 .form-signin {
@@ -103,12 +105,14 @@ div#login {
   transform: translate(-50%,-50%);
   text-align: center;
   background-color: lightgray;
+  border-radius: 20px;
 }
 
 .form-signin h1{
   color: black;
   text-transform: uppercase;
   font-weight: 600;
+  
 }
  .form-signin input[type=text], .form-signin input[type=password] {
   border: 0;
