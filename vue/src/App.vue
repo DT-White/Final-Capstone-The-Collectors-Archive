@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="appheader">
-      <img id="logoImage" src="../resources/logo6.jpg" alt="" />
+      <img id="logoImage" src="../resources/logo12.jpg" alt="" />
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
         <button id="buttons">
@@ -25,6 +25,13 @@
   </div>
 </template>
 <style>
+
+
+body {
+  background-image: url("../resources/test.jpg");
+  background-position: bottom right;
+  background-size: 10px 20px;
+}
 
 div#app {
   display: flex;

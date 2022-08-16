@@ -5,6 +5,7 @@
   @dragover.prevent
   @dragenter.prevent>
     <div class="shelf">
+      <!-- <div class="line"> -->
       <div class="shelf-top">
         <div class="shelf-label">
           <div class="nail"></div>
@@ -12,6 +13,7 @@
           <div class="nail"></div>
         </div>
         <add-book/>
+      <!-- </div> -->
       </div>
     <section class="books" >
       
@@ -191,6 +193,13 @@ export default {
   box-shadow: 0px 10px 18px #1d1611;
   background: linear-gradient(#3b2f23 10%, #534331 20%, #4e3e2d);
 }
+
+
+/* .line {
+  
+ 
+
+} */
 
 .shelf-top{
   background-color: #755D44;
