@@ -43,12 +43,18 @@ public class JdbcProfileDao implements ProfileDao{
 
     @Override
     public void addProfile(int userId) {
+<<<<<<< HEAD
+        String sql = "insert into profiles (user_id) " +
+                "values(?)";
+        jdbcTemplate.update(sql, userId);
+=======
       try {
           String sql = "insert into profiles (user_id) " +
                   "values(?)";
           jdbcTemplate.update(sql, userId);
       } catch (Exception ignore) {}
 
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
     }
 
     @Override
