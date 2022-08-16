@@ -5,7 +5,6 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import Books from '../views/Books.vue'
-import Profile from '../views/Profile.vue'
 
 Vue.use(Router)
 
@@ -63,15 +62,6 @@ const router = new Router({
         requiresAuth: true
       }
     },
-
-    {
-      path: "/profile",
-      name: "profile",
-      component: Profile,
-      meta: {
-        requiresAuth: true
-      }
-    }
   ]
 })
 
