@@ -3,8 +3,9 @@
       <book-filter/>
       <section>
         <add-book />
+        <profile/>
         <section>
-          <bookList @openBook="openBook"/>
+          <bookList @openBook="openBook" />
           <reading-list @openBook="openBook"/>
         </section>
       </section>
@@ -17,18 +18,20 @@
 </template>
 
 <script>
-import addBook from "@/components/AddBook";
+
 import bookList from "@/components/BookList";
 import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
-import Modal from "@/components/BookDetail"
+import Modal from "@/components/BookDetail";
+import profile from '@/components/Profile'
 export default {
   components: { 
-    addBook,
+    
     bookList,
     bookFilter,
     readingList,
-    Modal 
+    Modal ,
+    profile
   },
 
   methods: {
@@ -60,13 +63,25 @@ export default {
 
 #booksView > section{
   display: flex;
+<<<<<<< HEAD
   flex-direction: row;
+=======
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 }
 
 #booksView > section > section{
   display: flex;
   gap:50px;
+<<<<<<< HEAD
+=======
+  margin-right: 30px;
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 }
+
+
 
 
 </style>

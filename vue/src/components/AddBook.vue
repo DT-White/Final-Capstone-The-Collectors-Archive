@@ -1,6 +1,7 @@
 <template>
-<div>
-  <button v-on:click ="showAddBook =!showAddBook">{{showAddBook?"Cancel":"Add Book"}}</button>
+  <div>
+    <span class="icon" v-on:click ="showAddBook =!showAddBook"></span>
+  <!-- <button v-on:click ="showAddBook =!showAddBook">{{showAddBook?"Cancel":"Add Book"}}</button> -->
   <form id ="addBookForm" v-if="showAddBook"  v-on:click="showError = false">
     <span>
       <input
@@ -45,17 +46,39 @@
       />
     </span>
 
-    <div class="genres" v-if="this.$store.state.genres.length > 0">
-      <div
-      
-        v-on:click="toggleSelected(genre)"
-        v-for="genre in this.$store.state.genres"
-        v-bind:key="genre.id"
-        v-bind:class="{ selected: genre.selected }"
-      >
-        {{ genre.name }}
+    <div class="multi-selector">
+        <div class="select-field">
+          <input
+            type="text"
+            name="genreName"
+            placeholder="Select Genres"
+            id="genreName"
+            class="input-select"
+            disabled
+            v-model="genreTextField"
+          />
+          <span class="downArrow" v-on:click="showGenres = !showGenres">{{
+            showGenres ? "&blacktriangle;" : "&blacktriangledown;"
+          }}</span>
+        </div>
+        <div
+          class="genreList"
+          v-for="genre in $store.state.genres"
+          v-show="showGenres"
+          v-bind:key="genre.id"
+          v-bind:class="{ selected: genre.selected }"
+        >
+          <label for="genreName" class="genreOption">
+            <input
+              type="checkbox"
+              v-on:click="toggleSelected(genre)"
+              name="genreName"
+              id="genreName"
+            />
+            {{ genre.name }}
+          </label>
+        </div>
       </div>
-    </div>
     <button v-on:click.prevent="createBook" type="submit">Submit</button>
   </form>
   </div>
@@ -74,7 +97,7 @@ export default {
 
     return {
       showAddBook:false,
-
+      showGenres: false,
 
       showError: false,
 
@@ -85,6 +108,23 @@ export default {
       }
     };
   },
+
+  computed: {
+    genreTextField() {
+      let textField = "";
+      this.$store.state.genres.forEach((genre) => {
+        if (genre.selected === true) {
+          if (textField === "") {
+            textField = genre.name;
+          } else {
+            textField =textField + ", " + genre.name
+          }
+        }
+      });
+
+      return textField;
+    }
+  }, 
 
   created(){
     bookService.getGenres().then(response =>{
@@ -100,6 +140,10 @@ export default {
   },
   
   methods: {
+    close() {
+        this.$emit('close');
+      },
+
     createBook() {
       let newBook = {
         title: this.book.title,
@@ -109,7 +153,7 @@ export default {
         summary: this.book.summary,
         publishingDate: this.book.publishingDate,
         coverImageUrl: this.book.coverImageUrl,
-        genres: this.book.genres.filter(g => g.selected).map((g) => g.name)
+        genres: this.$store.state.genres.filter(g => g.selected).map((g) => g.name)
       }
       bookService.createBook(newBook).then((response) => {
         if (response.status === 201) {
@@ -228,6 +272,10 @@ export default {
   
 }
 
+input textarea {
+  border: none;
+}
+
 textarea {
   width: 98%;
   max-width: 500px;
@@ -244,12 +292,13 @@ textarea {
   align-items: center;
   justify-content: space-between;
   display: flex;
-  /* border: 1px;
-  border-style: solid;
-  border-color: rgb(109, 106, 106); */
   min-width: 225px;
   max-width: 500px;
   
+}
+
+textarea {
+  max-width: 98%;
 }
 
 #date {
@@ -279,26 +328,67 @@ textarea {
   flex-wrap: wrap;
 }
 
-.genres div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-style: solid;
-  border-color: rgb(109, 106, 106);
-  border-width: 1px;
-  width: 30%;
-  height: 30px;
-  font-size: 0.85rem;
-  font-family: sans-serif;
+.input-select {
+  outline: none;
+  border: none;
+  background: white;
+}
+
+.multi-selector {
+  width: max-content;
+}
+
+.select-field {
+  border: 1px solid black;
   
 }
 
-.genres div:hover {
+.select-field,
+.genreList,
+.genreName {
+  max-width: 97%;
+  max-height: 40px;
+  background-color: white;
+  padding: 0.3rem;
+}
+
+.genreList {
+  box-shadow: 0 30px 60px rgb(0, 0, 0, 0.2);
+}
+
+.genreOption {
+  display: block;
+}
+
+.downArrow {
+  font-size: 1.2rem;
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+
+.downArrow .showGenres {
+  transform: rotate(180deg);
+}
+
+.genreOption:hover {
+  background-color: aliceblue;
+}
+
+.icon {
+  background: url('../../resources/newBook2.jpg');
+  background-repeat: no-repeat;
+  height: 25px;
+  width: 25px;
+  display: block;
+  border:2px solid black;
+  border-radius: 50%;
+  margin: 5px;
   cursor: pointer;
 }
 
-.genres div.selected {
-  background-color: #5cc461;
-  border-width: 2px;
+.icon:hover {
+  background: lightskyblue;
+  
 }
 </style>

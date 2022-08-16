@@ -40,6 +40,7 @@
 
 <script>
 import authService from "../services/AuthService";
+import profileService from '../services/ProfileService';
 
 
 export default {
@@ -63,7 +64,19 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
+<<<<<<< HEAD
             this.$router.push("/books");
+=======
+            let profile = {
+            username:this.username
+          };
+          profileService.createProfile(profile).then(response => {
+            if (response.status === 201){
+              console.log("profile created")
+            }
+          })
+          this.$router.push("/books");
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
           }
         })
         .catch(error => {
@@ -79,10 +92,20 @@ export default {
 </script>
 
 <style>
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 div#login {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+<<<<<<< HEAD
+=======
+  background: url('../../resources/upload.png');
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 }
 
 .form-signin {
@@ -93,12 +116,24 @@ div#login {
   left: 50%;
   transform: translate(-50%,-50%);
   text-align: center;
+<<<<<<< HEAD
 }
 
 .form-signin h1{
   color: white;
   text-transform: uppercase;
   font-weight: 600;
+=======
+  background-color: lightgray;
+  border-radius: 20px;
+}
+
+.form-signin h1{
+  color: black;
+  text-transform: uppercase;
+  font-weight: 600;
+  
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 }
  .form-signin input[type=text], .form-signin input[type=password] {
   border: 0;
@@ -110,7 +145,11 @@ div#login {
   padding: 14px 10px;
   width: 220px;
   outline: none;
+<<<<<<< HEAD
   color: white;
+=======
+  color: black;
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
   border-radius: 24px;
   transition:0.25px;
 }

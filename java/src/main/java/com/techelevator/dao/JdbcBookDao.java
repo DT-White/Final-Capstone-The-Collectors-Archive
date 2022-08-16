@@ -24,15 +24,15 @@ public class JdbcBookDao implements BookDao {
 
 
     @Override
-    public Book getBook(int bookId) {
+    public Book getBook(long isbn) {
 
         Book book = null;
 
         String sql = "select book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added " +
                 "from books " +
-                "where book_id = ?";
+                "where isbn = ?";
 
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, bookId);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, isbn);
 
         if (rowSet.next()) {
             book = mapRowToBook(rowSet);
@@ -45,11 +45,14 @@ public class JdbcBookDao implements BookDao {
     public List<Book> getBookList(String username) {
 
         List<Book> bookList = new ArrayList<>();
+        int userId = userDao.findIdByUsername(username);
+        String sql = "SELECT books.book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added FROM books " +
+                "JOIN user_collection on books.book_id = user_collection.book_id " +
+                "JOIN users on user_collection.user_id = users.user_id " +
+                "where users.user_id = ? " +
+                "order by book_id desc";
 
-        String sql = "select book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added " +
-                "from books order by book_id desc";
-
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 
         while(rowSet.next()) {
             bookList.add(mapRowToBook(rowSet));
@@ -60,25 +63,29 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public Book addBook(Book book) {
-
-        String sql = "insert into books (book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added) " +
-                "values (default, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp) returning book_id";
-
-        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, book.getTitle(), book.getAuthor(), book.getIsbn(), book.isBestSeller(), book.getSummary(), book.getKeyword(), book.getPublishingDate(), book.getCoverImageUrl());
-
-        book.setBookId(id);
-
-       List<String> genres = book.getGenres();
-
-        for(String genre: genres) {
-
+    public Book addBook(Book book, String username) {
+        if(getBook(book.getIsbn()) == null) {
+            String sql = "insert into books (book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added) " +
+                    "values (default, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp) returning book_id";
+            Integer id = jdbcTemplate.queryForObject(sql, Integer.class, book.getTitle(), book.getAuthor(), book.getIsbn(), book.isBestSeller(), book.getSummary(), book.getKeyword(), book.getPublishingDate(), book.getCoverImageUrl());
+            int userId = userDao.findIdByUsername(username);
+            String sql2 = "INSERT INTO user_collection (book_id, user_id) " +
+                    "values (?,?)";
+            jdbcTemplate.update(sql2, id, userId);
+            book.setBookId(id);
+            List<String> genres = book.getGenres();
+            for (String genre : genres) {
                 int genreId = getGenreId(genre);
-
-                String sql2 = "insert into book_genre (book_id, genre_id) " +
+                String sql3 = "insert into book_genre (book_id, genre_id) " +
                         "values (?, ?)";
-
-                jdbcTemplate.update(sql2, id, genreId);
+                jdbcTemplate.update(sql3, id, genreId);
+            }
+        } else {
+            book = getBook(book.getIsbn());
+            int userId = userDao.findIdByUsername(username);
+            String sql2 = "INSERT INTO user_collection (book_id, user_id) " +
+                    "values (?,?)";
+            jdbcTemplate.update(sql2, book.getBookId(), userId);
         }
         return book;
     }

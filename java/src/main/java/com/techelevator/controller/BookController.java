@@ -19,9 +19,9 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/books/{Id}", method = RequestMethod.GET)
-    public Book getBookById(@PathVariable("Id") int bookId) {
-        return bookDao.getBook(bookId);
+    @RequestMapping(path = "/books/{Isbn}", method = RequestMethod.GET)
+    public Book getBookByIsbn(@PathVariable("Isbn") long isbn) {
+        return bookDao.getBook(isbn);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -32,8 +32,8 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/books", method = RequestMethod.POST)
-    public Book addBook(@RequestBody Book book) {
-        return bookDao.addBook(book);
+    public Book addBook(@RequestBody Book book, Principal principal) {
+        return bookDao.addBook(book, principal.getName());
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
