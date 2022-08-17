@@ -1,24 +1,13 @@
 <template>
   <div id="webcam" class="web-camera-container">
-    <!-- <div class="camera-button">
-      <button
-        type="button"
-        class="button is-rounded"
-        :class="{ 'is-primary': !isCameraOpen, 'is-danger': isCameraOpen }"
-        @click="toggleCamera"
-      >
-        <span v-if="!isCameraOpen">Open Camera</span>
-        <span v-else>Close Camera</span>
-      </button>
-    </div> -->
 
-    <!-- <div v-show="isCameraOpen && isLoading" class="camera-loading">
+    <div v-show="isCameraOpen && isLoading" class="camera-loading">
       <ul class="loader-circle">
         <li></li>
         <li></li>
         <li></li>
       </ul>
-    </div> -->
+    </div>
 
     <div
       v-if="isCameraOpen"
@@ -42,15 +31,19 @@
       ></canvas>
     </div>
 
-    <div v-if="isCameraOpen && !isLoading" class="camera-shoot">
+    <div v-if="isCameraOpen && !isLoading && !isPhotoTaken" class="camera-shoot">
       <button type="button" class="button" @click="takePhoto">
         <img
           src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png"
         />
       </button>
     </div>
-
-    <!-- <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
+    <div id="photo-confirm-icons">
+      <img src="../../resources/confirm.png" alt="Confirm icon" class="confirm-btn btn" @click="confirmPhoto" v-if="isPhotoTaken">
+      <img src="../../resources/retake.png" alt="Retake icon" class="confirm-btn btn" @click="isPhotoTaken = !isPhotoTaken" v-if="isPhotoTaken">
+    </div>
+<!-- 
+    <div v-show="true" class="camera-download">
       <a
         id="downloadPhoto"
         download="my-photo.jpg"
@@ -128,36 +121,26 @@ export default {
       });
     },
 
-    takePhoto(event) {
+    takePhoto() {
       if (!this.isPhotoTaken) {
         this.isShotPhoto = true;
-
+        this.isPhotoTaken = true;
         const FLASH_TIMEOUT = 50;
 
         setTimeout(() => {
           this.isShotPhoto = false;
         }, FLASH_TIMEOUT);
+        const context = this.$refs.canvas.getContext("2d");
+        const cam = this.$refs.camera;
+        context.drawImage(cam, 0, 0, cam.videoWidth, cam.videoHeight, 0, 0, 300, 150);
       }
-
-      this.isPhotoTaken = !this.isPhotoTaken;
-
-      const context = this.$refs.canvas.getContext("2d");
-      context.drawImage(this.$refs.camera, 0, 0, 150, 112.5 );
-      this.image = document
-        .getElementById("photoTaken")
-        .toDataURL("image/jpeg")
-        .replace("image/jpeg", "image/octet-stream");
-        console.log(this.image)
-      this.$emit('photoTaken', event, this.image);
     },
 
-    downloadImage() {
-      const download = document.getElementById("downloadPhoto");
-      const canvas = document
+    confirmPhoto(event) {const url = document
         .getElementById("photoTaken")
         .toDataURL("image/jpeg")
-        .replace("image/jpeg", "image/octet-stream");
-      download.setAttribute("href", canvas);
+      this.$emit('photoTaken', event, url);
+      this.stopCameraStream();
     },
   },
 };
@@ -272,6 +255,14 @@ body {
   left: -1px;
   top: 26px;
   overflow: hidden;
+  position: absolute;
+  width: 150px;
+  height: 112px;
+}
+
+#photo-confirm-icons{
+  top: 155px;
+  left: 55px;
   position: absolute;
 }
 

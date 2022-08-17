@@ -189,17 +189,13 @@ export default {
 .shelf{
   border-width:0px 25px 25px 25px;
   border-color:#755D44;
-  border-style: solid;
+  border-style:solid;
   box-shadow: 0px 10px 18px #1d1611;
   background: linear-gradient(#3b2f23 10%, #534331 20%, #4e3e2d);
+  border-radius: 5px;
+  
 }
 
-
-/* .line {
-  
- 
-
-} */
 
 .shelf-top{
   background-color: #755D44;

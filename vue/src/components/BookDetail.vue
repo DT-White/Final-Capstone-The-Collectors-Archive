@@ -1,6 +1,8 @@
+
 <template>
   <div @click="close" class="modal-backdrop">
     <div
+      v-if="book !== {}"
       class="modal"
       @click.stop
       v-bind:class="{
@@ -35,7 +37,20 @@
         </p>
       </section>
     <!-- <p v-for="genre in book.genres" :key="genre.id">{{genre}}</p> -->
-
+    </div>
+    <div
+      v-if="book === {}"
+      class="modal"
+      @click.stop
+      v-bind:class="{
+        purpleOpen: book.color == 'purple',
+        blueOpen: book.color == 'blue',
+        orangeOpen: book.color == 'orange',
+        redOpen: book.color == 'red',
+        greenOpen: book.color == 'green',
+      }"
+    >
+    <!-- add book stuff here -->
     </div>
   </div>
 </template>

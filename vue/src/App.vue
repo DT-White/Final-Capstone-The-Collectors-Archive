@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="appheader">
-      <img id="logoImage" src="../resources/logo12.jpg" alt="" />
+        <img id="logoImage" src="../resources/logo12.jpg" alt="" />
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
         <button id="buttons">
@@ -11,7 +11,7 @@
             >Home</router-link
           >
         </button>
-        &nbsp;|&nbsp;
+
         <button id="buttons">
           <router-link
             v-bind:to="{ name: 'logout' }"
@@ -25,8 +25,7 @@
   </div>
 </template>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap");
 
 body {
   background-image: url("");
@@ -44,7 +43,7 @@ div#appheader {
 }
 h1#header {
   text-align: center;
-  font-family: 'Fredoka One', cursive;
+  font-family: "Fredoka One", cursive;
   font-size: 70px;
 }
 img#logoImage {
@@ -64,5 +63,29 @@ a:visited {
 button#buttons {
   border-radius: 14%;
   height: 25px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.icon .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.icon:hover .tooltiptext {
+  visibility: visible;
 }
 </style>

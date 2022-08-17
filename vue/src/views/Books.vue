@@ -2,7 +2,6 @@
   <div id="booksView">
       <book-filter/>
       <section>
-        <add-book />
         <profile/>
         <section>
           <bookList @openBook="openBook" />
@@ -23,7 +22,7 @@ import bookList from "@/components/BookList";
 import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
 import Modal from "@/components/BookDetail";
-import profile from '@/components/Profile'
+import profile from '@/components/Profile';
 export default {
   components: { 
     
@@ -31,7 +30,7 @@ export default {
     bookFilter,
     readingList,
     Modal ,
-    profile
+    profile,
   },
 
   methods: {

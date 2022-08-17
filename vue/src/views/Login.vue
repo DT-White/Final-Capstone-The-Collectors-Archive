@@ -88,9 +88,12 @@ export default {
 </script>
 
 <style>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 8e6322261a3ced3cf75117443d8c71dca12147ab
 div#login {
   margin: 0;
   padding: 0;
