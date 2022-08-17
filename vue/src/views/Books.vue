@@ -1,14 +1,15 @@
 <template>
   <div id="booksView">
-      <book-filter/>
+      
       <section>
-        <add-book />
+        <book-filter/>
         <!-- <profile/> -->
         <section>
           <bookList @openBook="openBook" />
           <reading-list @openBook="openBook"/>
         </section>
       </section>
+      
 
     <Modal :book="bookToOpen"
       v-show="isModalVisible"
@@ -23,15 +24,15 @@ import bookList from "@/components/BookList";
 import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
 import Modal from "@/components/BookDetail";
-// import profile from '@/components/Profile'
+// import profile from '@/components/Profile';
 export default {
   components: { 
     
     bookList,
     bookFilter,
     readingList,
-    Modal 
-    // profile
+    Modal ,
+    // profile,
   },
 
   methods: {
@@ -58,6 +59,7 @@ export default {
 #booksView{
   display: flex;
   align-items: start;
+  justify-content: space-around;
   gap: 50px;
 }
 
@@ -72,6 +74,8 @@ export default {
   display: flex;
   gap:50px;
   margin-right: 30px;
+  justify-content: space-around;
+  align-items: center;
 }
 
 

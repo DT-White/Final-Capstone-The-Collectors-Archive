@@ -39,9 +39,12 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap");
 
 body {
-  background-image: url("../resources/test.jpg");
-  background-position: bottom right;
-  background-size: 10px 20px;
+  background-image: url("../resources/testBackground5.jpg");
+  background-position: center center;
+  background-size: cover;
+  min-height: 100%;
+  
+
 }
 
 div#app {
@@ -56,6 +59,7 @@ h1#header {
   text-align: center;
   font-family: "Fredoka One", cursive;
   font-size: 70px;
+  color: white;
 }
 img#logoImage {
   height: 200px;

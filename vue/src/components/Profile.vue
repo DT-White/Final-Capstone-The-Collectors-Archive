@@ -1,7 +1,6 @@
 <template>
   <div id="profile-page">
     <section class="portrait-wall">
-      
       <div class="portrait" @click="showOptions = !showOptions">
         <img
           :src="pictureAddress"
@@ -23,41 +22,88 @@
           accept="image/*"
           @change="onFileChange"
         />
-        <!-- <div id="image-icons">
-                    <img src="../../resources/upload.png" alt="Upload icon" class="confirm-btn btn" @click="$refs.selectedFile.click()" v-if="isEditing">
-                    <img src="../../resources/camera.png" alt="Camera icon" class="confirm-btn btn" @click="isWebcamVisible = true" v-if="isEditing">
-                </div> -->
-      </div>
-      <div class="profileDropdownWrap" v-show="!showOptions">
-      <div class="profileDropdown" >
-        <div class="user-info">
-            <img
-          :src="pictureAddress"
-          alt="Profile picture"
-          class="profile-picture"
-          v-show="!isWebcamVisible"
-        />
-            <h2>{{profile.firstName}} {{profile.lastName}}</h2>
-            
-        <!-- <ul>
-          <li><router-link v-bind:to="{ name: 'logout' }">Logout</router-link></li>
-        </ul> -->
+        <div id="image-icons">
+          <img
+            src="../../resources/upload.png"
+            alt="Upload icon"
+            class="confirm-btn btn"
+            @click="$refs.selectedFile.click()"
+            v-if="isEditing"
+          />
+          <img
+            src="../../resources/camera.png"
+            alt="Camera icon"
+            class="confirm-btn btn"
+            @click="isWebcamVisible = true"
+            v-if="isEditing"
+          />
         </div>
-        <hr>
       </div>
+      <div class="profileDropdownWrap" v-show="!showOptions || isEditing">
+        <div class="profileDropdown">
+          <div class="user-info">
+            <div class="plaque">
+              <h2 v-if="!isEditing">
+                {{ profile.firstName }} {{ profile.lastName }}
+              </h2>
+              <input
+                type="text"
+                v-model="profile.firstName"
+                v-if="isEditing"
+                placeholder="First name"
+              />
+              <input
+                type="text"
+                v-model="profile.lastName"
+                v-if="isEditing"
+                placeholder="Last name"
+              />
+              <h3 v-if="!isEditing">{{ profile.email }}</h3>
+              <input
+                type="text"
+                v-model="profile.email"
+                v-if="isEditing"
+                placeholder="Email address"
+              />
+              <div id="edit-icons">
+                <img
+                  src="../../resources/edit.png"
+                  alt="Edit icon"
+                  class="edit-btn btn"
+                  @click="isEditing = !isEditing"
+                  v-if="!isEditing"
+                />
+                <img
+                  src="../../resources/confirm.png"
+                  alt="Confirm icon"
+                  class="confirm-btn btn"
+                  @click="saveProfileChanges"
+                  v-if="isEditing"
+                />
+                <img
+                  src="../../resources/cancel.png"
+                  alt="Cancel icon"
+                  class="cancel-btn btn"
+                  @click="cancelEdit"
+                  v-if="isEditing"
+                />
+              </div>
+            </div>
+          </div>
+          <hr />
+
+          <router-link to="/friends" class="submenu-link">
+            <img src="../../resources/friends.png" alt="" />
+            <p>Friend's List</p>
+            <!-- <span>></span> -->
+          </router-link>
+          <router-link v-bind:to="{ name: 'logout' }" class="submenu-link">
+              <img src="../../resources/logput.png" alt="">
+              <p>Logout</p>
+              <!-- <span>></span> -->
+              </router-link>
+        </div>
       </div>
-      <!-- <div class="plaque" v-show="!showOptions">
-                <h2 v-if="!isEditing">{{profile.firstName}} {{profile.lastName}}</h2>
-                <input type="text" v-model="profile.firstName" v-if="isEditing" placeholder="First name">
-                <input type="text" v-model="profile.lastName" v-if="isEditing" placeholder="Last name">
-                <h3 v-if="!isEditing">{{profile.email}}</h3>
-                <input type="text" v-model="profile.email" v-if="isEditing" placeholder="Email address">
-                <div id='edit-icons'>
-                    <img src="../../resources/edit.png" alt="Edit icon" class="edit-btn btn" @click="isEditing = !isEditing" v-if="!isEditing">
-                    <img src="../../resources/confirm.png" alt="Confirm icon" class="confirm-btn btn" @click="saveProfileChanges" v-if="isEditing">
-                    <img src="../../resources/cancel.png" alt="Cancel icon" class="cancel-btn btn" @click="cancelEdit" v-if="isEditing">
-                </div>
-            </div> -->
     </section>
   </div>
 </template>
@@ -97,14 +143,14 @@ export default {
 
   computed: {
     fileName() {
-      return `user${this.profile.userId}-profile-picture`;
+      return `user${this.$store.state.user.id}-profile-picture`;
     },
     storageRef() {
       return ref(storage, this.fileName);
     },
     pictureAddress() {
       return this.webcamPicture
-        ? this.webcamPicture
+        ? URL.createObjectURL(this.webcamPicture)
         : this.updatingPicture
         ? URL.createObjectURL(this.updatingPicture)
         : this.profile.profilePictureUrl
@@ -128,10 +174,17 @@ export default {
       bookToOpen: {},
       updatingPicture: null,
       webcamPicture: null,
-      metadata: {
-        contentType: "image/jpg",
-      },
     };
+  },
+
+  pictureAddress() {
+    return this.webcamPicture
+      ? this.webcamPicture
+      : this.updatingPicture
+      ? URL.createObjectURL(this.updatingPicture)
+      : this.profile.profilePictureUrl
+      ? this.profile.profilePictureUrl
+      : require("../../resources/default-user.png");
   },
 
   methods: {
@@ -144,11 +197,13 @@ export default {
       this.isBookDetailVisible = false;
     },
 
-    useWebcamPhoto(event, image) {
-      console.log(image);
-      fetch(image.url).then((response) => {
-        this.webcamPicture = response.data;
-      });
+    useWebcamPhoto(event, url) {
+      fetch(url)
+        .then((r) => r.blob())
+        .then((blob) => {
+          this.webcamPicture = blob;
+          this.isWebcamVisible = false;
+        });
     },
 
     cancelEdit() {
@@ -159,15 +214,17 @@ export default {
     },
 
     uploadProfilePicture(file) {
-      uploadBytes(this.storageRef, file, this.metadata).then((snapshot) => {
+      uploadBytes(this.storageRef, file).then((snapshot) => {
         console.log(snapshot);
       });
     },
 
     saveProfileChanges() {
-      this.uploadProfilePicture(
-        this.webcamPicture ? this.webcamPicture : this.updatingPicture
-      );
+      if (this.updatingPicture || this.webcamPicture) {
+        this.uploadProfilePicture(
+          this.webcamPicture ? this.webcamPicture : this.updatingPicture
+        );
+      }
       getDownloadURL(ref(storage, this.fileName)).then((url) => {
         this.profile.profilePictureUrl = url;
         let profile = {
@@ -196,30 +253,55 @@ export default {
       }
       this.updatingPicture = files[0];
     },
-  },
-  created() {
-    profileService.getProfile(this.$store.state.user.id).then((response) => {
-      if (response.status === 200 && response.data) {
-        this.profile = response.data;
-        this.isEditing = true;
-      }
-    });
+    mounted() {
+      profileService.getProfile(this.$store.state.user.id).then((response) => {
+          console.log(response.data)
+        if (response.status === 200 && response.data.firstName) {
+          this.profile = response.data;
+          this.isEditing = false;
+        }
+      });
+    },
   },
 };
 </script>
 
 <style>
+.submenu-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 12px 0;
+}
+
+.submenu-link p {
+    width: 100%;
+}
+
+.submenu-link img {
+    width: 40px;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 15px;
+}
+
+
+.submenu-link:hover p {
+    font-weight: 600;
+}
+
 .profileDropdownWrap {
-    
-    top: 100%;
-    right: 10%;
-    
+  top: 100%;
+  right: 10%;
+  max-height: 400px;
+  overflow: hidden;
 }
 
 .profileDropdown {
-    background: lightgray;
-    padding: 20px;
-    margin: 10px;
+  background: lightgray;
+  padding: 20px;
+  margin: 10px;
 }
 
 .portrait-wall {
@@ -230,12 +312,13 @@ export default {
 }
 
 .user-info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .portrait {
-  border-color: rgb(211, 187, 55);
+  /* border-color: rgb(211, 187, 55); */
+  border-color: #ffde59;
   background-color: rgb(231, 229, 213);
   border-width: 30px;
   border-style: solid;
@@ -256,8 +339,10 @@ export default {
   height: auto;
   max-width: 150px;
   max-height: 200px;
+  border-radius: 47%;
+  display: block;
+  height: 100vh;
 }
-
 #image-icons {
   top: 0;
   position: absolute;
