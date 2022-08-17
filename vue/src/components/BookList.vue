@@ -7,6 +7,9 @@
     <div class="shelf">
       <!-- <div class="line"> -->
       <div class="shelf-top">
+        <span class="icon" v-on:click="$emit('sendEmail', $event)">
+          <span class="tooltiptext">Add Friend</span>
+        </span>
         <div class="shelf-label">
           <div class="nail"></div>
             <h2>LIBRARY</h2>

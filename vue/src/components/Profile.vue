@@ -156,7 +156,9 @@ export default {
         }
         this.updatingPicture = files[0];
     },
-   
+   updateStoreProfile(){
+       this.$store.commit('SET_PROFILE', this.profile)
+   }
     },
     created(){
         profileService.getProfile(this.$store.state.user.id).then(response => {

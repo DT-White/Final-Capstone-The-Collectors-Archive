@@ -4,7 +4,7 @@
       <section>
         <profile/>
         <section>
-          <bookList @openBook="openBook" @addBook="newBook"/>
+          <bookList @openBook="openBook" @addBook="newBook" @sendEmail="openEmail"/>
           <reading-list @openBook="openBook"/>
         </section>
       </section>
@@ -15,6 +15,11 @@
 
     <add-book
       v-show="isNewBookVisible"
+      @close="closeModal" />
+
+    <email
+      @updateProfile="updateProfile"
+      v-if="isEmailVisible"
       @close="closeModal" />
 
   </div>
@@ -28,6 +33,8 @@ import readingList from "@/components/ReadingList";
 import bookDetail from "@/components/BookDetail";
 import profile from '@/components/Profile';
 import addBook from '@/components/AddBook';
+import email from '@/components/Email';
+import profileService from '@/services/ProfileService'
 
 export default {
   components: { 
@@ -37,6 +44,7 @@ export default {
     readingList,
     bookDetail ,
     profile,
+    email,
   },
 
   methods: {
@@ -47,10 +55,23 @@ export default {
     closeModal() {
       this.isBookDetailVisible = false;
       this.isNewBookVisible = false;
+      this.isEmailVisible = false;
     },
 
     newBook(){
       this.isNewBookVisible = true;
+    },
+
+    openEmail(){
+      this.isEmailVisible = true;
+    },
+
+    updateProfile(){
+      profileService.getProfile(this.$store.state.user.id).then(response => {
+            if (response.status === 200 && response.data.firstName){
+                this.$store.commit('SET_PROFILE',response.data);
+            }
+        })
     }
   },
 
@@ -58,6 +79,7 @@ export default {
     return {
       isBookDetailVisible: false,
       isNewBookVisible: false,
+      isEmailVisible: false,
       bookToOpen: {}
     }
   }
