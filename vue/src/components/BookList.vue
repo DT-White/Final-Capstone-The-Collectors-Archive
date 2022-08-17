@@ -190,6 +190,7 @@ export default {
   border-style: solid;
   box-shadow: 0px 10px 18px #1d1611;
   background: linear-gradient(#3b2f23 10%, #534331 20%, #4e3e2d);
+  border-radius: 5px;
 }
 
 .shelf-top{

@@ -72,7 +72,7 @@ export default {
             return ref(storage, this.fileName);
         },
         pictureAddress(){
-            return this.webcamPicture ? this.webcamPicture : this.updatingPicture ? URL.createObjectURL(this.updatingPicture) : this.profile.profilePictureUrl ? this.profile.profilePictureUrl : require('../../resources/default-user.png')
+            return this.webcamPicture ? URL.createObjectURL(this.webcamPicture) : this.updatingPicture ? URL.createObjectURL(this.updatingPicture) : this.profile.profilePictureUrl ? this.profile.profilePictureUrl : require('../../resources/default-user.png')
         }
     },
 
@@ -90,9 +90,6 @@ export default {
             bookToOpen: {},
             updatingPicture: null,
             webcamPicture: null,
-            metadata:{
-                contentType: 'image/jpg'
-            }
         }
     },
 
@@ -106,11 +103,11 @@ export default {
       this.isBookDetailVisible = false;
     },
 
-    useWebcamPhoto(event, image){
-        console.log(image)
-        fetch(image.url).then(response => {
-            this.webcamPicture = response.data;
-        }) ;
+    useWebcamPhoto(event, url){
+        fetch(url).then(r => r.blob()).then(blob => {
+            this.webcamPicture = blob
+            this.isWebcamVisible = false; 
+        })  
     },
 
     cancelEdit(){
@@ -121,17 +118,19 @@ export default {
     },
 
     uploadProfilePicture(file){
-        uploadBytes(this.storageRef, file, this.metadata).then((snapshot) => {
+        uploadBytes(this.storageRef, file).then((snapshot) => {
         console.log(snapshot);
         });
     },
 
 
     saveProfileChanges(){
-        this.uploadProfilePicture(this.webcamPicture ? this.webcamPicture : this.updatingPicture);
+        if (this.updatingPicture || this.webcamPicture){
+            this.uploadProfilePicture(this.webcamPicture ? this.webcamPicture : this.updatingPicture);
+        }
         getDownloadURL(ref(storage, this.fileName)).then((url) => {
-                this.profile.profilePictureUrl = url;
-                let profile = {
+            this.profile.profilePictureUrl = url;
+            let profile = {
                 userId:this.profile.userId,
                 firstName:this.profile.firstName,
                 lastName:this.profile.lastName,
@@ -161,9 +160,9 @@ export default {
     },
     created(){
         profileService.getProfile(this.$store.state.user.id).then(response => {
-            if (response.status === 200 && response.data){
+            if (response.status === 200 && response.data.firstName){
                 this.profile = response.data;
-                this.isEditing = true;
+                this.isEditing = false;
             }
         })
     },
@@ -199,7 +198,7 @@ export default {
     width: auto;
     height: auto;
     max-width: 150px;
-    max-height: 200px;
+    min-height: 112px;
 }
 
 #image-icons{
