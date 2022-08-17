@@ -44,18 +44,11 @@ create table profiles (
 	first_name varchar(16),
 	last_name varchar(16),
 	email varchar(32),
-<<<<<<< HEAD
-	profile_picture_url varchar(128),
-	user_id bigint not null unique references users (user_id)
-);
-
-=======
 	profile_picture_url varchar(1024),
 	user_id bigint not null unique references users (user_id)
 );
 
 
->>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 Create table books (
 	book_id serial primary key,
 	title varchar(128) not null,

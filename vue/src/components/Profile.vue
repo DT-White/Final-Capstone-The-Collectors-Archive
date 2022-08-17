@@ -66,7 +66,7 @@ export default {
 
     computed:{
         fileName(){
-            return `user${this.profile.userId}-profile-picture`;
+            return `user${this.$store.state.user.id}-profile-picture`;
         },
         storageRef(){
             return ref(storage, this.fileName);
