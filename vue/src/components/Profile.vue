@@ -1,16 +1,52 @@
 <template>
-<div id="profile-page">
+  <div id="profile-page">
     <section class="portrait-wall">
-            <div class="portrait">
-                <img :src="pictureAddress" alt="Profile picture" class="profile-picture" v-show="!isWebcamVisible">
-                <webcam v-if="isWebcamVisible" :isCameraOpen="isWebcamVisible" @photoTaken="useWebcamPhoto"/>
-                <input type="file" id="selectedFile" ref="selectedFile" v-if="isEditing" style="display: none;" accept="image/*" @change="onFileChange">
-                <div id="image-icons">
+      
+      <div class="portrait" @click="showOptions = !showOptions">
+        <img
+          :src="pictureAddress"
+          alt="Profile picture"
+          class="profile-picture"
+          v-show="!isWebcamVisible"
+        />
+        <webcam
+          v-if="isWebcamVisible"
+          :isCameraOpen="isWebcamVisible"
+          @photoTaken="useWebcamPhoto"
+        />
+        <input
+          type="file"
+          id="selectedFile"
+          ref="selectedFile"
+          v-if="isEditing"
+          style="display: none"
+          accept="image/*"
+          @change="onFileChange"
+        />
+        <!-- <div id="image-icons">
                     <img src="../../resources/upload.png" alt="Upload icon" class="confirm-btn btn" @click="$refs.selectedFile.click()" v-if="isEditing">
                     <img src="../../resources/camera.png" alt="Camera icon" class="confirm-btn btn" @click="isWebcamVisible = true" v-if="isEditing">
-                </div>
-            </div>
-            <div class="plaque">
+                </div> -->
+      </div>
+      <div class="profileDropdownWrap" v-show="!showOptions">
+      <div class="profileDropdown" >
+        <div class="user-info">
+            <img
+          :src="pictureAddress"
+          alt="Profile picture"
+          class="profile-picture"
+          v-show="!isWebcamVisible"
+        />
+            <h2>{{profile.firstName}} {{profile.lastName}}</h2>
+            
+        <!-- <ul>
+          <li><router-link v-bind:to="{ name: 'logout' }">Logout</router-link></li>
+        </ul> -->
+        </div>
+        <hr>
+      </div>
+      </div>
+      <!-- <div class="plaque" v-show="!showOptions">
                 <h2 v-if="!isEditing">{{profile.firstName}} {{profile.lastName}}</h2>
                 <input type="text" v-model="profile.firstName" v-if="isEditing" placeholder="First name">
                 <input type="text" v-model="profile.lastName" v-if="isEditing" placeholder="Last name">
@@ -21,16 +57,14 @@
                     <img src="../../resources/confirm.png" alt="Confirm icon" class="confirm-btn btn" @click="saveProfileChanges" v-if="isEditing">
                     <img src="../../resources/cancel.png" alt="Cancel icon" class="cancel-btn btn" @click="cancelEdit" v-if="isEditing">
                 </div>
-            </div>
-        
-        
-    </section>       
-</div>
+            </div> -->
+    </section>
+  </div>
 </template>
 
 <script>
-import profileService from '@/services/ProfileService';
-import webcam from "@/components/Webcam"
+import profileService from "@/services/ProfileService";
+import webcam from "@/components/Webcam";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -56,195 +90,216 @@ const storage = getStorage(firebaseApp, "gs://collectors-archive.appspot.com");
 
 // Create a storage reference from our storage service
 
-
-
-
 export default {
-    components:{
-        webcam
-    },
+  components: {
+    webcam,
+  },
 
-    computed:{
-        fileName(){
-            return `user${this.profile.userId}-profile-picture`;
-        },
-        storageRef(){
-            return ref(storage, this.fileName);
-        },
-        pictureAddress(){
-            return this.webcamPicture ? this.webcamPicture : this.updatingPicture ? URL.createObjectURL(this.updatingPicture) : this.profile.profilePictureUrl ? this.profile.profilePictureUrl : require('../../resources/default-user.png')
-        }
+  computed: {
+    fileName() {
+      return `user${this.profile.userId}-profile-picture`;
     },
-
-    data(){
-        return{
-            isEditing:true,
-            isBookDetailVisible: false,
-            isWebcamVisible: false,
-            profile:{
-                profilePictureUrl:"",
-                firstName:"",
-                lastName:"",
-                email:""
-            },
-            bookToOpen: {},
-            updatingPicture: null,
-            webcamPicture: null,
-            metadata:{
-                contentType: 'image/jpg'
-            }
-        }
+    storageRef() {
+      return ref(storage, this.fileName);
     },
+    pictureAddress() {
+      return this.webcamPicture
+        ? this.webcamPicture
+        : this.updatingPicture
+        ? URL.createObjectURL(this.updatingPicture)
+        : this.profile.profilePictureUrl
+        ? this.profile.profilePictureUrl
+        : require("../../resources/default-user.png");
+    },
+  },
 
-    methods: {
+  data() {
+    return {
+      isEditing: true,
+      isBookDetailVisible: false,
+      isWebcamVisible: false,
+      showOptions: true,
+      profile: {
+        profilePictureUrl: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+      },
+      bookToOpen: {},
+      updatingPicture: null,
+      webcamPicture: null,
+      metadata: {
+        contentType: "image/jpg",
+      },
+    };
+  },
+
+  methods: {
     openBook(event, book) {
-        this.bookToOpen = book;
-        this.isBookDetailVisible = true;
+      this.bookToOpen = book;
+      this.isBookDetailVisible = true;
     },
 
     closeBook() {
       this.isBookDetailVisible = false;
     },
 
-    useWebcamPhoto(event, image){
-        console.log(image)
-        fetch(image.url).then(response => {
-            this.webcamPicture = response.data;
-        }) ;
+    useWebcamPhoto(event, image) {
+      console.log(image);
+      fetch(image.url).then((response) => {
+        this.webcamPicture = response.data;
+      });
     },
 
-    cancelEdit(){
+    cancelEdit() {
+      this.isEditing = false;
+      this.updatingPicture = null;
+      this.webcamPicture = null;
+      this.isWebcamVisible = false;
+    },
+
+    uploadProfilePicture(file) {
+      uploadBytes(this.storageRef, file, this.metadata).then((snapshot) => {
+        console.log(snapshot);
+      });
+    },
+
+    saveProfileChanges() {
+      this.uploadProfilePicture(
+        this.webcamPicture ? this.webcamPicture : this.updatingPicture
+      );
+      getDownloadURL(ref(storage, this.fileName)).then((url) => {
+        this.profile.profilePictureUrl = url;
+        let profile = {
+          userId: this.profile.userId,
+          firstName: this.profile.firstName,
+          lastName: this.profile.lastName,
+          email: this.profile.email,
+          profilePictureUrl: url,
+        };
+        console.log(profile);
         this.isEditing = false;
         this.updatingPicture = null;
         this.webcamPicture = null;
-        this.isWebcamVisible = false;
-    },
-
-    uploadProfilePicture(file){
-        uploadBytes(this.storageRef, file, this.metadata).then((snapshot) => {
-        console.log(snapshot);
+        profileService.updateProfile(profile).then((response) => {
+          if (response.status === 200) {
+            console.log("Profile updated");
+          }
         });
-    },
-
-
-    saveProfileChanges(){
-        this.uploadProfilePicture(this.webcamPicture ? this.webcamPicture : this.updatingPicture);
-        getDownloadURL(ref(storage, this.fileName)).then((url) => {
-                this.profile.profilePictureUrl = url;
-                let profile = {
-                userId:this.profile.userId,
-                firstName:this.profile.firstName,
-                lastName:this.profile.lastName,
-                email:this.profile.email,
-                profilePictureUrl:url
-            }
-            console.log(profile);
-            this.isEditing = false;
-            this.updatingPicture = null;
-            this.webcamPicture = null;
-            profileService.updateProfile(profile).then(response => {
-                if (response.status === 200){
-                    console.log("Profile updated")
-                }
-            })
-        });
+      });
     },
 
     onFileChange(e) {
-        var files = e.target.files || e.dataTransfer.files;
-        if (!files.length){
-            return;
-        }
-        this.updatingPicture = files[0];
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) {
+        return;
+      }
+      this.updatingPicture = files[0];
     },
-   
-    },
-    created(){
-        profileService.getProfile(this.$store.state.user.id).then(response => {
-            if (response.status === 200 && response.data){
-                this.profile = response.data;
-                this.isEditing = true;
-            }
-        })
-    },
-}
+  },
+  created() {
+    profileService.getProfile(this.$store.state.user.id).then((response) => {
+      if (response.status === 200 && response.data) {
+        this.profile = response.data;
+        this.isEditing = true;
+      }
+    });
+  },
+};
 </script>
 
 <style>
+.profileDropdownWrap {
+    
+    top: 100%;
+    right: 10%;
+    
+}
 
-.portrait-wall{
+.profileDropdown {
+    background: lightgray;
+    padding: 20px;
+    margin: 10px;
+}
+
+.portrait-wall {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-info {
     display: flex;
     align-items: center;
-    flex-direction: column;
-    gap: 20px;
 }
 
-.portrait{
-    border-color: rgb(211, 187, 55);
-    background-color: rgb(231, 229, 213);
-    border-width: 30px;
-    border-style: solid;
-    width: 150px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: space-between;
-    flex-direction: column;
-    position: relative;
-    border-radius: 10px;
-    box-shadow: 0px 5px 12px #8b824a;
+.portrait {
+  border-color: rgb(211, 187, 55);
+  background-color: rgb(231, 229, 213);
+  border-width: 30px;
+  border-style: solid;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: space-between;
+  flex-direction: column;
+  position: relative;
+  border-radius: 100px;
+  box-shadow: 0px 5px 12px #8b824a;
+  cursor: pointer;
 }
 
-.portrait > img{
-    width: auto;
-    height: auto;
-    max-width: 150px;
-    max-height: 200px;
+.portrait > img {
+  width: auto;
+  height: auto;
+  max-width: 150px;
+  max-height: 200px;
 }
 
-#image-icons{
-    top: 0;
-    position: absolute;
+#image-icons {
+  top: 0;
+  position: absolute;
 }
 
-#edit-icons{
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 5px;
-    width: 100%;
+#edit-icons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+  width: 100%;
 }
 
-.plaque{
-    background-color: rgb(151, 65, 32);
-    border-radius: 10px;
-    padding: 10px 10px 5px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: cornsilk;
-    box-shadow: 0px 5px 12px rgb(110, 64, 47);
+.plaque {
+  background-color: rgb(151, 65, 32);
+  border-radius: 10px;
+  padding: 10px 10px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: cornsilk;
+  box-shadow: 0px 5px 12px rgb(110, 64, 47);
 }
 
-.plaque h2{
-    line-height: 0px;
-    font-size: 20px;
-    margin-top: 10px;
+.plaque h2 {
+  line-height: 0px;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
-.plaque h3{
-    line-height: 0px;
-    font-size: 18px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.plaque h3 {
+  line-height: 0px;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.btn{
-    width: 20px;
-    height: 20px;
+.btn {
+  width: 20px;
+  height: 20px;
 }
 
-.btn:hover{
-    cursor: pointer;
+.btn:hover {
+  cursor: pointer;
 }
-
 </style>

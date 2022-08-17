@@ -4,7 +4,7 @@
         <img id="logoImage" src="../resources/logo12.jpg" alt="" />
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
-        <button id="buttons">
+        <!-- <button id="buttons">
           <router-link
             v-bind:to="{ name: 'books' }"
             v-if="$store.state.token != ''"
@@ -18,12 +18,23 @@
             v-if="$store.state.token != ''"
             >Logout</router-link
           >
-        </button>
+        </button> -->
+        <profile/>
       </div>
     </div>
     <router-view />
   </div>
 </template>
+<script>
+import profile from '@/components/Profile';
+
+
+export default {
+  components: { profile },
+  
+}
+</script>
+
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap");
 
