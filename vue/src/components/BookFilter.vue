@@ -99,8 +99,10 @@
 import bookService from "@/services/BookService";
 
 export default {
+  // components: { Multiselect },
   data() {
     return {
+      value: [],
       filter: {
         title: "",
         author: "",
@@ -188,6 +190,7 @@ export default {
   },
 };
 </script>
+// 
 
 
 <style>

@@ -44,11 +44,18 @@ create table profiles (
 	first_name varchar(16),
 	last_name varchar(16),
 	email varchar(32),
+<<<<<<< HEAD
+	profile_picture_url varchar(128),
+	user_id bigint not null unique references users (user_id)
+);
+
+=======
 	profile_picture_url varchar(1024),
 	user_id bigint not null unique references users (user_id)
 );
 
 
+>>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 Create table books (
 	book_id serial primary key,
 	title varchar(128) not null,
@@ -129,14 +136,16 @@ values ('Trouble Don''t Last', 'Shelley Pearsall', '9780440418115', 'false', 'Dr
 Insert into book_genre (book_id, genre_id)
 values (6, 1), (6, 5);
 
-Insert into reading_list (user_id, book_id)
-values (1, 2), (1, 5), (1, 1), (1, 6);
+
 
 Insert into time_accessed (user_id, time_update)
 values (1, current_timestamp), (2, current_timestamp);
 
 insert into profiles (user_id, first_name, last_name, profile_picture_url, email)
 values (1, 'John', 'Doe', 'https://www.nicepng.com/png/detail/8-88271_madagascar-penguin-png-image-penguins-of-madagascar.png', 'john@gmail.com');
-	
+
+INSERT INTO user_collection (book_id, user_id) 
+values(2,1), (3,1), (6,1);
+
 COMMIT TRANSACTION;
 
