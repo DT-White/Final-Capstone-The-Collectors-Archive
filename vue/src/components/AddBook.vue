@@ -1,99 +1,184 @@
 <template>
   <div @click="close" class="modal-backdrop">
-    <form id="addBookForm"  v-on:click="showError = false">
-    <div
-      class="modal orangeOpen"
-      @click.stop
-    >
-      
-      
-      <section class='.left-page page'>  
-        <span>
-          <input
-            type="text"
-            id="isbn"
-            v-model="book.isbn"
-            placeholder="Enter ISBN to autofill"
-          />
-          <button v-on:click.prevent="getBookFromGoogle">Autofill</button>
-        </span>
-        <isbn-not-found v-if="showError" />
-
+    <form id="addBookForm" v-on:click="showError = false">
+      <div class="modal orangeOpen" @click.stop>
+        <section class="left-page page">
+          <!-- <p id="isbnField">
+            <input
+              type="text"
+              id="isbn"
+              v-model="book.isbn"
+              placeholder="Enter ISBN to autofill"
+            />
+            <button id="isbnButton" v-on:click.prevent="getBookFromGoogle">
+              Autofill
+            </button>
+          </p>
+          <isbn-not-found v-if="showError" /> -->
+        </section>
+        <!-- <p>
+        <span id="textField">
         <input type="text" id="title" v-model="book.title" placeholder="Title" />
+         </span>
+        </p>
+        
+        <p>
+        <span id="authorField">
         <input
           type="text"
           id="author"
           v-model="book.author"
           placeholder="Author"
         />
+        </span>
+        </p>
+
+        <p>
+        <span id="summaryField">
         <textarea
           rows="4"
           id="summary"
           v-model="book.summary"
           placeholder="Summary"
         />
+        </span>
+        </p>
+
+        <p>
+        <span id="keywordsField">
         <input
           type="text"
           id="keyWords"
           v-model="book.keyword"
           placeholder="Key Words separated by commas"
         />
+        </span>
+        </p>
 
+        <p>
+        <span id="coverImageField">
         <input
           type="text"
           id="coverUrl"
           v-model="book.coverImageUrl"
           placeholder="Cover Image Url"
         />
-      </section>
-      <section class="right-page page">
-        <span>
-          <p id="dateLabel">Publishing Date</p>
-          <input
-            type="date"
-            id="date"
-            v-model="book.publishingDate"
-            placeholder="Publishing Date"
-          />
         </span>
-
-        <div class="multi-selector">
-          <div class="select-field">
+        </p> -->
+        
+        <section class="right-page page">
+          <p id="toAddABook"> </p>
+          <p id="isbnField">
             <input
               type="text"
-              name="genreName"
-              placeholder="Select Genres"
-              id="genreName"
-              class="input-select"
-              disabled
-              v-model="genreTextField"
+              id="isbn"
+              v-model="book.isbn"
+              placeholder="Enter ISBN to autofill"
             />
-            <span class="downArrow" v-on:click="showGenres = !showGenres">{{
-              showGenres ? "&blacktriangle;" : "&blacktriangledown;"
-            }}</span>
-          </div>
-          <div
-            class="genreList"
-            v-for="genre in $store.state.genres"
-            v-show="showGenres"
-            v-bind:key="genre.id"
-            v-bind:class="{ selected: genre.selected }"
-          >
-            <label for="genreName" class="genreOption">
-              <input
-                type="checkbox"
-                v-on:click="toggleSelected(genre)"
-                name="genreName"
-                id="genreName"
-              />
-              {{ genre.name }}
-            </label>
-          </div>
-        </div>
-        <button v-on:click.prevent="createBook" type="submit">Submit</button>
-      </section>
-      
-    </div>
+            <button id="isbnButton" v-on:click.prevent="getBookFromGoogle">
+              Autofill
+            </button>
+          <isbn-not-found v-if="showError" />
+          </p>
+
+          <p id="textField">
+            <input
+              type="text"
+              id="title"
+              v-model="book.title"
+              placeholder="Title"
+            />
+          </p>
+
+          <p id="authorField">
+            <input
+              type="text"
+              id="author"
+              v-model="book.author"
+              placeholder="Author"
+            />
+          </p>
+
+          <p id="summaryField">
+            <textarea
+              rows="4"
+              id="summary"
+              v-model="book.summary"
+              placeholder="Summary"
+            />
+          </p>
+
+          <p id="keywordsField">
+            <input
+              type="text"
+              id="keyWords"
+              v-model="book.keyword"
+              placeholder="Key Words separated by commas"
+            />
+          </p>
+
+          <p id="coverImageField">
+            <input
+              type="text"
+              id="coverUrl"
+              v-model="book.coverImageUrl"
+              placeholder="Cover Image Url"
+            />
+          </p>
+
+          <p id="dateField">
+            <span id="dateLabel">Publishing Date: </span>
+            <input
+              type="date"
+              id="date"
+              v-model="book.publishingDate"
+              placeholder="Publishing Date"
+            />
+          </p>
+
+          <span id="genreField">
+            <div class="multi-selector">
+              <div class="select-field">
+                <input
+                  type="text"
+                  name="genreName"
+                  placeholder="Select Genres"
+                  id="genreName"
+                  class="input-select"
+                  disabled
+                  v-model="genreTextField"
+                />
+                <span class="downArrow" v-on:click="showGenres = !showGenres">{{
+                  showGenres ? "&blacktriangle;" : "&blacktriangledown;"
+                }}</span>
+              </div>
+              <div
+                class="genreList"
+                v-for="genre in $store.state.genres"
+                v-show="showGenres"
+                v-bind:key="genre.id"
+                v-bind:class="{ selected: genre.selected }"
+              >
+                <label for="genreName" class="genreOption">
+                  <input
+                    type="checkbox"
+                    v-on:click="toggleSelected(genre)"
+                    name="genreName"
+                    id="genreName"
+                  />
+                  {{ genre.name }}
+                </label>
+              </div>
+            </div>
+          </span>
+
+          <p id="submitButton">
+            <button v-on:click.prevent="createBook" type="submit">
+              Submit
+            </button>
+          </p>
+        </section>
+      </div>
     </form>
   </div>
 </template>
@@ -136,9 +221,9 @@ export default {
       return textField;
     },
 
-    bookColor(){
-      return this.setBookColor(this.book)
-    }
+    bookColor() {
+      return this.setBookColor(this.book);
+    },
   },
 
   created() {
@@ -158,7 +243,7 @@ export default {
       this.$emit("close");
     },
 
-    createBook() { 
+    createBook() {
       let newBook = {
         title: this.book.title,
         author: this.book.author,
@@ -167,12 +252,12 @@ export default {
         summary: this.book.summary,
         publishingDate: this.book.publishingDate,
         coverImageUrl: this.book.coverImageUrl,
-        color: 'orange',
+        color: "orange",
         genres: this.$store.state.genres
           .filter((g) => g.selected)
           .map((g) => g.name),
       };
-      console.log(newBook)
+      console.log(newBook);
       bookService.createBook(newBook).then((response) => {
         if (response.status === 201) {
           this.showAddBook = false;
@@ -204,7 +289,6 @@ export default {
       return color;
     },
 
-
     getBookFromGoogle() {
       googleService.getBook(this.book.isbn).then((response) => {
         if (!response.data.items) {
@@ -216,7 +300,7 @@ export default {
             response.authors.length > 1
               ? response.authors.join(", ")
               : response.authors[0];
-          this.book.summary = response.description.substring(0,2000);
+          this.book.summary = response.description.substring(0, 2000);
           this.book.coverImageUrl = response.imageLinks.thumbnail;
           this.book.publishingDate = response.publishedDate;
           for (let category of response.categories) {
@@ -277,6 +361,58 @@ export default {
   width: 600px;
   height: 500px;
 }
+
+#toAddABook {
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+#isbnField {
+  display: flex;
+  justify-content: center;
+}
+
+#textField {
+  display: flex;
+  justify-content: center;
+}
+
+#authorField {
+  display: flex;
+  justify-content: center;
+}
+
+#summaryField {
+  display: flex;
+  justify-content: center;
+}
+
+#keywordsField {
+  display: flex;
+  justify-content: center;
+}
+
+#coverImageField {
+  display: flex;
+  justify-content: center;
+}
+
+#dateField {
+  display: flex;
+  justify-content: center;
+}
+
+#genreField {
+  display: flex;
+  justify-content: center;
+}
+
+#submitButton {
+  display: flex;
+  justify-content: center;
+}
+
 /*
 #addBookForm  input {
   width: 98%;
