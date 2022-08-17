@@ -63,22 +63,15 @@ export default {
 
 #booksView > section{
   display: flex;
-<<<<<<< HEAD
-  flex-direction: row;
-=======
   flex-direction: column;
   gap: 20px;
   align-items: center;
->>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 }
 
 #booksView > section > section{
   display: flex;
   gap:50px;
-<<<<<<< HEAD
-=======
   margin-right: 30px;
->>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 }
 
 

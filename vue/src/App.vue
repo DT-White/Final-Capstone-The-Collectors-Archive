@@ -29,7 +29,7 @@
 
 
 body {
-  background-image: url("../resources/test.jpg");
+  background-image: url("");
   background-position: bottom right;
   background-size: 10px 20px;
 }

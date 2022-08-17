@@ -207,10 +207,10 @@ export default {
   display: flex;
   justify-content: center;
   box-shadow: 0 10px 18px -12px #1d1611;
-  ;
 }
 
 .shelf-label{
+  
   background-color: rgb(211, 187, 55);
   width: 175px;
   border-radius: 10% / 50%;
@@ -221,6 +221,7 @@ export default {
 }
 
 .shelf-label h2{
+  
   font-size: 1.2rem;
   color: rgb(77, 68, 18);
   margin:1px 3px 1px 3px;
@@ -245,6 +246,7 @@ body {
 }
 
 img#newSticker {
+  
   height: 80px;
   margin-left: -20px;
   margin-right: -20px;
@@ -257,6 +259,7 @@ img#newSticker {
 }
 
 .books {
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -265,6 +268,7 @@ img#newSticker {
 }
 
 .books > div {
+  
   padding-left: 10px;
   padding-right: 20px;
   display: flex;
