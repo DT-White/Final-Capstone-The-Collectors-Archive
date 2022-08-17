@@ -12,7 +12,9 @@
             <h2>LIBRARY</h2>
           <div class="nail"></div>
         </div>
-        <add-book/>
+        <span class="icon" v-on:click="$emit('addBook', $event)">
+          <span class="tooltiptext">ADD BOOK</span>
+        </span>
       <!-- </div> -->
       </div>
     <section class="books" >
@@ -39,10 +41,9 @@
 
 <script>
 import bookService from "@/services/BookService";
-import AddBook from './AddBook.vue';
 
 export default {
-  components: { AddBook },
+  components: {  },
   data() {
     return {
       books: [],

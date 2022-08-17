@@ -98,10 +98,10 @@
             <!-- <span>></span> -->
           </router-link>
           <router-link v-bind:to="{ name: 'logout' }" class="submenu-link">
-              <img src="../../resources/logput.png" alt="">
-              <p>Logout</p>
-              <!-- <span>></span> -->
-              </router-link>
+            <img src="../../resources/logput.png" alt="" />
+            <p>Logout</p>
+            <!-- <span>></span> -->
+          </router-link>
         </div>
       </div>
     </section>
@@ -177,16 +177,6 @@ export default {
     };
   },
 
-  pictureAddress() {
-    return this.webcamPicture
-      ? this.webcamPicture
-      : this.updatingPicture
-      ? URL.createObjectURL(this.updatingPicture)
-      : this.profile.profilePictureUrl
-      ? this.profile.profilePictureUrl
-      : require("../../resources/default-user.png");
-  },
-
   methods: {
     openBook(event, book) {
       this.bookToOpen = book;
@@ -228,7 +218,7 @@ export default {
       getDownloadURL(ref(storage, this.fileName)).then((url) => {
         this.profile.profilePictureUrl = url;
         let profile = {
-          userId: this.profile.userId,
+          userId: this.$store.state.user.id,
           firstName: this.profile.firstName,
           lastName: this.profile.lastName,
           email: this.profile.email,
@@ -255,7 +245,7 @@ export default {
     },
     mounted() {
       profileService.getProfile(this.$store.state.user.id).then((response) => {
-          console.log(response.data)
+        console.log(response.data);
         if (response.status === 200 && response.data.firstName) {
           this.profile = response.data;
           this.isEditing = false;
@@ -268,27 +258,26 @@ export default {
 
 <style>
 .submenu-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #525252;
-    margin: 12px 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #525252;
+  margin: 12px 0;
 }
 
 .submenu-link p {
-    width: 100%;
+  width: 100%;
 }
 
 .submenu-link img {
-    width: 40px;
-    border-radius: 50%;
-    padding: 8px;
-    margin-right: 15px;
+  width: 40px;
+  border-radius: 50%;
+  padding: 8px;
+  margin-right: 15px;
 }
 
-
 .submenu-link:hover p {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .profileDropdownWrap {

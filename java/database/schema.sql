@@ -5,6 +5,7 @@ DROP table if exists time_accessed;
 DROP table if exists user_collection;
 DROP table if exists reading_list;
 drop table if exists profiles;
+DROP table if exists friends;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS seq_user_id;
 DROP table if exists book_genre;
@@ -39,23 +40,21 @@ Create table time_accessed (
 	time_update timestamp not null
 );
 
+Create table friends (
+	first_user bigint not null references users (user_id),
+	second_user bigint not null references users (user_id),
+	Constraint pk_friends primary key (first_user, second_user)
+);
+
 create table profiles (
 	profile_id serial primary key,
 	first_name varchar(16),
 	last_name varchar(16),
 	email varchar(32),
-<<<<<<< HEAD
-	profile_picture_url varchar(128),
-	user_id bigint not null unique references users (user_id)
-);
-
-=======
 	profile_picture_url varchar(1024),
 	user_id bigint not null unique references users (user_id)
 );
 
-
->>>>>>> ff1888b87dfefc110e373ca607ed32dbff92cd12
 Create table books (
 	book_id serial primary key,
 	title varchar(128) not null,

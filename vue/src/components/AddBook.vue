@@ -1,93 +1,99 @@
 <template>
-  <div>
-    
-    <span class="icon" v-on:click="showAddBook = !showAddBook">
-      <span class="tooltiptext">ADD BOOK</span>
-    </span>
-    
-    <form id="addBookForm" v-if="showAddBook" v-on:click="showError = false">
-      <span>
-        <input
-          type="text"
-          id="isbn"
-          v-model="book.isbn"
-          placeholder="Enter ISBN to autofill"
-        />
-        <button v-on:click.prevent="getBookFromGoogle">Autofill</button>
-      </span>
-      <isbn-not-found v-if="showError" />
-
-      <input type="text" id="title" v-model="book.title" placeholder="Title" />
-      <input
-        type="text"
-        id="author"
-        v-model="book.author"
-        placeholder="Author"
-      />
-      <textarea
-        rows="4"
-        id="summary"
-        v-model="book.summary"
-        placeholder="Summary"
-      />
-      <input
-        type="text"
-        id="keyWords"
-        v-model="book.keyword"
-        placeholder="Key Words separated by commas"
-      />
-
-      <input
-        type="text"
-        id="coverUrl"
-        v-model="book.coverImageUrl"
-        placeholder="Cover Image Url"
-      />
-
-      <span>
-        <p id="dateLabel">Publishing Date</p>
-        <input
-          type="date"
-          id="date"
-          v-model="book.publishingDate"
-          placeholder="Publishing Date"
-        />
-      </span>
-
-      <div class="multi-selector">
-        <div class="select-field">
+  <div @click="close" class="modal-backdrop">
+    <form id="addBookForm"  v-on:click="showError = false">
+    <div
+      class="modal orangeOpen"
+      @click.stop
+    >
+      
+      
+      <section class='.left-page page'>  
+        <span>
           <input
             type="text"
-            name="genreName"
-            placeholder="Select Genres"
-            id="genreName"
-            class="input-select"
-            disabled
-            v-model="genreTextField"
+            id="isbn"
+            v-model="book.isbn"
+            placeholder="Enter ISBN to autofill"
           />
-          <span class="downArrow" v-on:click="showGenres = !showGenres">{{
-            showGenres ? "&blacktriangle;" : "&blacktriangledown;"
-          }}</span>
-        </div>
-        <div
-          class="genreList"
-          v-for="genre in $store.state.genres"
-          v-show="showGenres"
-          v-bind:key="genre.id"
-          v-bind:class="{ selected: genre.selected }"
-        >
-          <label for="genreName" class="genreOption">
+          <button v-on:click.prevent="getBookFromGoogle">Autofill</button>
+        </span>
+        <isbn-not-found v-if="showError" />
+
+        <input type="text" id="title" v-model="book.title" placeholder="Title" />
+        <input
+          type="text"
+          id="author"
+          v-model="book.author"
+          placeholder="Author"
+        />
+        <textarea
+          rows="4"
+          id="summary"
+          v-model="book.summary"
+          placeholder="Summary"
+        />
+        <input
+          type="text"
+          id="keyWords"
+          v-model="book.keyword"
+          placeholder="Key Words separated by commas"
+        />
+
+        <input
+          type="text"
+          id="coverUrl"
+          v-model="book.coverImageUrl"
+          placeholder="Cover Image Url"
+        />
+      </section>
+      <section class="right-page page">
+        <span>
+          <p id="dateLabel">Publishing Date</p>
+          <input
+            type="date"
+            id="date"
+            v-model="book.publishingDate"
+            placeholder="Publishing Date"
+          />
+        </span>
+
+        <div class="multi-selector">
+          <div class="select-field">
             <input
-              type="checkbox"
-              v-on:click="toggleSelected(genre)"
+              type="text"
               name="genreName"
+              placeholder="Select Genres"
               id="genreName"
+              class="input-select"
+              disabled
+              v-model="genreTextField"
             />
-            {{ genre.name }}
-          </label>
+            <span class="downArrow" v-on:click="showGenres = !showGenres">{{
+              showGenres ? "&blacktriangle;" : "&blacktriangledown;"
+            }}</span>
+          </div>
+          <div
+            class="genreList"
+            v-for="genre in $store.state.genres"
+            v-show="showGenres"
+            v-bind:key="genre.id"
+            v-bind:class="{ selected: genre.selected }"
+          >
+            <label for="genreName" class="genreOption">
+              <input
+                type="checkbox"
+                v-on:click="toggleSelected(genre)"
+                name="genreName"
+                id="genreName"
+              />
+              {{ genre.name }}
+            </label>
+          </div>
         </div>
-      </div>
-      <button v-on:click.prevent="createBook" type="submit">Submit</button>
+        <button v-on:click.prevent="createBook" type="submit">Submit</button>
+      </section>
+      
+    </div>
     </form>
   </div>
 </template>
@@ -103,7 +109,6 @@ export default {
 
   data() {
     return {
-      showAddBook: false,
       showGenres: false,
 
       showError: false,
@@ -130,6 +135,10 @@ export default {
 
       return textField;
     },
+
+    bookColor(){
+      return this.setBookColor(this.book)
+    }
   },
 
   created() {
@@ -149,7 +158,7 @@ export default {
       this.$emit("close");
     },
 
-    createBook() {
+    createBook() { 
       let newBook = {
         title: this.book.title,
         author: this.book.author,
@@ -158,40 +167,43 @@ export default {
         summary: this.book.summary,
         publishingDate: this.book.publishingDate,
         coverImageUrl: this.book.coverImageUrl,
+        color: 'orange',
         genres: this.$store.state.genres
           .filter((g) => g.selected)
           .map((g) => g.name),
       };
+      console.log(newBook)
       bookService.createBook(newBook).then((response) => {
         if (response.status === 201) {
           this.showAddBook = false;
-          this.book = this.setBookColor(this.book);
-          this.$store.commit("ADD_BOOK", this.book);
+          this.$store.commit("ADD_BOOK", newBook);
           this.book = { genres: [] };
         }
       });
     },
 
     setBookColor(book) {
+      let color;
       switch (book.bookId % 5) {
         case 0:
-          book.color = "purple";
+          color = "purple";
           break;
         case 1:
-          book.color = "orange";
+          color = "orange";
           break;
         case 2:
-          book.color = "blue";
+          color = "blue";
           break;
         case 3:
-          book.color = "green";
+          color = "green";
           break;
         case 4:
-          book.color = "red";
+          color = "red";
           break;
       }
-      return book;
+      return color;
     },
+
 
     getBookFromGoogle() {
       googleService.getBook(this.book.isbn).then((response) => {
@@ -204,7 +216,7 @@ export default {
             response.authors.length > 1
               ? response.authors.join(", ")
               : response.authors[0];
-          this.book.summary = response.description;
+          this.book.summary = response.description.substring(0,2000);
           this.book.coverImageUrl = response.imageLinks.thumbnail;
           this.book.publishingDate = response.publishedDate;
           for (let category of response.categories) {
@@ -260,12 +272,13 @@ export default {
 
 <style>
 #addBookForm > * {
-  /* display: block; */
-  width: 100%;
-  min-width: 220px;
+  display: flex;
+  justify-content: center;
+  width: 600px;
+  height: 500px;
 }
-
-#addBookForm > input {
+/*
+#addBookForm  input {
   width: 98%;
   max-width: 500px;
   margin-bottom: 8px;
@@ -372,7 +385,7 @@ textarea {
 .genreOption:hover {
   background-color: aliceblue;
 }
-
+*/
 .icon {
   background: url("../../resources/newBook2.jpg");
   background-repeat: no-repeat;
@@ -385,7 +398,7 @@ textarea {
   position: relative;
   display: inline-block;
 }
-
+/*
 .icon .tooltiptext {
   visibility: hidden;
   width: 120px;
@@ -408,10 +421,10 @@ textarea {
   content: " ";
   position: absolute;
   top: 50%;
-  right: 100%; /* To the left of the tooltip */
+  right: 100%; /* To the left of the tooltip 
   margin-top: -5px;
   border-width: 5px;
   border-style: solid;
   border-color: transparent black transparent transparent;
-}
+} */
 </style>
