@@ -105,6 +105,7 @@ img#logoImage {
   border-radius: 100px;
   justify-content: flex-start;
   cursor: pointer;
+  
 }
 div#nav {
   justify-content: flex-end;
