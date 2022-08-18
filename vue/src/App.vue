@@ -22,7 +22,9 @@
         <profile/>
       </div>
     </div>
-    <router-view />
+    <div id="main-page">
+      <router-view />
+    </div>
   </div>
 </template>
 <script>
@@ -38,13 +40,20 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap");
 
-body {
-  background-image: url("../resources/testBackground5.jpg");
-  background-position: center center;
-  background-size: cover;
-  min-height: 100%;
+html{
+  height: 90%;
   
+}
 
+body {
+  background-image: url("../resources/background3.jpg");
+  background-position: center center;
+  background-size: 100% 100%;
+  min-height: 100%;
+  backdrop-filter: blur(2px);
+}
+
+#main-page{
 }
 
 div#app {
@@ -60,6 +69,8 @@ h1#header {
   font-family: "Fredoka One", cursive;
   font-size: 70px;
   color: white;
+  font-weight: 500;
+  
 }
 img#logoImage {
   height: 200px;

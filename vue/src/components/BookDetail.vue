@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style>
-.modal-backdrop {
+/* .modal-backdrop {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -65,6 +65,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .modal {
@@ -74,7 +75,6 @@ export default {
   display: flex;
   height: 500px;
   width: 600px;
-  border-color: red;
   border-style: solid;
   border-width: 5px 12px 5px 12px;
   border-radius: 10px;
@@ -93,8 +93,8 @@ export default {
 .left-page {
   border-right: rgb(141, 141, 141);
   border-style: hidden;
-  /* border-width: 0px 1px 0px 0px; */
-  /* border-width: 20px 5px 20px 5px; */
+  /* border-width: 0px 1px 0px 0px; 
+  /* border-width: 20px 5px 20px 5px; 
   box-shadow: 5px 0px 40px #1d1611;
   display: flex;
   justify-content: center;
@@ -163,5 +163,5 @@ export default {
 
 .purpleOpen {
   border-color: #662358;
-}
+} */
 </style>

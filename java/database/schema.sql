@@ -55,10 +55,7 @@ create table profiles (
 	user_id bigint not null unique references users (user_id)
 );
 
-<<<<<<< HEAD
 
-=======
->>>>>>> d87c3a4e8d6f762957bb3f6ad4fc5d9cf9aca2d8
 Create table books (
 	book_id serial primary key,
 	title varchar(128) not null,

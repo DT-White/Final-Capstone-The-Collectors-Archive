@@ -4,7 +4,7 @@
       <section>
         <book-filter/>
         <section>
-          <bookList @openBook="openBook" @addBook="newBook"/>
+          <bookList @openBook="openTest" @addBook="newBook" @sendEmail="openEmail"/>
           <reading-list @openBook="openBook"/>
         </section>
       </section>
@@ -18,6 +18,15 @@
       v-show="isNewBookVisible"
       @close="closeModal" />
 
+    <email
+      @updateProfile="updateProfile"
+      v-if="isEmailVisible"
+      @close="closeModal" />
+
+      <test :book="bookToOpen"
+      v-show="isTestVisible"
+      @close="closeModal" />
+
   </div>
 </template>
 
@@ -26,18 +35,21 @@
 import bookList from "@/components/BookList";
 import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
-// import Modal from "@/components/BookDetail";
 import bookDetail from "@/components/BookDetail";
 import addBook from '@/components/AddBook';
-
+import email from '@/components/Email';
+import profileService from '@/services/ProfileService';
+import test from '@/components/test';
 export default {
   components: { 
     addBook,
     bookList,
     bookFilter,
     readingList,
-    // Modal,
-    bookDetail 
+    bookDetail ,
+  //  profile,
+    email,
+    test
   },
 
   methods: {
@@ -45,13 +57,32 @@ export default {
       this.bookToOpen = book;
       this.isBookDetailVisible = true;
     },
+    openTest(event, book) {
+      this.bookToOpen = book;
+      this.isTestVisible = true;
+    },
+
     closeModal() {
       this.isBookDetailVisible = false;
       this.isNewBookVisible = false;
+      this.isEmailVisible = false;
+      this.isTestVisible = false
     },
 
     newBook(){
       this.isNewBookVisible = true;
+    },
+
+    openEmail(){
+      this.isEmailVisible = true;
+    },
+
+    updateProfile(){
+      profileService.getProfile(this.$store.state.user.id).then(response => {
+            if (response.status === 200 && response.data.firstName){
+                this.$store.commit('SET_PROFILE',response.data);
+            }
+        })
     }
   },
 
@@ -59,6 +90,8 @@ export default {
     return {
       isBookDetailVisible: false,
       isNewBookVisible: false,
+      isEmailVisible: false,
+      isTestVisible: false,
       bookToOpen: {}
     }
   }
@@ -86,7 +119,7 @@ export default {
   gap:50px;
   margin-right: 30px;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
 }
 
 

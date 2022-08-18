@@ -33,8 +33,13 @@ export default new Vuex.Store({
     },
     token: currentToken || '',
     user: currentUser || {},
+    profile: {}
   },
   mutations: {
+
+    SET_PROFILE(state, profile){
+      state.profile = profile;
+    },
 
     GET_READING_LIST(state, readingList){
       state.readingList = readingList;
