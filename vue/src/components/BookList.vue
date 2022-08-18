@@ -7,6 +7,9 @@
     <div class="shelf">
       <!-- <div class="line"> -->
       <div class="shelf-top">
+        <span class="icon" v-on:click="$emit('sendEmail', $event)">
+          <span class="tooltiptext">Add Friend</span>
+        </span>
         <div class="shelf-label">
           <div class="nail"></div>
             <h2>LIBRARY</h2>
@@ -22,7 +25,7 @@
       <div v-bind:key="currentBook.bookId"  v-for="currentBook in booksList" draggable 
         @dragstart="startDrag($event, currentBook)"
         v-show="!checkForBookInReadingList(currentBook) " 
-        @dblclick="$emit('openBook',$event, currentBook)"
+        @click="$emit('openBook',$event, currentBook)"
         v-bind:class="{new_book: isNewBook(currentBook), 
         purple: currentBook.color == 'purple',
         blue: currentBook.color == 'blue',
@@ -99,7 +102,7 @@ export default {
   methods: {
     setBookColors(books){
       for (let book of books){
-          switch (book.bookId % 5){
+          switch (book.isbn % 5){
             case 0:
               book.color = "purple"
               break;
@@ -199,30 +202,25 @@ export default {
 
 .shelf{
   border-width:0px 25px 25px 25px;
-  border-color:#755D44;
+  border-color:#4e3823;
   border-style: solid;
   box-shadow: 0px 10px 18px #1d1611;
-  background: linear-gradient(#3b2f23 10%, #534331 20%, #4e3e2d);
+  background: linear-gradient(#3a291a 10%, #4e3823 20%, #3a291a);
   border-radius: 5px;
+  
 }
 
 
-/* .line {
-  
- 
-
-} */
-
 .shelf-top{
-  background-color: #755D44;
+  background-color: #4e3823;
   margin: 0px 1px 30px 1px;
   display: flex;
   justify-content: center;
   box-shadow: 0 10px 18px -12px #1d1611;
-  ;
 }
 
 .shelf-label{
+  
   background-color: rgb(211, 187, 55);
   width: 175px;
   border-radius: 10% / 50%;
@@ -233,6 +231,7 @@ export default {
 }
 
 .shelf-label h2{
+  
   font-size: 1.2rem;
   color: rgb(77, 68, 18);
   margin:1px 3px 1px 3px;
@@ -257,6 +256,7 @@ body {
 }
 
 img#newSticker {
+  
   height: 80px;
   margin-left: -20px;
   margin-right: -20px;
@@ -269,6 +269,7 @@ img#newSticker {
 }
 
 .books {
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -277,6 +278,7 @@ img#newSticker {
 }
 
 .books > div {
+  
   padding-left: 10px;
   padding-right: 20px;
   display: flex;
@@ -284,6 +286,7 @@ img#newSticker {
   background-color: seagreen;
   border-radius: 2px;
   max-width: 98%;
+  cursor: pointer;
 }
 
 .purple {

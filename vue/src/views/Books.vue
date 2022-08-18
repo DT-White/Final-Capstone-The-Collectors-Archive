@@ -1,10 +1,11 @@
 <template>
   <div id="booksView">
-      
+     
       <section>
-        <book-filter/>
+         
         <section>
-          <bookList @openBook="openBook" @addBook="newBook"/>
+          <book-filter id="searchBooks"/> 
+          <bookList @openBook="openTest" @addBook="newBook" @sendEmail="openEmail"/>
           <reading-list @openBook="openBook"/>
         </section>
       </section>
@@ -18,6 +19,11 @@
       v-show="isNewBookVisible"
       @close="closeModal" />
 
+    <email
+      @updateProfile="updateProfile"
+      v-if="isEmailVisible"
+      @close="closeModal" />
+
   </div>
 </template>
 
@@ -28,14 +34,17 @@ import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
 import bookDetail from "@/components/BookDetail";
 import addBook from '@/components/AddBook';
-
+import email from '@/components/Email';
+import profileService from '@/services/ProfileService';
 export default {
   components: { 
     addBook,
     bookList,
     bookFilter,
     readingList,
-    bookDetail 
+    bookDetail ,
+  //  profile,
+    email,
   },
 
   methods: {
@@ -43,13 +52,27 @@ export default {
       this.bookToOpen = book;
       this.isBookDetailVisible = true;
     },
+
     closeModal() {
       this.isBookDetailVisible = false;
       this.isNewBookVisible = false;
+      this.isEmailVisible = false;
     },
 
     newBook(){
       this.isNewBookVisible = true;
+    },
+
+    openEmail(){
+      this.isEmailVisible = true;
+    },
+
+    updateProfile(){
+      profileService.getProfile(this.$store.state.user.id).then(response => {
+            if (response.status === 200 && response.data.firstName){
+                this.$store.commit('SET_PROFILE',response.data);
+            }
+        })
     }
   },
 
@@ -57,6 +80,8 @@ export default {
     return {
       isBookDetailVisible: false,
       isNewBookVisible: false,
+      isEmailVisible: false,
+      isTestVisible: false,
       bookToOpen: {}
     }
   }
@@ -65,16 +90,18 @@ export default {
 
 <style>
 
+
+
 #booksView{
   display: flex;
   align-items: start;
-  justify-content: space-around;
+  justify-content: space-evenly;
   gap: 50px;
 }
 
 #booksView > section{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 20px;
   align-items: center;
 }
@@ -84,7 +111,7 @@ export default {
   gap:50px;
   margin-right: 30px;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
 }
 
 

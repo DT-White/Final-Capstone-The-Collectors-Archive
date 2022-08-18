@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <div id="appheader">
-        <img id="logoImage" src="../resources/logo12.jpg" alt="" @click="goToBooksPage" />
+        <div id="logoAndSearch">
+        <img id="logoImage" src="../resources/logo12.jpg" alt="" />
+        <!-- <book-filter id="searchBooks"/> -->
+        </div>
+        
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
         <!-- <button id="buttons">
@@ -19,16 +23,19 @@
             >Logout</router-link
           >
         </button> -->
-        <profile/>
+        
+          
+        <profile />
       </div>
     </div>
-    <div class="routerView">
-    <router-view />
+    <div id="main-page">
+      <router-view />
     </div>
   </div>
 </template>
 <script>
 import profile from '@/components/Profile';
+// import bookFilter from "@/components/BookFilter";
 
 
 export default {
@@ -44,16 +51,35 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap");
 
+#logoAndSearch {
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: 1;
+}
 
+html {
+  height: 90%;
+}
 
 body {
-  background-image: url("../resources/testBackground5.jpg");
+  background-image: url("../resources/background3.jpg");
   background-position: center center;
   background-size: 100% 100%;
   min-height: 100%;
-  backdrop-filter: blur(8px);
-
+  backdrop-filter: blur(2px);
+  margin: 0;
+  padding: 8px;
 }
+
+/* div#profile-marker {
+  background-color: ivory !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left:50px;
+    height: 200px;
+    width: 200px;
+} */
 
 div#app {
   display: flex;
@@ -63,11 +89,16 @@ div#appheader {
   display: flex;
   justify-content: space-between;
 }
+
 h1#header {
+  position:absolute;
+  display: flex;
+  padding-left: 25%;
   text-align: center;
   font-family: "Fredoka One", cursive;
   font-size: 70px;
   color: white;
+  font-weight: 500;
 }
 img#logoImage {
   height: 200px;
@@ -92,7 +123,6 @@ button#buttons {
 .tooltip {
   position: relative;
   display: inline-block;
-  
 }
 
 .icon .tooltiptext {

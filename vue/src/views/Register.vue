@@ -91,12 +91,13 @@ export default {
 
 <style>
 div#register {
-  margin: 0;
-  padding: 0;
+  top: 0;
+  padding-top:35%;
   font-family: sans-serif;
 }
 
 .form-register {
+  margin-block: 50px;
   width:300px;
   padding: 30px;
   position: absolute;
@@ -104,12 +105,13 @@ div#register {
   left: 50%;
   transform: translate(-50%,-50%);
   text-align: center;
-  background: blueviolet;
+  background: lightgrey;
   border-radius: 15px;
 }
 
 .form-register h1{
-  color: white;
+  font-family: sans-serif;
+  color: balck;
   text-transform: uppercase;
   font-weight: 600;
 }
@@ -136,12 +138,14 @@ div#register {
 
 .form-register button[type=submit] {
   border: 0;
+  width:50%;
   background: white;
   display: block;
   margin: 20px auto;
   text-align: center;
   border: 3px solid #ffc400ec;
-  padding: 14px 10px;
+  padding-top:10px ;
+  padding-bottom: 22px;
   outline: none;
   color: gray;
   border-radius: 24px;

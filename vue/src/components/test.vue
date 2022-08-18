@@ -1,7 +1,6 @@
-
 <template>
-    <div @click="close" class="modal-backdrop" @mouseenter="page3Flipped = false">
-        <div class="book" @click.stop >
+    <div @click="close" class="modal-backdrop">
+        <div class="book" @click.stop>
             <div class="back"
                 v-bind:class="{
                 purpleCover: book.color == 'purple',
@@ -11,18 +10,17 @@
                 greenCover: book.color == 'green',
                 }"
             ></div>
-            <div class="page4 clickable" >
+            <div class="page4 clickable">
                 <p id="bookSummary">
                 {{ summary2 }}
                 </p>
             </div>
-            <div class="page3 clickable"
-            :class="{flipped: page3Flipped}">
+            <div class="page3 clickable">
                 <p id="bookSummary">
                 {{ summary2 }}
                 </p>
             </div>
-            <div class="page2" :class="{clickable: summary2, flipped: page3Flipped}" @click="page3Flipped = true" >
+            <div class="page2" :class="{clickable: summary2}">
                 <p id="summaryTitle">Summary</p>
                 <p id="bookSummary">
                 {{ summary1 }}
@@ -65,12 +63,6 @@ export default {
   name: "Modal",
   props: {
     book: {},
-  },
-
-  data(){
-    return {
-      page3Flipped:false
-    }
   },
 
   computed:{
@@ -292,10 +284,6 @@ export default {
 
 .book:hover .back {
   transform: rotateY(-20deg) scale(1.1);
-}
-
-.flipped{
-  transform: rotateY(-158deg) scale(1.1);
 }
 
 .clickable{

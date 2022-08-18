@@ -148,7 +148,7 @@
                   disabled
                   v-model="genreTextField"
                 />
-                <span class="downArrow" v-on:click="showGenres = !showGenres">{{
+                <span id="downArrow" v-on:click="showGenres = !showGenres">{{
                   showGenres ? "&blacktriangle;" : "&blacktriangledown;"
                 }}</span>
               </div>
@@ -252,7 +252,7 @@ export default {
         summary: this.book.summary,
         publishingDate: this.book.publishingDate,
         coverImageUrl: this.book.coverImageUrl,
-        color: "orange",
+        color: this.setBookColor(this.book),
         genres: this.$store.state.genres
           .filter((g) => g.selected)
           .map((g) => g.name),
@@ -263,13 +263,14 @@ export default {
           this.showAddBook = false;
           this.$store.commit("ADD_BOOK", newBook);
           this.book = { genres: [] };
+          this.close();
         }
       });
     },
 
     setBookColor(book) {
       let color;
-      switch (book.bookId % 5) {
+      switch (book.isbn % 5) {
         case 0:
           color = "purple";
           break;
@@ -412,6 +413,31 @@ export default {
   display: flex;
   justify-content: center;
 }
+
+.left-page {
+  border-right: rgb(141, 141, 141);
+  border-style: hidden;
+  border-width: 0px 1px 0px 0px; 
+  border-width: 20px 5px 20px 5px; 
+  box-shadow: 5px 0px 40px #1d1611;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-page {
+  border-right: rgb(141, 141, 141);
+  border-style: hidden;
+  border-width: 0px 0px 0px 1px;
+  box-shadow: -5px 0px 40px #1d1611;
+  justify-content: center;
+  align-items: center;
+}
+
+.page {
+  width: 50%;
+}
+
 
 /*
 #addBookForm  input {
@@ -563,4 +589,18 @@ textarea {
   border-style: solid;
   border-color: transparent black transparent transparent;
 } */
+
+.multi-selector {
+  width: max-content;
+  max-height: 20vh;
+  overflow: scroll;
+  
+}
+
+.select-field {
+  /* position: absolute; */
+  width: max-content;
+  height: 20px;
+  
+}
 </style>
