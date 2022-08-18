@@ -16,6 +16,7 @@ public interface BookDao {
     List<Book> getUserReadingList(String username);
     void addBookToReadingList(String username, Book book);
     void removeBookFromReadingList(String username, int bookId);
+    List<Book> getFriendBookList (int userId);
 
 
 

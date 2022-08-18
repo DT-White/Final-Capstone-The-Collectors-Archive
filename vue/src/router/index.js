@@ -6,7 +6,8 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import Books from '../views/Books.vue'
-// import Profile from '../views/Profile.vue'
+import FriendsList from '../views/FriendsList.vue'
+import FriendsBooks from '../views/FriendsBooks.vue'
 
 Vue.use(Router)
 
@@ -64,6 +65,26 @@ const router = new Router({
         requiresAuth: true
       }
     },
+
+    {
+      path: "/friends",
+      name: "friendsList",
+      component: FriendsList,
+      meta: {
+        requiresAuth: true
+      }
+    },
+
+    {
+      path: "/friends/:id",
+      name:"friendsCollection",
+      component: FriendsBooks,
+      meta: {
+        requiresAuth: true
+      }
+    }
+
+
   ]
 })
 

@@ -216,6 +216,23 @@ public class JdbcBookDao implements BookDao {
         jdbcTemplate.update(sql, userId, bookId);
     }
 
+    @Override
+    public List<Book> getFriendBookList(int userId) {
+        List<Book> friendBookList = new ArrayList<>();
+        String sql = "SELECT books.book_id, title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added FROM books " +
+                "JOIN user_collection on books.book_id = user_collection.book_id " +
+                "JOIN users on user_collection.user_id = users.user_id " +
+                "where users.user_id = ? " +
+                "order by book_id desc";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        while(rowSet.next()){
+            friendBookList.add(mapRowToBook(rowSet));
+        }
+
+        return friendBookList;
+    }
+
     private Book mapRowToBook(SqlRowSet rowSet) {
 
         Book book = new Book();

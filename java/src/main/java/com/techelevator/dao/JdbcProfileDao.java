@@ -49,8 +49,6 @@ public class JdbcProfileDao implements ProfileDao{
                   "values(?)";
           jdbcTemplate.update(sql, userId);
       } catch (Exception ignore) {}
-
-
     }
 
     @Override

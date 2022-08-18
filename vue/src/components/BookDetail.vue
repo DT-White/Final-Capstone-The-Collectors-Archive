@@ -2,7 +2,6 @@
 <template>
   <div @click="close" class="modal-backdrop">
     <div
-      v-if="book !== {}"
       class="modal"
       @click.stop
       v-bind:class="{
@@ -13,7 +12,7 @@
         greenOpen: book.color == 'green',
       }"
     >
-      <section id="titleAuthorIsbnPublishingDate">
+      <section id="titleAuthorIsbnPublishingDate" class="left-page page">
         <img
           id="cover"
           :src="
@@ -30,27 +29,13 @@
         {{ book.publishingDate ? book.publishingDate : "publishing date" }}
       </section>
 
-      <section>
+      <section class="right-page page">
         <p id="summaryTitle">Summary</p>
         <p id="bookSummary">
           {{ book.summary ? book.summary : "summary" }}
         </p>
       </section>
     <!-- <p v-for="genre in book.genres" :key="genre.id">{{genre}}</p> -->
-    </div>
-    <div
-      v-if="book === {}"
-      class="modal"
-      @click.stop
-      v-bind:class="{
-        purpleOpen: book.color == 'purple',
-        blueOpen: book.color == 'blue',
-        orangeOpen: book.color == 'orange',
-        redOpen: book.color == 'red',
-        greenOpen: book.color == 'green',
-      }"
-    >
-    <!-- add book stuff here -->
     </div>
   </div>
 </template>
@@ -87,15 +72,17 @@ export default {
   box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
   display: flex;
-  height: 96%;
-  width: 55%;
+  height: 500px;
+  width: 600px;
   border-color: red;
   border-style: solid;
   border-width: 5px 12px 5px 12px;
   border-radius: 10px;
+  justify-content: center;
+  margin-right: 0;
 }
 
-.modal > section {
+.page {
   width: 50%;
 }
 
@@ -103,7 +90,7 @@ export default {
   flex-direction: column;
 }
 
-.modal > section:first-child {
+.left-page {
   border-right: rgb(141, 141, 141);
   border-style: hidden;
   /* border-width: 0px 1px 0px 0px; */
@@ -114,11 +101,15 @@ export default {
   align-items: center;
 }
 
-.modal > section:last-child {
+.right-page {
   border-right: rgb(141, 141, 141);
   border-style: hidden;
   border-width: 0px 0px 0px 1px;
   box-shadow: -5px 0px 40px #1d1611;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  
 }
 
 #cover {   

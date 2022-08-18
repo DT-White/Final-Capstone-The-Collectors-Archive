@@ -30,6 +30,10 @@ public class BookController {
         return bookDao.getBookList(principal.getName());
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/books/{id}", method = RequestMethod.GET)
+    public List<Book> getFriendBookList(@PathVariable("id") int userId) {return bookDao.getFriendBookList(userId);}
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/books", method = RequestMethod.POST)
     public Book addBook(@RequestBody Book book, Principal principal) {
