@@ -25,7 +25,7 @@
       <div v-bind:key="currentBook.bookId"  v-for="currentBook in booksList" draggable 
         @dragstart="startDrag($event, currentBook)"
         v-show="!checkForBookInReadingList(currentBook) " 
-        @dblclick="$emit('openBook',$event, currentBook)"
+        @click="$emit('openBook',$event, currentBook)"
         v-bind:class="{new_book: isNewBook(currentBook), 
         purple: currentBook.color == 'purple',
         blue: currentBook.color == 'blue',
@@ -92,7 +92,7 @@ export default {
   methods: {
     setBookColors(books){
       for (let book of books){
-          switch (book.bookId % 5){
+          switch (book.isbn % 5){
             case 0:
               book.color = "purple"
               break;
@@ -277,6 +277,7 @@ img#newSticker {
   background-color: seagreen;
   border-radius: 2px;
   max-width: 98%;
+  cursor: pointer;
 }
 
 .purple {

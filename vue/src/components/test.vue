@@ -1,7 +1,15 @@
 <template>
     <div @click="close" class="modal-backdrop">
         <div class="book" @click.stop>
-            <div class="back orangeCover"></div>
+            <div class="back"
+                v-bind:class="{
+                purpleCover: book.color == 'purple',
+                blueCover: book.color == 'blue',
+                orangeCover: book.color == 'orange',
+                redCover: book.color == 'red',
+                greenCover: book.color == 'green',
+                }"
+            ></div>
             <div class="page4 clickable">
                 <p id="bookSummary">
                 {{ summary2 }}
@@ -27,8 +35,24 @@
                 <div id="publishingDate">Publishing Date: 
                 {{ book.publishingDate ? book.publishingDate : "publishing date" }}</div>
             </div>
-            <div class="page0"></div>
-            <div class="front orangeCover">
+            <div class="page0"
+                v-bind:class="{
+                purpleCover: book.color == 'purple',
+                blueCover: book.color == 'blue',
+                orangeCover: book.color == 'orange',
+                redCover: book.color == 'red',
+                greenCover: book.color == 'green',
+                }"
+            ></div>
+            <div class="front"
+                v-bind:class="{
+                purpleCover: book.color == 'purple',
+                blueCover: book.color == 'blue',
+                orangeCover: book.color == 'orange',
+                redCover: book.color == 'red',
+                greenCover: book.color == 'green',
+                }"
+            >
                 <img :src="book.coverImageUrl" alt="">
             </div>
         </div>
@@ -43,26 +67,33 @@ export default {
 
   computed:{
       summary1(){
-          let text = this.book.summary.substring(0,700);
-          if (this.summary2){
-              text += ' . . . '
-          }
+          let text = ""
+          if (this.book.summary){
+            text = this.book.summary.substring(0,700);
+            if (this.summary2){
+                text += ' . . . '
+            }
+            }
           return text;
       },
       summary2(){
           let text = "";
-          if (this.book.summary.length > 700){
-            text = this.book.summary.substring(701,1400);
-          }
-          if (this.summary3){
-              text += ' . . . '
+          if (this.book.summary){
+            if (this.book.summary.length > 700){
+                text = this.book.summary.substring(701,1400);
+            }
+            if (this.summary3){
+                text += ' . . . '
+            }
           }
           return text;
       },
       summary3(){
           let text = "";
-          if (this.book.summary.length > 1400){
-            text = this.book.summary.substring(1401);
+          if (this.book.summary){
+            if (this.book.summary.length > 1400){
+                text = this.book.summary.substring(1401);
+            }
           }
           return text;
       }
@@ -88,7 +119,7 @@ export default {
   --base-size: var(--baseline) * 1.2;
 }
 .modal-backdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -101,17 +132,35 @@ export default {
   width: 100%;
 }
 
-.modal {
-  overflow: visible;
-  background: #FFFFFF;
-  box-shadow: 2px 2px 20px 1px;
-  overflow-x: auto;
-  display: flex;
-  border-color: red;
-  border-style: solid;
-  border-width: 2px 8px 2px 8px;
-  border-radius: 5px;
-  perspective: 1200px;
+#titleAuthorIsbnPublishingDate {
+  flex-direction: column;
+}
+
+#bookTitle {
+  text-align: center;
+}
+
+#author {
+  text-decoration: underline;
+}
+
+#ISBN {
+  text-decoration: underline;
+}
+
+#publishingDate {
+  text-decoration: underline;
+}
+
+#summaryTitle {
+  text-align: center;
+  font-size: 20px;
+  font-style: italic;
+}
+
+#bookSummary {
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 .book {
@@ -120,6 +169,7 @@ export default {
   height: 300px;
   backface-visibility: visible;
 }
+
 
 .front, .back, .page1, .page2, .page0, .page3, .page4 {
   transform-style: preserve-3d;
@@ -152,6 +202,22 @@ export default {
     background-color: #AC6027;
 }
 
+.redCover{
+    background-color: #791c1c;
+}
+
+.blueCover{
+    background-color: #17305f;
+}
+
+.greenCover{
+    background-color: #253f1a;
+}
+
+.purpleCover{
+    background-color: #662358;
+}
+
 .front, .page1, .page0 {
   border-bottom-right-radius: .5em;
   border-top-right-radius: .5em;
@@ -180,10 +246,6 @@ export default {
 .page1 > *{
     transform: scale(-1,1);
     
-}
-
-.page0{
-    background: #AC6027;
 }
 
 .book:hover .front {
