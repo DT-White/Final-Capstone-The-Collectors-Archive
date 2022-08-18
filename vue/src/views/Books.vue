@@ -1,10 +1,11 @@
 <template>
   <div id="booksView">
-      
+     
       <section>
-        <book-filter/>
+         
         <section>
-          <bookList @openBook="openBook" @addBook="newBook" @sendEmail="openEmail"/>
+          <book-filter id="searchBooks"/> 
+          <bookList @openBook="openTest" @addBook="newBook" @sendEmail="openEmail"/>
           <reading-list @openBook="openBook"/>
         </section>
       </section>
@@ -89,16 +90,18 @@ export default {
 
 <style>
 
+
+
 #booksView{
   display: flex;
   align-items: start;
-  justify-content: space-around;
+  justify-content: space-evenly;
   gap: 50px;
 }
 
 #booksView > section{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 20px;
   align-items: center;
 }

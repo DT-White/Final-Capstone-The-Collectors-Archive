@@ -1,3 +1,4 @@
+
 <template>
     <div @click="close" class="modal-backdrop" @mouseenter="page3Flipped = false">
         <div class="book" @click.stop >

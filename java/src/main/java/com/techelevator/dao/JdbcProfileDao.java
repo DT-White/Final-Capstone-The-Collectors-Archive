@@ -43,6 +43,7 @@ public class JdbcProfileDao implements ProfileDao{
 
     @Override
     public void addProfile(int userId) {
+
       try {
           String sql = "insert into profiles (user_id) " +
                   "values(?)";
