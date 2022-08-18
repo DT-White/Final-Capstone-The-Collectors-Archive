@@ -288,12 +288,14 @@ export default {
   right: 10%;
   max-height: 400px;
   overflow: hidden;
+
 }
 
 .profileDropdown {
   background: lightgray;
   padding: 20px;
-  margin: 10px;
+  margin-left: -90px;
+  position: absolute;
 }
 
 .portrait-wall {
