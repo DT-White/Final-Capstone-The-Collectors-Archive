@@ -71,7 +71,7 @@ export default {
       if (response.status === 200) {
         const books = response.data;
         for (let book of books){
-          switch (book.bookId % 5){
+          switch (book.isbn % 5){
             case 0:
               book.color = "purple"
               break;

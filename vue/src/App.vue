@@ -3,7 +3,7 @@
     <div id="appheader">
         <div id="logoAndSearch">
         <img id="logoImage" src="../resources/logo12.jpg" alt="" />
-        <book-filter id="searchBooks"/>
+        <!-- <book-filter id="searchBooks"/> -->
         </div>
         
       <h1 id="header">The Collector's Archive</h1>
@@ -23,20 +23,24 @@
             >Logout</router-link
           >
         </button> -->
-        <profile/>
+        
+          
+        <profile />
       </div>
     </div>
-    <router-view />
+    <div id="main-page">
+      <router-view />
+    </div>
   </div>
 </template>
 <script>
 import profile from '@/components/Profile';
-import bookFilter from "@/components/BookFilter";
+// import bookFilter from "@/components/BookFilter";
 
 
 export default {
   components: { profile,
-                bookFilter
+                // bookFilter
                
 },
   
@@ -52,14 +56,27 @@ export default {
   grid-template-rows: 1;
 }
 
-body {
-  background-image: url("../resources/testBackground5.jpg");
-  background-position: center center;
-  background-size: cover;
-  min-height: 100%;
-  
-
+html {
+  height: 90%;
 }
+
+body {
+  background-image: url("../resources/background3.jpg");
+  background-position: center center;
+  background-size: 100% 100%;
+  min-height: 100%;
+  backdrop-filter: blur(2px);
+}
+
+/* div#profile-marker {
+  background-color: ivory !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left:50px;
+    height: 200px;
+    width: 200px;
+} */
 
 div#app {
   display: flex;
@@ -69,11 +86,16 @@ div#appheader {
   display: flex;
   justify-content: space-between;
 }
+
 h1#header {
+  position:absolute;
+  display: flex;
+  padding-left: 25%;
   text-align: center;
   font-family: "Fredoka One", cursive;
   font-size: 70px;
   color: white;
+  font-weight: 500;
 }
 img#logoImage {
   height: 200px;
@@ -97,7 +119,6 @@ button#buttons {
 .tooltip {
   position: relative;
   display: inline-block;
-  
 }
 
 .icon .tooltiptext {

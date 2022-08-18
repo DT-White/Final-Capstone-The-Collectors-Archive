@@ -243,16 +243,19 @@ export default {
       }
       this.updatingPicture = files[0];
     },
-    mounted() {
-      profileService.getProfile(this.$store.state.user.id).then((response) => {
-        console.log(response.data);
-        if (response.status === 200 && response.data.firstName) {
-          this.profile = response.data;
-          this.isEditing = false;
-        }
-      });
-    },
+   updateStoreProfile(){
+       this.$store.commit('SET_PROFILE', this.profile)
+   }
   },
+    
+    created(){
+        profileService.getProfile(this.$store.state.user.id).then(response => {
+            if (response.status === 200 && response.data.firstName){
+                this.profile = response.data;
+                this.isEditing = false;
+            }
+        })
+    },
 };
 </script>
 
