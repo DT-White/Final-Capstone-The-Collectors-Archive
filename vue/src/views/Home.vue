@@ -21,10 +21,13 @@ created(){
     goToBooks(){
       this.transition = true;
       return setTimeout(function() {
-        return this.$router.push({name:'books'})
+        this.goToPage()
       }, 1000)
       
-    }
+    },
+    goToPage() {
+      this.$router.push({name:'books'})
+    },
   }
 };
 </script>

@@ -10,4 +10,5 @@ public interface ProfileDao {
     void addProfile(int userId);
     void updateProfile(Profile profile);
     List<Profile> getFriendsProfile(String username);
+    Profile getFriendsProfileById(int friendId);
 }

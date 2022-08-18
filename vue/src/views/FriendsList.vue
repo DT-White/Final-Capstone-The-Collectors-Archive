@@ -1,5 +1,6 @@
 <template>
   <div id="friendsListView">
+      
       <friends-list />
   </div>
 </template>

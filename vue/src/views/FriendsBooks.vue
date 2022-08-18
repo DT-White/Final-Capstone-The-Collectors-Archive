@@ -1,6 +1,6 @@
 <template>
   <div id="friendsList">
-    <friends-Book-List  @openBook="openBook"/>
+    <friends-Book-List :profile="this.profile" @openBook="openBook"/>
     <Modal :book="bookToOpen" v-show="isModalVisible" @close="closeModal" />
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 import friendsBookList from "@/components/BookList";
 import Modal from "@/components/BookDetail";
-
+import profileService from "@/services/ProfileService";
 
 export default {
   name:'friendsCollection',
@@ -17,10 +17,12 @@ export default {
     Modal,
   },
 
-
-  computed: {
-  
-
+  created() {
+    profileService.getFriendProfile(this.$route.params).then((response) => {
+        if(response.status === 200) {
+          this.profile = response.data
+        }
+      })
   },
 
    methods: {
@@ -36,7 +38,8 @@ export default {
   data(){
     return {
       isModalVisible: false,
-      bookToOpen: {}
+      bookToOpen: {},
+      profile: {}
     }
   }
 };
@@ -47,10 +50,11 @@ span.icon {
   display: hidden;
 }
 
+div#main
 div#friendsList {
   max-width: 50vw;
   display: flex;
   justify-content: center;
-  
+  flex-direction: column;
 }
 </style>

@@ -2,7 +2,7 @@
   <div id="app">
     <div id="appheader">
         <div id="logoAndSearch">
-        <img id="logoImage" src="../resources/logo12.jpg" alt="" />
+        <img id="logoImage" src="../resources/logo12.jpg" alt="" @click="goToBooksPage"/>
         <!-- <book-filter id="searchBooks"/> -->
         </div>
         

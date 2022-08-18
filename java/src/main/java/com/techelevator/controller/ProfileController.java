@@ -27,7 +27,7 @@ public class ProfileController {
         return profileDao.getProfiles();
     }
 
-    @RequestMapping (path = "/profiles/{id}", method = RequestMethod.GET)
+    @RequestMapping (path = "/profile", method = RequestMethod.GET)
     public Profile getProfileByUserId(Principal principal){
         int userId = userDao.findIdByUsername(principal.getName());
         return profileDao.getProfileByUserId(userId);
@@ -55,5 +55,10 @@ public class ProfileController {
     @RequestMapping(path="/friends", method = RequestMethod.GET)
     public List<Profile> getFriendsProfile(Principal principal) {
         return profileDao.getFriendsProfile(principal.getName());
+    }
+
+    @RequestMapping (path = "/profile/{id}", method = RequestMethod.GET)
+    public Profile getFriendsProfileById(@PathVariable("id") int friendId){
+        return profileDao.getFriendsProfileById(friendId);
     }
 }

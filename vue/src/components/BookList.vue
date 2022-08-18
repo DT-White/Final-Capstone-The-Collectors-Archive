@@ -7,12 +7,13 @@
     <div class="shelf">
       <!-- <div class="line"> -->
       <div class="shelf-top">
-        <span class="icon" v-on:click="$emit('sendEmail', $event)">
-          <span class="tooltiptext">Add Friend</span>
+        <span v-show="this.$route.path == '/books'" class="iconEmail icon" v-on:click="$emit('sendEmail', $event)">
+          <span class="tooltiptext">Send Email</span>
         </span>
         <div class="shelf-label">
           <div class="nail"></div>
-            <h2>LIBRARY</h2>
+            <h2 v-if="this.$route.path != '/books'">{{this.profile.firstName}}</h2>
+            <h2 v-show="this.$route.path == '/books'">LIBRARY</h2>
           <div class="nail"></div>
         </div>
         <span v-show="this.$route.path == '/books'" class="icon" v-on:click="$emit('addBook', $event)">
@@ -45,11 +46,16 @@
 <script>
 import bookService from "@/services/BookService";
 
+
 export default {
+  props: {
+    profile:{}
+    },
   components: {  },
   data() {
     return {
       books: [],
+      user: [],
       draggingBook: null,
     };
   },
@@ -100,6 +106,8 @@ export default {
 
 
   methods: {
+   
+
     setBookColors(books){
       for (let book of books){
           switch (book.isbn % 5){
@@ -222,7 +230,7 @@ export default {
 .shelf-label{
   
   background-color: rgb(211, 187, 55);
-  width: 175px;
+  width: max-content;
   border-radius: 10% / 50%;
   margin: 5px 5px 5px 5px;
   display: flex;

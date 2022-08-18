@@ -5,7 +5,7 @@
          
         <section>
           <book-filter id="searchBooks"/> 
-          <bookList @openBook="openTest" @addBook="newBook" @sendEmail="openEmail"/>
+          <bookList @openBook="openBook" @addBook="newBook" @sendEmail="openEmail"/>
           <reading-list @openBook="openBook"/>
         </section>
       </section>

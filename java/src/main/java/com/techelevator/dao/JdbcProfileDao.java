@@ -78,6 +78,18 @@ public class JdbcProfileDao implements ProfileDao{
         return friendsProfiles;
     }
 
+    @Override
+    public Profile getFriendsProfileById(int friendId) {
+        Profile profile = null;
+        String sql = "select profile_id, first_name, last_name, email, profile_picture_url, user_id " +
+                "from profiles where user_id = ?";
+        SqlRowSet rowset = jdbcTemplate.queryForRowSet(sql, friendId);
+        if (rowset.next()){
+            profile = mapRowToProfile(rowset);
+        }
+        return profile;
+    }
+
     private Profile mapRowToProfile(SqlRowSet sqlRowSet){
         Profile profile = new Profile();
         profile.setProfileId(sqlRowSet.getInt("profile_id"));
