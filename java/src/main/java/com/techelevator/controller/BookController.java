@@ -31,7 +31,7 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/books/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/friends/{id}", method = RequestMethod.GET)
     public List<Book> getFriendBookList(@PathVariable("id") int userId) {return bookDao.getFriendBookList(userId);}
 
     @ResponseStatus(HttpStatus.CREATED)

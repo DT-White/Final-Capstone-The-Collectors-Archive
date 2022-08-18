@@ -17,10 +17,13 @@ public interface UserDao {
 
     boolean create(String username, String password, String role);
 
+    void addFriends (String username, int friendUserId);
+
     void addTimeAccessed(String username);
 
     void updateTimeAccessed(String username);
 
+    List<Integer> getFriendsUserIds (String username);
 
 
 }

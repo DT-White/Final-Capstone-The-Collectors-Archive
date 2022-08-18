@@ -105,6 +105,18 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
+    public void addFriends(String username, int friendUserId) {
+        int userId = findIdByUsername(username);
+        String sql = "insert into friends (first_user, second_user) " +
+                "values(?,?), (?,?)";
+        jdbcTemplate.update(sql,userId,friendUserId, friendUserId, userId);
+
+//        String sql2 = "insert into friends (first_user, second_user) " +
+//                "values(?,?)";
+//        jdbcTemplate.update(sql,friendUserId, userId);
+    }
+
+    @Override
     public void addTimeAccessed(String username) {
 
         String sql = "insert into time_accessed (user_id, time_update) " +
@@ -121,6 +133,19 @@ public class JdbcUserDao implements UserDao {
         String sql = "update time_accessed SET time_update = current_timestamp WHERE user_id = ?";
         int userId = findIdByUsername(username);
         jdbcTemplate.update(sql, userId);
+    }
+
+    @Override
+    public List<Integer> getFriendsUserIds(String username) {
+        List<Integer> listOfFriendsIds = new ArrayList<>();
+        int userId = findIdByUsername(username);
+        String sql = "SELECT second_user FROM friends " +
+                "WHERE first_user = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        while (rowSet.next()) {
+            listOfFriendsIds.add(rowSet.getInt("second_user"));
+        }
+        return listOfFriendsIds;
     }
 
     private LocalDateTime getTimeAccessed(Long userId) {

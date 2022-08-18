@@ -294,7 +294,7 @@ export default {
 .profileDropdown {
   background: lightgray;
   padding: 20px;
-  margin-left: -90px;
+  margin-left: -95px;
   position: absolute;
 }
 
@@ -314,7 +314,7 @@ export default {
   /* border-color: rgb(211, 187, 55); */
   border-color: #ffde59;
   background-color: rgb(231, 229, 213);
-  border-width: 30px;
+  border-width: 20px;
   border-style: solid;
   width: 150px;
   height: 150px;

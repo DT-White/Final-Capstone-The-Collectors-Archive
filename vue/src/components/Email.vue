@@ -82,4 +82,17 @@ export default {
     height: 150px !important;
 }
 
+.iconEmail {
+  background: url("../../resources/email3.png");
+  background-repeat: no-repeat;
+  height: 25px;
+  width: 25px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  margin: 5px;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
 </style>

@@ -12,9 +12,11 @@ import java.util.List;
 public class JdbcProfileDao implements ProfileDao{
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserDao userDao;
 
-    public JdbcProfileDao(JdbcTemplate jdbcTemplate){
+    public JdbcProfileDao(JdbcTemplate jdbcTemplate, UserDao userDao){
         this.jdbcTemplate = jdbcTemplate;
+        this.userDao = userDao;
     }
 
     @Override
@@ -58,6 +60,34 @@ public class JdbcProfileDao implements ProfileDao{
                 "where user_id = ?";
         jdbcTemplate.update(sql, profile.getFirstName(), profile.getLastName(), profile.getEmail(),
                 profile.getProfilePictureUrl(), profile.getUserId());
+    }
+
+    @Override
+    public List<Profile> getFriendsProfile(String username) {
+        List<Profile> friendsProfiles = new ArrayList<>();
+        List<Integer> friendsIds = userDao.getFriendsUserIds(username);
+
+        for(int friendId : friendsIds) {
+            String sql = "Select profile_id, first_name, last_name, profile_picture_url, email, user_id from profiles " +
+                    "Where user_id = ?";
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, friendId);
+            while (rowSet.next()){
+                friendsProfiles.add(mapRowToProfile(rowSet));
+            }
+        }
+        return friendsProfiles;
+    }
+
+    @Override
+    public Profile getFriendsProfileById(int friendId) {
+        Profile profile = null;
+        String sql = "select profile_id, first_name, last_name, email, profile_picture_url, user_id " +
+                "from profiles where user_id = ?";
+        SqlRowSet rowset = jdbcTemplate.queryForRowSet(sql, friendId);
+        if (rowset.next()){
+            profile = mapRowToProfile(rowset);
+        }
+        return profile;
     }
 
     private Profile mapRowToProfile(SqlRowSet sqlRowSet){

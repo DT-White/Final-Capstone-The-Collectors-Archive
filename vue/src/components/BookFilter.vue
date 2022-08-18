@@ -3,12 +3,12 @@
     <button id="searchBooksButton" v-on:click="hidden = !hidden">
       {{ hidden === true ? "Search Books" : "Hide Search" }}
     </button>
-    <form id="bookFilterForm" v-bind:class="{ hidden }">
-      <div id="shelf-top">
-        <div id="shelf-label">
-          <div id="nail"></div>
+    <form class="shelf" id="bookFilterForm" v-bind:class="{ hidden }">
+      <div class="shelf-top">
+        <div class="shelf-label">
+          <div class="nail"></div>
           <h2>Filter Books</h2>
-          <div id="nail"></div>
+          <div class="nail"></div>
         </div>
       </div>
       <div id="formFields">
@@ -249,17 +249,6 @@ h2 {
   color: white;
 }
 
-/* #bookFilterForm {
-  display: flex;
-  min-width: 200px;
-  max-width: 200px;
-  background-color: #c8daaa;
-  flex-direction: column;
-  padding: 10px;
-  gap: 10px;
-  max-height: auto;
-  border-style: inset;
-} */
 
 #ISBNfield {
   display: flex;
@@ -270,14 +259,6 @@ h2 {
   flex-grow: 2;
 }
 
-#bookFilterForm {
-  border-width: 0px 25px 25px 25px;
-  border-color: #755d44;
-  border-style: solid;
-  box-shadow: 0px 10px 18px #1d1611;
-  background: linear-gradient(#3b2f23 12%, #a88d6e 20%, #3d3023);
-  border-radius: 5px;
-}
 
 #shelf-top {
   background-color: #755d44;

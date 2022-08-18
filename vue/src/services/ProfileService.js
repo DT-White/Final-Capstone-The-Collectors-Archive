@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export default{
-    getProfile(userId){
-        return axios.get(`/profiles/${userId}`);
+    getProfile(){
+        return axios.get('/profile');
     },
 
     updateProfile(profile){
@@ -11,5 +11,17 @@ export default{
 
     createProfile(profile){
         return axios.post('/profiles', profile)
+    },
+
+    addFriend(friendUserId){
+        return axios.post('/friends', friendUserId)
+    },
+
+    getFriendsProfiles(){
+        return axios.get('/friends')
+    },
+
+    getFriendProfile(friendId){
+        return axios.get(`/profile/${friendId}`)
     }
 }
