@@ -1,13 +1,14 @@
 <template>
   <div id="booksView">
-      <book-filter/>
+      
       <section>
-        <profile/>
+        <book-filter/>
         <section>
-          <bookList @openBook="openBook" @addBook="newBook" @sendEmail="openEmail"/>
+          <bookList @openBook="openTest" @addBook="newBook" @sendEmail="openEmail"/>
           <reading-list @openBook="openBook"/>
         </section>
       </section>
+      
 
     <book-detail :book="bookToOpen"
       v-show="isBookDetailVisible"
@@ -22,6 +23,10 @@
       v-if="isEmailVisible"
       @close="closeModal" />
 
+      <test :book="bookToOpen"
+      v-show="isTestVisible"
+      @close="closeModal" />
+
   </div>
 </template>
 
@@ -31,11 +36,10 @@ import bookList from "@/components/BookList";
 import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
 import bookDetail from "@/components/BookDetail";
-import profile from '@/components/Profile';
 import addBook from '@/components/AddBook';
 import email from '@/components/Email';
-import profileService from '@/services/ProfileService'
-
+import profileService from '@/services/ProfileService';
+import test from '@/components/test';
 export default {
   components: { 
     addBook,
@@ -43,8 +47,9 @@ export default {
     bookFilter,
     readingList,
     bookDetail ,
-    profile,
+  //  profile,
     email,
+    test
   },
 
   methods: {
@@ -52,10 +57,16 @@ export default {
       this.bookToOpen = book;
       this.isBookDetailVisible = true;
     },
+    openTest(event, book) {
+      this.bookToOpen = book;
+      this.isTestVisible = true;
+    },
+
     closeModal() {
       this.isBookDetailVisible = false;
       this.isNewBookVisible = false;
       this.isEmailVisible = false;
+      this.isTestVisible = false
     },
 
     newBook(){
@@ -80,6 +91,7 @@ export default {
       isBookDetailVisible: false,
       isNewBookVisible: false,
       isEmailVisible: false,
+      isTestVisible: false,
       bookToOpen: {}
     }
   }
@@ -91,6 +103,7 @@ export default {
 #booksView{
   display: flex;
   align-items: start;
+  justify-content: space-around;
   gap: 50px;
 }
 
@@ -105,6 +118,8 @@ export default {
   display: flex;
   gap:50px;
   margin-right: 30px;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
 

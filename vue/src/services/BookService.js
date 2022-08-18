@@ -23,6 +23,10 @@ export default {
 
     removeBookFromReadingList(id){
         return axios.delete(`http://localhost:8080/reading-list/${id}`,);
+    },
+
+    getFriendBookList(id){
+        return axios.get(`http://localhost:8080/books/${id}`)
     }
 
 }

@@ -192,10 +192,10 @@ export default {
 
 .shelf{
   border-width:0px 25px 25px 25px;
-  border-color:#755D44;
+  border-color:#4e3823;
   border-style: solid;
   box-shadow: 0px 10px 18px #1d1611;
-  background: linear-gradient(#3b2f23 10%, #534331 20%, #4e3e2d);
+  background: linear-gradient(#3a291a 10%, #4e3823 20%, #3a291a);
   border-radius: 5px;
 }
 
@@ -207,7 +207,7 @@ export default {
 } */
 
 .shelf-top{
-  background-color: #755D44;
+  background-color: #4e3823;
   margin: 0px 1px 30px 1px;
   display: flex;
   justify-content: center;

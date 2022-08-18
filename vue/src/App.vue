@@ -4,7 +4,7 @@
         <img id="logoImage" src="../resources/logo12.jpg" alt="" />
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
-        <button id="buttons">
+        <!-- <button id="buttons">
           <router-link
             v-bind:to="{ name: 'books' }"
             v-if="$store.state.token != ''"
@@ -18,19 +18,42 @@
             v-if="$store.state.token != ''"
             >Logout</router-link
           >
-        </button>
+        </button> -->
+        <profile/>
       </div>
     </div>
-    <router-view />
+    <div id="main-page">
+      <router-view />
+    </div>
   </div>
 </template>
+<script>
+import profile from '@/components/Profile';
+
+
+export default {
+  components: { profile },
+  
+}
+</script>
+
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap");
 
+html{
+  height: 90%;
+  
+}
+
 body {
-  background-image: url("../resources/test.jpg");
-  background-position: bottom right;
-  background-size: 10px 20px;
+  background-image: url("../resources/background3.jpg");
+  background-position: center center;
+  background-size: 100% 100%;
+  min-height: 100%;
+  backdrop-filter: blur(2px);
+}
+
+#main-page{
 }
 
 div#app {
@@ -45,6 +68,9 @@ h1#header {
   text-align: center;
   font-family: "Fredoka One", cursive;
   font-size: 70px;
+  color: white;
+  font-weight: 500;
+  
 }
 img#logoImage {
   height: 200px;

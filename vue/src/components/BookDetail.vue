@@ -105,6 +105,9 @@ export default {
   border-style: hidden;
   border-width: 0px 0px 0px 1px;
   box-shadow: -5px 0px 40px #1d1611;
+  justify-content: center;
+  align-items: center;
+  
 }
 
 #cover {   
