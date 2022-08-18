@@ -1,8 +1,8 @@
 <template>
   <div id="booksView">
-      
+     <!-- <book-filter id="searchBooks"/>  -->
       <section>
-        <book-filter/>
+        
         <section>
           <bookList @openBook="openBook" @addBook="newBook"/>
           <reading-list @openBook="openBook"/>
@@ -24,7 +24,7 @@
 <script>
 
 import bookList from "@/components/BookList";
-import bookFilter from "@/components/BookFilter";
+// import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
 // import Modal from "@/components/BookDetail";
 import bookDetail from "@/components/BookDetail";
@@ -34,7 +34,7 @@ export default {
   components: { 
     addBook,
     bookList,
-    bookFilter,
+    // bookFilter,
     readingList,
     // Modal,
     bookDetail 
@@ -66,6 +66,8 @@ export default {
 </script>
 
 <style>
+
+
 
 #booksView{
   display: flex;

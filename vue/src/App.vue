@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <div id="appheader">
+        <div id="logoAndSearch">
         <img id="logoImage" src="../resources/logo12.jpg" alt="" />
+        <book-filter id="searchBooks"/>
+        </div>
+        
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
         <!-- <button id="buttons">
@@ -27,16 +31,26 @@
 </template>
 <script>
 import profile from '@/components/Profile';
+import bookFilter from "@/components/BookFilter";
 
 
 export default {
-  components: { profile },
+  components: { profile,
+                bookFilter
+               
+},
   
 }
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap");
+
+#logoAndSearch {
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: 1;
+}
 
 body {
   background-image: url("../resources/testBackground5.jpg");

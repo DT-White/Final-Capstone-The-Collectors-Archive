@@ -1,94 +1,103 @@
 <template>
   <div>
-    <button v-on:click="hidden = !hidden">
+    <button id="searchBooksButton" v-on:click="hidden = !hidden">
       {{ hidden === true ? "Search Books" : "Hide Search" }}
     </button>
     <form id="bookFilterForm" v-bind:class="{ hidden }">
-      <h2>Filter Books</h2>
-
-      <input
-        type="text"
-        v-on:change="updateStoreFilter()"
-        v-model="filter.isbn"
-        placeholder="ISBN"
-      />
-
-      <input
-        type="text"
-        id="title"
-        v-on:change="updateStoreFilter()"
-        v-model="filter.title"
-        placeholder="Title"
-      />
-      <input
-        type="text"
-        id="author"
-        v-on:change="updateStoreFilter()"
-        v-model="filter.author"
-        placeholder="Author"
-      />
-
-      <input
-        type="text"
-        v-on:change="updateStoreFilter()"
-        v-model="filter.keyword"
-        placeholder="Key Words separated by commas"
-      />
-
-      <div id="filterDates">
-        <p id="dateLabel">Publishing Date</p>
-        <span>
-          <p>Start Date:</p>
-          <input
-            type="date"
-            id="startDate"
-            v-on:change="updateStoreFilter()"
-            v-model="filter.startDate"
-          />
-        </span>
-
-        <span>
-          <p>End Date:</p>
-          <input
-            type="date"
-            id="endDate"
-            v-on:change="updateStoreFilter()"
-            v-model="filter.endDate"
-          />
-        </span>
+      <div id="shelf-top">
+        <div id="shelf-label">
+          <div id="nail"></div>
+          <h2>Filter Books</h2>
+          <div id="nail"></div>
+        </div>
       </div>
-
-      <div class="multi-selector">
-        <div class="select-field">
+      <div id="formFields">
+        <input
+          id="ISBNfield"
+          type="text"
+          v-on:change="updateStoreFilter()"
+          v-model="filter.isbn"
+          placeholder="ISBN"
+        />
+        <p>
           <input
             type="text"
-            name="genreName"
-            placeholder="Select Genres"
-            id="genreName"
-            class="input-select"
-            disabled
-            v-model="genreTextField"
+            id="title"
+            v-on:change="updateStoreFilter()"
+            v-model="filter.title"
+            placeholder="Title"
           />
-          <span class="downArrow" v-on:click="showGenres = !showGenres">{{
-            showGenres ? "&blacktriangle;" : "&blacktriangledown;"
-          }}</span>
-        </div>
-        <div
-          class="genreList"
-          v-for="genre in filter.genres"
-          v-show="showGenres"
-          v-bind:key="genre.id"
-          v-bind:class="{ selected: genre.selected }"
-        >
-          <label for="genreName" class="genreOption">
+        </p>
+        <input
+          type="text"
+          id="author"
+          v-on:change="updateStoreFilter()"
+          v-model="filter.author"
+          placeholder="Author"
+        />
+        <p>
+          <input
+            type="text"
+            v-on:change="updateStoreFilter()"
+            v-model="filter.keyword"
+            placeholder="Key Words separated by commas"
+          />
+        </p>
+        <div id="filterDates">
+          <p id="dateLabel">Publishing&nbsp;Date</p>
+          <span>
+            <p id="startDatelabel">Start Date:</p>
             <input
-              type="checkbox"
-              v-on:click="toggleSelected(genre)"
-              name="genreName"
-              id="genreName"
+              type="date"
+              id="startDate"
+              v-on:change="updateStoreFilter()"
+              v-model="filter.startDate"
             />
-            {{ genre.name }}
-          </label>
+          </span>
+
+          <span>
+            <p id="endDateLabel">End Date:</p>
+            <input
+              type="date"
+              id="endDate"
+              v-on:change="updateStoreFilter()"
+              v-model="filter.endDate"
+            />
+          </span>
+        </div>
+
+        <div class="multi-selector">
+          <div class="select-field">
+            <input
+              type="text"
+              name="genreName"
+              placeholder="Select Genres"
+              id="genreName"
+              class="input-select"
+              disabled
+              v-model="genreTextField"
+            />
+            <span class="downArrow" v-on:click="showGenres = !showGenres">{{
+              showGenres ? "&blacktriangle;" : "&blacktriangledown;"
+            }}</span>
+          </div>
+          <div
+            class="genreList"
+            v-for="genre in filter.genres"
+            v-show="showGenres"
+            v-bind:key="genre.id"
+            v-bind:class="{ selected: genre.selected }"
+          >
+            <label for="genreName" class="genreOption">
+              <input
+                type="checkbox"
+                v-on:click="toggleSelected(genre)"
+                name="genreName"
+                id="genreName"
+              />
+              {{ genre.name }}
+            </label>
+          </div>
         </div>
       </div>
     </form>
@@ -162,7 +171,6 @@ export default {
   },
 
   computed: {
-    
     genreTextField() {
       let textField = "";
       this.filter.genres.forEach((genre) => {
@@ -170,7 +178,7 @@ export default {
           if (textField === "") {
             textField = genre.name;
           } else {
-            textField =textField + ", " + genre.name
+            textField = textField + ", " + genre.name;
           }
         }
       });
@@ -194,7 +202,54 @@ export default {
 
 
 <style>
-#bookFilterForm {
+#formFields {
+  justify-content: center;
+  align-items: center;
+}
+
+#shelf-label h2 {
+  font-size: 1.2rem;
+  color: rgb(77, 68, 18);
+  margin: 1px 3px 1px 3px;
+}
+
+h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+#searchBooksButton {
+  margin: auto;
+  width: 80px;
+  height: 80px;
+  background: lightgrey;
+  border-radius: 50%;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+}
+
+#searchBooksButton:hover {
+  cursor: pointer;
+}
+
+#dateLabel {
+  color: white;
+  white-space: nowrap;
+}
+
+#startDatelabel {
+  color: white;
+}
+
+#endDateLabel {
+  color: white;
+}
+
+/* #bookFilterForm {
   display: flex;
   min-width: 200px;
   max-width: 200px;
@@ -204,6 +259,52 @@ export default {
   gap: 10px;
   max-height: auto;
   border-style: inset;
+} */
+
+#ISBNfield {
+  display: flex;
+}
+
+#bookFilterForm h2 {
+  text-align: center;
+  flex-grow: 2;
+}
+
+#bookFilterForm {
+  border-width: 0px 25px 25px 25px;
+  border-color: #755d44;
+  border-style: solid;
+  box-shadow: 0px 10px 18px #1d1611;
+  background: linear-gradient(#3b2f23 12%, #a88d6e 20%, #3d3023);
+  border-radius: 5px;
+}
+
+#shelf-top {
+  background-color: #755d44;
+  margin: 0px 1px 30px 1px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 10px 18px -12px #1d1611;
+}
+
+#shelf-label {
+  background-color: rgb(211, 187, 55);
+  width: 175px;
+  border-radius: 10% / 50%;
+  margin: 5px 5px 5px 5px;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px 0px 10px;
+}
+
+#nail {
+  background-color: rgb(156, 138, 37);
+  width: 5px;
+  height: 5px;
+  border-width: 2.5px;
+  border-style: solid;
+  border-color: rgb(150, 132, 35);
+  border-radius: 50%;
 }
 
 #filterDates > span {
@@ -227,8 +328,6 @@ export default {
   font-size: 0.8rem;
   font-weight: 700;
 }
-
-
 
 #bookFilterForm.hidden {
   display: none;
