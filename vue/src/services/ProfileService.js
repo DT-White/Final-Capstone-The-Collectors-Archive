@@ -11,5 +11,13 @@ export default{
 
     createProfile(profile){
         return axios.post('/profiles', profile)
+    },
+
+    addFriend(friendUserId){
+        return axios.post('/friends', friendUserId)
+    },
+
+    getFriendsProfiles(){
+        return axios.get('/friends')
     }
 }

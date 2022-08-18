@@ -12,7 +12,7 @@
             <h2>LIBRARY</h2>
           <div class="nail"></div>
         </div>
-        <span class="icon" v-on:click="$emit('addBook', $event)">
+        <span v-show="this.$route.path == '/books'" class="icon" v-on:click="$emit('addBook', $event)">
           <span class="tooltiptext">ADD BOOK</span>
         </span>
       <!-- </div> -->
@@ -76,6 +76,7 @@ export default {
   },
 
   created() {
+    if(this.$route.path == "/books") {
     bookService.getBooks().then((response) => {
       if (response.status === 200) {
         const books = this.setBookColors(response.data);
@@ -83,6 +84,15 @@ export default {
         this.books = books;
       }
     });
+    } else {
+      bookService.getFriendBookList(this.$route.params.id).then((response) => {
+      if (response.status === 200) {
+        const books = this.setBookColors(response.data);
+        this.$store.commit("GET_BOOK_LIST", books);
+        this.books = books;
+      }
+    });
+    }
   },
 
 

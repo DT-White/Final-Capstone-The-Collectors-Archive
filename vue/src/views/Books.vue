@@ -26,7 +26,6 @@
 import bookList from "@/components/BookList";
 import bookFilter from "@/components/BookFilter";
 import readingList from "@/components/ReadingList";
-// import Modal from "@/components/BookDetail";
 import bookDetail from "@/components/BookDetail";
 import addBook from '@/components/AddBook';
 
@@ -36,7 +35,6 @@ export default {
     bookList,
     bookFilter,
     readingList,
-    // Modal,
     bookDetail 
   },
 

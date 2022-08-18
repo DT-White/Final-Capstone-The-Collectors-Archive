@@ -26,7 +26,7 @@ export default {
     },
 
     getFriendBookList(id){
-        return axios.get(`http://localhost:8080/books/${id}`)
+        return axios.get(`http://localhost:8080/friends/${id}`)
     }
 
 }
