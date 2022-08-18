@@ -148,7 +148,7 @@
                   disabled
                   v-model="genreTextField"
                 />
-                <span class="downArrow" v-on:click="showGenres = !showGenres">{{
+                <span id="downArrow" v-on:click="showGenres = !showGenres">{{
                   showGenres ? "&blacktriangle;" : "&blacktriangledown;"
                 }}</span>
               </div>
@@ -589,4 +589,18 @@ textarea {
   border-style: solid;
   border-color: transparent black transparent transparent;
 } */
+
+.multi-selector {
+  width: max-content;
+  max-height: 20vh;
+  overflow: scroll;
+  
+}
+
+.select-field {
+  /* position: absolute; */
+  width: max-content;
+  height: 20px;
+  
+}
 </style>

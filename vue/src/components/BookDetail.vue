@@ -107,6 +107,7 @@ export default {
   box-shadow: -5px 0px 40px #1d1611;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   
 }
 
