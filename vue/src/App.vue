@@ -1,11 +1,16 @@
 <template>
   <div id="app">
     <div id="appheader">
-        <div id="logoAndSearch">
-        <img id="logoImage" src="../resources/logo12.jpg" alt="" @click="goToBooksPage"/>
+      <div id="logoAndSearch">
+        <img
+          id="logoImage"
+          @click="goToHome"
+          src="../resources/logo12.jpg"
+          alt=""
+        />
         <!-- <book-filter id="searchBooks"/> -->
-        </div>
-        
+      </div>
+
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
         <!-- <button id="buttons">
@@ -23,8 +28,7 @@
             >Logout</router-link
           >
         </button> -->
-        
-          
+
         <profile />
       </div>
     </div>
@@ -34,18 +38,23 @@
   </div>
 </template>
 <script>
-import profile from '@/components/Profile';
+import profile from "@/components/Profile";
 // import bookFilter from "@/components/BookFilter";
-
 
 export default {
   components: { profile },
   methods: {
     goToBooksPage() {
-      return this.$router.push('/books')
-    }
-  }
-}
+      return this.$router.push("/books");
+    },
+
+
+    goToHome() {
+        return this.$router.push({ name: "books" });
+      },
+    },
+  
+};
 </script>
 
 <style>
@@ -91,7 +100,7 @@ div#appheader {
 }
 
 h1#header {
-  position:absolute;
+  position: absolute;
   display: flex;
   padding-left: 25%;
   text-align: center;
@@ -99,6 +108,7 @@ h1#header {
   font-size: 70px;
   color: white;
   font-weight: 500;
+  cursor: pointer;
 }
 img#logoImage {
   height: 200px;
