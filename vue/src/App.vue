@@ -140,4 +140,8 @@ button#buttons {
 .icon:hover .tooltiptext {
   visibility: visible;
 }
+
+html{
+  overflow:auto !important
+}
 </style>

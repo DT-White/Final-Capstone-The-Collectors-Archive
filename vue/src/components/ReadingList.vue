@@ -14,7 +14,7 @@
     <section class="books">
       <div v-bind:key="currentBook.isbn" v-for="currentBook in booksList" draggable 
         @dragstart="startDrag($event, currentBook)"
-        @dblclick="$emit('openBook',$event, currentBook)"
+        @click="$emit('openBook',$event, currentBook)"
         v-bind:class="{purple: currentBook.color == 'purple',
         blue: currentBook.color == 'blue',
         orange: currentBook.color == 'orange',

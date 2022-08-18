@@ -20,10 +20,9 @@ created(){
   methods:{
     goToBooks(){
       this.transition = true;
-      return setTimeout(function() {
-        return this.$router.push({name:'books'})
-      }, 1000)
-      
+      setTimeout(function(scope) {
+        scope.$router.push({path:'/books'})
+      }, 1000, this)
     }
   }
 };
@@ -39,15 +38,19 @@ created(){
   left: -10%;
   top: -10%;
   position: absolute;
-  -webkit-transition: transform 2s ease-in-out;
-  transition: transform 2s ease-in-out;
+  -webkit-transition: transform 1s ease-in;
+  transition: transform 1s ease-in;
+  transform-origin: 54% 46%;
+  overflow: hidden;
 }
 
 .main-page{
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
+
 
 .home img{
   position: absolute;
@@ -59,8 +62,8 @@ created(){
 }
 
 .transition:hover{
-  transform: scale(10);
-  -webkit-transform: scale(10);
+  transform: scale(2);
+  -webkit-transform: scale(2);
 }
 
 </style>

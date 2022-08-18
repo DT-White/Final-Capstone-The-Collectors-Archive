@@ -11,24 +11,30 @@
                 greenCover: book.color == 'green',
                 }"
             ></div>
-            <div class="page4 clickable" >
+            <div class="page4 " >
                 <p id="bookSummary">
                 {{ summary2 }}
                 </p>
             </div>
-            <div class="page3 clickable"
+            <div class="page3 "
             :class="{flipped: page3Flipped}">
                 <p id="bookSummary">
                 {{ summary2 }}
                 </p>
             </div>
-            <div class="page2" :class="{clickable: summary2, flipped: page3Flipped}" @click="page3Flipped = true" >
+            <div class="page2" :class="{clickable: summary2, flipped: page3Flipped}"  >
                 <p id="summaryTitle">Summary</p>
                 <p id="bookSummary">
                 {{ summary1 }}
                 </p>
             </div>
-            <div class="page1">
+            <!-- <div class="page1 "
+            :class="{flipped: !page3Flipped, covered: !page3Flipped}">
+                <p id="bookSummary">
+                {{ summary2 }}
+                </p>
+            </div> -->
+            <div class="page1" :class="{covered:page3Flipped}">
                 <h2 id="bookTitle">{{ book.title ? book.title : "title" }}</h2>
                 <div id="author">Author(s): 
                 <h3 id="bookAuthor">{{ book.author ? book.author : "author" }}</h3></div>
@@ -200,7 +206,7 @@ export default {
   height: 500px;
   top: 0; left: 0;
   transform-origin: left center;
-  transition: transform .5s ease-in-out, box-shadow .35s ease-in-out;
+  transition: transform .5s ease-in-out, box-shadow .35s ease-in-out, display .5s ease-in-out;
   margin: 0;
   padding: 0;
 }
@@ -295,7 +301,11 @@ export default {
 }
 
 .flipped{
-  transform: rotateY(-158deg) scale(1.1);
+  transform: rotateY(-90deg) scale(-1,1) !important;
+}
+
+.covered{
+  display: none;
 }
 
 .clickable{
