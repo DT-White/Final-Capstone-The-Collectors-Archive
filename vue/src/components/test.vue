@@ -132,6 +132,20 @@ export default {
   width: 100%;
 }
 
+.modal {
+  background: #ffffff;
+  box-shadow: 2px 2px 20px 1px;
+  overflow-x: auto;
+  display: flex;
+  height: 500px;
+  width: 600px;
+  border-style: solid;
+  border-width: 5px 12px 5px 12px;
+  border-radius: 10px;
+  justify-content: center;
+  margin-right: 0;
+}
+
 #titleAuthorIsbnPublishingDate {
   flex-direction: column;
 }
@@ -166,7 +180,7 @@ export default {
 .book {
   transform-style: preserve-3d;
   position: relative;
-  height: 300px;
+  height: 500px;
   backface-visibility: visible;
 }
 
@@ -196,6 +210,7 @@ export default {
 .front img {
     width: 90%;
     height: 90%;
+    border-radius: 5px;
 }
 
 .orangeCover{

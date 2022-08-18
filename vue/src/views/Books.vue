@@ -4,7 +4,7 @@
       <section>
         <book-filter/>
         <section>
-          <bookList @openBook="openTest" @addBook="newBook" @sendEmail="openEmail"/>
+          <bookList @openBook="openBook" @addBook="newBook" @sendEmail="openEmail"/>
           <reading-list @openBook="openBook"/>
         </section>
       </section>
@@ -23,10 +23,6 @@
       v-if="isEmailVisible"
       @close="closeModal" />
 
-      <test :book="bookToOpen"
-      v-show="isTestVisible"
-      @close="closeModal" />
-
   </div>
 </template>
 
@@ -39,7 +35,6 @@ import bookDetail from "@/components/BookDetail";
 import addBook from '@/components/AddBook';
 import email from '@/components/Email';
 import profileService from '@/services/ProfileService';
-import test from '@/components/test';
 export default {
   components: { 
     addBook,
@@ -49,7 +44,6 @@ export default {
     bookDetail ,
   //  profile,
     email,
-    test
   },
 
   methods: {
@@ -57,16 +51,11 @@ export default {
       this.bookToOpen = book;
       this.isBookDetailVisible = true;
     },
-    openTest(event, book) {
-      this.bookToOpen = book;
-      this.isTestVisible = true;
-    },
 
     closeModal() {
       this.isBookDetailVisible = false;
       this.isNewBookVisible = false;
       this.isEmailVisible = false;
-      this.isTestVisible = false
     },
 
     newBook(){

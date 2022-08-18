@@ -7,6 +7,7 @@ import store from '../store/index'
 import Books from '../views/Books.vue'
 import FriendsList from '../views/FriendsList.vue'
 import FriendsBooks from '../views/FriendsBooks.vue'
+import Home from '../views/Home.vue'
 
 Vue.use(Router)
 
@@ -26,9 +27,9 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Books,
+      component: Home,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {

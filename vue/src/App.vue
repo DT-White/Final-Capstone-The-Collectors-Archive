@@ -51,6 +51,8 @@ body {
   background-size: 100% 100%;
   min-height: 100%;
   backdrop-filter: blur(2px);
+  margin: 0;
+  padding: 8px;
 }
 
 #main-page{
