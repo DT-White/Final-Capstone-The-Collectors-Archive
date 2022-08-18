@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="appheader">
-        <img id="logoImage" src="../resources/logo12.jpg" alt="" />
+      <img id="logoImage" src="../resources/logo12.jpg" alt="" />
       <h1 id="header">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
         <!-- <button id="buttons">
@@ -19,7 +19,9 @@
             >Logout</router-link
           >
         </button> -->
-        <profile/>
+        
+          
+        <profile />
       </div>
     </div>
     <div id="main-page">
@@ -28,21 +30,18 @@
   </div>
 </template>
 <script>
-import profile from '@/components/Profile';
-
+import profile from "@/components/Profile";
 
 export default {
   components: { profile },
-  
-}
+};
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Fredoka+One&display=swap");
 
-html{
+html {
   height: 90%;
-  
 }
 
 body {
@@ -53,8 +52,15 @@ body {
   backdrop-filter: blur(2px);
 }
 
-#main-page{
-}
+/* div#profile-marker {
+  background-color: ivory !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left:50px;
+    height: 200px;
+    width: 200px;
+} */
 
 div#app {
   display: flex;
@@ -64,13 +70,16 @@ div#appheader {
   display: flex;
   justify-content: space-between;
 }
+
 h1#header {
+  position:absolute;
+  display: flex;
+  padding-left: 25%;
   text-align: center;
   font-family: "Fredoka One", cursive;
   font-size: 70px;
   color: white;
   font-weight: 500;
-  
 }
 img#logoImage {
   height: 200px;
@@ -94,7 +103,6 @@ button#buttons {
 .tooltip {
   position: relative;
   display: inline-block;
-  
 }
 
 .icon .tooltiptext {
