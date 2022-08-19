@@ -549,7 +549,7 @@ textarea {
   background-color: aliceblue;
 }
 */
-.icon {
+/* .icon {
   background: url("../../resources/newBook2.jpg");
   background-repeat: no-repeat;
   height: 25px;
@@ -560,6 +560,12 @@ textarea {
   cursor: pointer;
   position: relative;
   display: inline-block;
+} */
+
+#plus{
+  height: 20px;
+  margin-top: 5px;
+  cursor: pointer;
 }
 /*
 .icon .tooltiptext {

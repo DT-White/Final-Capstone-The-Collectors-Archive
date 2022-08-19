@@ -8,7 +8,8 @@
       <!-- <div class="line"> -->
       <div class="shelf-top">
         <span v-show="this.$route.path == '/books'" class="iconEmail icon" v-on:click="$emit('sendEmail', $event)">
-          <span class="tooltiptext">Send Email</span>
+          <img id="email" src="../../resources/email.png" alt="Plus icon">
+          <span class="tooltiptext">SHARE YOUR LIBRARY</span>
         </span>
         <div class="shelf-label">
           <div class="nail"></div>
@@ -17,8 +18,10 @@
           <div class="nail"></div>
         </div>
         <span v-show="this.$route.path == '/books'" class="icon" v-on:click="$emit('addBook', $event)">
-          <span class="tooltiptext">ADD BOOK</span>
+          <img id="plus" src="../../resources/plus.png" alt="Plus icon">
+          <span class="tooltiptext">ADD A BOOK</span>
         </span>
+        
       <!-- </div> -->
       </div>
     <section class="books" >
@@ -225,6 +228,7 @@ export default {
   display: flex;
   justify-content: center;
   box-shadow: 0 10px 18px -12px #1d1611;
+  align-items: center;
 }
 
 .shelf-label{

@@ -32,7 +32,7 @@ export default {
                 to_email:"",
                 message:"Check out this cool book collection website I found!",
                 from_name:`${this.$store.state.profile.firstName} ${this.$store.state.profile.lastName}`,
-                url:`http://localhost:8081/books/${this.$store.state.profile.userId}`,
+                url:`http://localhost:8081/friends/${this.$store.state.profile.userId}`,
         }
       }
     },
@@ -82,7 +82,7 @@ export default {
     height: 150px !important;
 }
 
-.iconEmail {
+/* .iconEmail {
   background: url("../../resources/email3.png");
   background-repeat: no-repeat;
   height: 25px;
@@ -93,6 +93,13 @@ export default {
   cursor: pointer;
   position: relative;
   display: inline-block;
+} */
+
+#email{
+  height: 25px;
+  width: 25px;
+  margin-top: 5px;
+  cursor: pointer;
 }
 
 </style>
