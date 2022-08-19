@@ -1,6 +1,6 @@
 <template>
   <div id="search-div">
-    <button id="searchBooksButton" v-on:click="hidden = !hidden">
+    <button id="searchBooksButton" v-on:click="showOrHideForm">
       {{ hidden === true ? "Search Books" : "Hide Search" }}
     </button>
     <form class="shelf" id="bookFilterForm" v-bind:class="{ hidden }">
@@ -127,6 +127,25 @@ export default {
     };
   },
   methods: {
+
+    clearForm(){
+      this.filter = {
+        title: "",
+        author: "",
+        keyword: "",
+        startDate: "",
+        endDate: "",
+        genres: [],
+        isbn: "",
+      }
+        this.updateStoreFilter();
+    },
+
+    showOrHideForm(){
+      this.clearForm();
+      this.hidden = !this.hidden;
+    },
+    
     updateStoreFilter() {
       this.$store.commit("SET_STORE_FILTER", this.filter);
     },

@@ -294,7 +294,7 @@ export default {
 .profileDropdown {
   background: lightgray;
   padding: 20px;
-  left: 84%;
+  left: 86.5%;
   position: absolute;
 }
 
