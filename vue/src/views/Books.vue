@@ -102,7 +102,11 @@ export default {
 
 <style>
 
-
+#searchBooks{
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
 
 #booksView{
   display: flex;

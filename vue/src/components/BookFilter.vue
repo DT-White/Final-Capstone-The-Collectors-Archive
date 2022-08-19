@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="search-div">
     <button id="searchBooksButton" v-on:click="hidden = !hidden">
       {{ hidden === true ? "Search Books" : "Hide Search" }}
     </button>
@@ -44,7 +44,7 @@
           />
         </p>
         <div id="filterDates">
-          <p id="dateLabel">Publishing&nbsp;Date</p>
+          <p id="dateLabe">Publishing&nbsp;Date</p>
           <span>
             <p id="startDatelabel">Start Date:</p>
             <input
@@ -202,6 +202,11 @@ export default {
 
 
 <style>
+
+#search-div{
+  display: flex;
+}
+
 #formFields {
   justify-content: center;
   align-items: center;
@@ -224,7 +229,7 @@ h2 {
 }
 
 #searchBooksButton {
-  margin: auto;
+  margin: 0;
   width: 80px;
   height: 80px;
   background: lightgrey;
@@ -236,7 +241,7 @@ h2 {
   cursor: pointer;
 }
 
-#dateLabel {
+#dateLabe {
   color: white;
   white-space: nowrap;
 }
@@ -342,6 +347,7 @@ h2 {
 
 .genreOption {
   display: block;
+  cursor: pointer;
 }
 
 .downArrow {
@@ -358,4 +364,5 @@ h2 {
 .genreOption:hover {
   background-color: aliceblue;
 }
+
 </style>

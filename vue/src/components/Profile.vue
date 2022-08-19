@@ -1,14 +1,14 @@
 <template>
-  <div id="profile-page">
+  <div id="profile-page" @mouseenter="showOptions = false" @mouseleave="showOptions = true">
     <section class="portrait-wall">
-      <div class="portrait" @click="showOptions = !showOptions">
+      <div class="portrait" >
         <img
           :src="pictureAddress"
           alt="Profile picture"
           class="profile-picture"
           v-show="!isWebcamVisible"
         />
-        <webcam
+        <webcam id="webcam"
           v-if="isWebcamVisible"
           :isCameraOpen="isWebcamVisible"
           @photoTaken="useWebcamPhoto"
@@ -294,7 +294,7 @@ export default {
 .profileDropdown {
   background: lightgray;
   padding: 20px;
-  margin-left: -95px;
+  left: 84%;
   position: absolute;
 }
 
@@ -381,4 +381,5 @@ export default {
 .btn:hover {
   cursor: pointer;
 }
+
 </style>

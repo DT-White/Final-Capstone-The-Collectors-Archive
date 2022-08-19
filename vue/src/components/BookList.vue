@@ -12,8 +12,8 @@
         </span>
         <div class="shelf-label">
           <div class="nail"></div>
-            <h2 v-if="this.$route.path != '/books'">{{this.profile.firstName}}</h2>
-            <h2 v-show="this.$route.path == '/books'">LIBRARY</h2>
+            <h2 v-if="this.$route.path != '/books'">{{this.profile.firstName.toUpperCase()}}'S </h2>
+            <h2 >LIBRARY</h2>
           <div class="nail"></div>
         </div>
         <span v-show="this.$route.path == '/books'" class="icon" v-on:click="$emit('addBook', $event)">

@@ -18,7 +18,7 @@ export default {
   },
 
   created() {
-    profileService.getFriendProfile(this.$route.params).then((response) => {
+    profileService.getFriendProfile(this.$route.params.id).then((response) => {
         if(response.status === 200) {
           this.profile = response.data
         }

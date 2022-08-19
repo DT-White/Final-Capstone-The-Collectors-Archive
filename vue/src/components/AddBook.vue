@@ -147,6 +147,7 @@
                   class="input-select"
                   disabled
                   v-model="genreTextField"
+                  v-on:click="showGenres = !showGenres"
                 />
                 <span id="downArrow" v-on:click="showGenres = !showGenres">{{
                   showGenres ? "&blacktriangle;" : "&blacktriangledown;"
@@ -601,6 +602,6 @@ textarea {
   /* position: absolute; */
   width: max-content;
   height: 20px;
-  
+  cursor: pointer;
 }
 </style>

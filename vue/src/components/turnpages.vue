@@ -83,7 +83,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css?family=Cormorant+Garamond:300,400,600%7CTulpen+One&display=swap");
 :root {
   --body-bg: #FAFAFA;
@@ -111,14 +111,14 @@ export default {
 * {
   box-sizing: border-box;
 }
-body {
+/* body {
   background-color: var(--body-bg);
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
+} */
 .modal {
   overflow: hidden;
   background: #FFFFFF;

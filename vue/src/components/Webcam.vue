@@ -245,19 +245,37 @@ body {
   animation-delay: 0.4s;
 }
 
-#photo-taken, #video {
-  width: 150px;
-  height: 200px;
+#photoTaken, #video {
+  /* width: 150px;
+  height: 200px; */
   margin-left: 5px;
+   width: 150px;
+  height: auto;
+  max-width: 150px;
+  max-height: 200px;
+  border-radius: 50%;
+  display: block;
+  height: 100vh;
+  margin-top: 30px;
 }
 
+#video{
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+
+}
+
+
+
 #photoTaken{
-  left: -1px;
-  top: 26px;
+  left: -4px;
+  top: -29px;
   overflow: hidden;
   position: absolute;
   width: 150px;
-  height: 112px;
+  height: 150px;
+  object-fit:cover
 }
 
 #photo-confirm-icons{

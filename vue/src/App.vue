@@ -11,7 +11,8 @@
         <!-- <book-filter id="searchBooks"/> -->
       </div>
 
-      <h1 id="header">The Collector's Archive</h1>
+      <h1 id="header"
+          @click="goToHome">The Collector's Archive</h1>
       <div id="nav" v-if="$store.state.token != ''">
         <!-- <button id="buttons">
           <router-link
@@ -117,6 +118,7 @@ img#logoImage {
   cursor: pointer;
 }
 div#nav {
+  display: flex;
   justify-content: flex-end;
 }
 a {
@@ -153,7 +155,4 @@ button#buttons {
   visibility: visible;
 }
 
-html{
-  overflow:auto !important
-}
 </style>
