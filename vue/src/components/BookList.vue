@@ -17,9 +17,9 @@
             <h2 >LIBRARY</h2>
           <div class="nail"></div>
         </div>
-        <span v-show="this.$route.path == '/books'" class="icon" v-on:click="$emit('addBook', $event)">
+        <span v-show="showPlus" class="icon" v-on:click="handlePlusButton">
           <img id="plus" src="../../resources/plus.png" alt="Plus icon">
-          <span class="tooltiptext">ADD A BOOK</span>
+          <span class="tooltiptext">{{this.$route.path == '/books' ? 'ADD A BOOK' : 'ADD TO FRIENDS LIST'}}</span>
         </span>
         
       <!-- </div> -->
@@ -60,6 +60,7 @@ export default {
       books: [],
       user: [],
       draggingBook: null,
+      showPlus: true
     };
   },
   computed: {
@@ -110,6 +111,13 @@ export default {
 
   methods: {
    
+   handlePlusButton(event){
+     if (this.$route.path == '/books'){
+       this.$emit('addBook', event)
+     } else{
+       this.showPlus = false;
+     }
+   },
 
     setBookColors(books){
       for (let book of books){

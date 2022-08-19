@@ -33,7 +33,7 @@ created(){
   background-image: url("../../resources/testBackground5.jpg");
   backdrop-filter: blur(0px);
   background-size: 110% 110%;
-  height: 110%;
+  height: 118%;
   width: 110%;
   left: -10%;
   top: -10%;
