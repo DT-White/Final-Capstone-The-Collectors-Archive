@@ -8,7 +8,7 @@
       <!-- <div class="line"> -->
       <div class="shelf-top">
         <span v-show="this.$route.path == '/books'" class="iconEmail icon" v-on:click="$emit('sendEmail', $event)">
-          <img id="email" src="../../resources/email.png" alt="Plus icon">
+          <img id="email-icon" src="../../resources/email.png" alt="Plus icon">
           <span class="tooltiptext">SHARE YOUR LIBRARY</span>
         </span>
         <div class="shelf-label">

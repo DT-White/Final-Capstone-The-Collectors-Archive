@@ -335,7 +335,7 @@ export default {
   max-height: 200px;
   border-radius: 47%;
   display: block;
-  height: 100vh;
+  height: 110px
 }
 #image-icons {
   top: 0;

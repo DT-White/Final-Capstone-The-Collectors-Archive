@@ -270,12 +270,12 @@ body {
 
 #photoTaken{
   left: -4px;
-  top: -29px;
+  top: -12px;
   overflow: hidden;
   position: absolute;
+  object-fit:fill;
   width: 150px;
-  height: 150px;
-  object-fit:cover
+  height: 110px;
 }
 
 #photo-confirm-icons{

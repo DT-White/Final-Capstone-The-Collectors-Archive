@@ -95,7 +95,7 @@ export default {
   display: inline-block;
 } */
 
-#email{
+#email-icon{
   height: 25px;
   width: 25px;
   margin-top: 5px;
