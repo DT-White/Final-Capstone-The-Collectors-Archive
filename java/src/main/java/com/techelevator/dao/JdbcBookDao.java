@@ -58,7 +58,7 @@ public class JdbcBookDao implements BookDao {
             bookList.add(mapRowToBook(rowSet));
         }
 
-        userDao.updateTimeAccessed(username);
+       // userDao.updateTimeAccessed(username);
         return bookList;
     }
 

@@ -34,6 +34,11 @@ CREATE TABLE users (
 
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (username,password_hash,role) VALUES ('Mohamed','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('Benita','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('Derek','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('Nick','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+
 
 Create table time_accessed (
 	user_id bigint not null references users (user_id),
@@ -136,6 +141,65 @@ values ('Trouble Don''t Last', 'Shelley Pearsall', '9780440418115', 'false', 'Dr
 Insert into book_genre (book_id, genre_id)
 values (6, 1), (6, 5);
 
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values ('Harry Potter and the Sorcerer''s Stone', 'J. K. Rowling', '9780590353427', 'true', 'Rescued from the outrageous neglect of his aunt and uncle, a young boy with a great destiny proves his worth while attending Hogwarts School for Witchcraft and Wizardry.', 'magic, wizard, harry, bravery, hogwarts', '1997-06-26', 'http://books.google.com/books/content?id=fo4rzdaHDAwC&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (7, 1), (7, 8);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values ('Harry Potter and the Chamber of Secrets', 'J. K. Rowling', '9780439064866', 'true', 'Between the new spirit spooking his school and the mysterious forces that turn students into stone, Harry has a lot on his mind as he begins his second year at Hogwarts School of Witchcraft and Wizardry.', 'magic, wizard, harry, bravery, hogwarts', '1998-07-02', 'http://books.google.com/books/content?id=Bikg274Y4Q0C&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (8, 1), (8, 8);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values ('Harry Potter and the Prisoner of Azkaban', 'J. K. Rowling', '9780747546290', 'true', 'When Harry and his best friends go back for their third year at Hogwarts, the atmosphere is tense. There''s an escaped mass-murderer on the loose and the sinister prison guards of Azkaban have been called in to guard the school. Lessons, however, must go on and there are lots of new subjects in third year - Care of Magical Creatures and Divination among others - to take Harry''s mind off things!', 'magic, wizard, harry, bravery, hogwarts', '1999-07-08', 'http://books.google.com/books/content?id=nfRhQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (9, 1), (9, 8);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values ('Harry Potter and the Goblet of Fire', 'J. K. Rowling', '9780747546245', 'true', 'The summer holidays are dragging on and Harry Potter can''t wait for the start of the school year. It is his fourth year at Hogwarts School of Witchcraft and Wizardry and there are spells to be learnt and (unluckily) Potions and Divination lessons to be attended. But Harry can''t know that the atmosphere is darkening around him, and his worst enemy is preparing a fate that it seems will be inescapable . . . With characteristic wit, fast-paced humour and marvellous emotional depth, J.K. Rowling has proved herself yet again to be a master story-teller.', 'magic, wizard, harry, bravery, hogwarts, goblet, tournament', '2000-07-08', 'http://books.google.com/books/content?id=5eSxngEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (10, 1), (10, 8);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values('Harry Potter and the Order of the Phoenix', 'J.K Rowling', '9780439358064', 'true', 'Collects the complete series that relates the adventures of young Harry Potter, who attends Hogwarts School of Witchcraft and Wizardry, where he and others of his kind learn their craft.','magic, wizard, harry, bravery, hogwarts', '2003-06-21', 'http://books.google.com/books/content?id=qH7vyQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (11, 1), (11, 8);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values('Harry Potter and the Half-blood Prince', 'J.K Rowling', '9780747581086', 'true', 'Harry has yet again spent the summer holidays at the Dursleys''. He has had plenty to think about, though - from the death of his beloved godfather Sirius Black, to the terrifying chase through the Ministry of Magic by the Death Eaters, to the fierce duel he witnessed between Professor Dumbledore and Lord Voldemort. It is the middle of the summer, but there is an unseasonal mist pressing against the windowpanes. Harry is waiting nervously for a visit from Professor Dumbledore himself. He can''t quite believe that Professor Dumbledore will actually appear at the Dursleys'' of all places. Why is the Professor coming to visit him now? What is it that cannot wait until Harry returns to Hogwarts in a few weeks'' time? Harry''s sixth year at Hogwarts has already got off to an unusual start, as the worlds of Muggle and magic start to intertwine J.K. Rowling charts Harry Potter''s adventures in his sixth year at Hogwarts with a mix of detail and humour that is unsurpassed, pace that is breathless and above all a flair that is magical','magic, wizard, harry, bravery, hogwarts', '2005-07-16', 'http://books.google.com/books/content?id=3IbqPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (12, 1), (12, 8);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values('Harry Potter and the Deathly Hallows', 'J.K Rowling', '9780545010221', 'true', 'The seventh and final book of the blockbuster Harry Potter series follows the wizard''s last year at Hogwarts School of Witchcraft and Wizardry. 12,000,000 first printing.','magic, wizard, harry, bravery, hogwarts', '2007-07-14', 'http://books.google.com/books/content?id=GZAoAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (13, 1), (13, 8);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values('The Diary of a Young Girl', 'Anne Frank', '9780553296983', 'true', 'A young girl''s journal records her family''s struggles during two years of hiding from the Nazis in war-torn Holland.','holocaust, Nazis, concentration camp, world war two', '1947-06-25', 'http://books.google.com/books/content?id=ZEy6im49l08C&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (14, 10), (14, 5);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values('The Naturals', 'Jennifer Lynn Barnes', '9781423168232', 'false', 'Seventeen-year-old Cassie is a natural at reading people. Piecing together the tiniest details, she can tell you who you are and what you want. But, it''s not a skill that she''s ever taken seriously. That is, until the FBI come knocking: they''ve begun a classified program that uses exceptional teenagers to crack infamous cold cases, and they need Cassie. What Cassie doesn''t realize is that there''s more at risk than a few unsolved homicides-especially when she''s sent to live with a group of teens whose gifts are as unusual as her own. Soon, it becomes clear that no one in the Naturals program is what they seem. And when a new killer strikes, danger looms close. Caught in a lethal game of cat and mouse with a killer, the Naturals are going to have to use all of their gifts just to survive. Think The Mentalist meets Pretty Little Liars','crime, mystery, cold cases', '2013-11-05', 'http://books.google.com/books/content?id=IGNCmQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (15, 2), (15, 3), (15, 6), (15, 11);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values('Neuromancer', 'William Gibson', '9780441569595', 'true', 'Case, a burned out computer whiz, is asked to steal a security code that is locked in the most heavily guarded databank in the solar system','computer whiz, mission', '1984-07-01', 'http://books.google.com/books/content?id=958sAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (16, 9), (16, 1);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values('A Hell Called Ohio', 'John Hamilton', '9780991337941', 'false', 'John Hamilton’s novel follows factory worker Warrell Swanson through the depressed town of Defiance, Ohio as he comprehends the arrival of new love, personal loss, and the limitations of an identity based on work. Swanson suffers an injury on the factory line and looks for new ways to kill time. He and his best friend Mario drink at the local tavern, which quickly leads to an unwanted fling with his fiery ex-girlfriend, Rochelle. Escaping the resulting malaise and the late summer heat at the local library, Warrell falls in love with Emily, Defiance’s new bright and beautiful librarian. But the lofty summer days turn overcast and the rains that every year threaten floods begin heavily to fall. A sudden death demands emotional truth and healing, but Emily is concerned by the indecision of her future. With their lives on divergent paths and his growing dispassion for the factory life, Warrell battles the indefinable pressures of nothingness in hopes that he can scrape up enough meaning to escape Defiance for good.','Ohio, romance, factory worker', '2013-09-10', 'http://books.google.com/books/content?id=5mL4lwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (17, 1), (17, 6);
+
+Insert into books (title, author, isbn, bestseller, summary, keyword, publishing_date, cover_image_url, date_added)
+values('The Whiskey Rebels', 'David Liss', '9780812974539', 'false', 'Ethan Saunders, a former spy for George Washington, is recruited by Alexander Hamilton to find his ex-fiancee''s missing husband. Meanwhile, Joan Maycott and her veteran husband, amid hardship and deprivation on the western Pennsylvania frontier, find unlikely friendship and a chance for prosperity with a new method of distilling whiskey. The Maycotts'' success however attracts the brutal attention of men in Hamilton''s orbit, men who threaten to destroy all Joan holds dear. As their causes intertwine, Joanand Saunders--both patriots in their own way--find themselves on opposing sides of a daring scheme that will forever change their lives and their new country.', 'spy, Pennsylvania, distilery', '2009-06-16', 'http://books.google.com/books/content?id=yFMOh-knRw4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api', current_timestamp);
+Insert into book_genre (book_id, genre_id)
+values (18, 7), (18, 3);
 
 
 Insert into time_accessed (user_id, time_update)
@@ -144,8 +208,38 @@ values (1, current_timestamp), (2, current_timestamp);
 insert into profiles (user_id, first_name, last_name, profile_picture_url, email)
 values (1, 'John', 'Doe', 'https://www.nicepng.com/png/detail/8-88271_madagascar-penguin-png-image-penguins-of-madagascar.png', 'john@gmail.com');
 
+insert into profiles (user_id, first_name, last_name, profile_picture_url, email)
+values (3, 'Mohamed', 'A', 'https://firebasestorage.googleapis.com/v0/b/collectors-archive.appspot.com/o/user3-profile-picture?alt=media&token=0d21e608-6fef-4ee4-bd20-05f1ab2ae993', 'ma@TE.com');
+
+insert into profiles (user_id, first_name, last_name, profile_picture_url, email)
+values (4, 'Benita', 'Nou', 'https://firebasestorage.googleapis.com/v0/b/collectors-archive.appspot.com/o/user4-profile-picture?alt=media&token=1ad2241f-d89d-4729-a64e-14b10bf766bc', 'bn@TE.com');
+
+insert into profiles (user_id, first_name, last_name, profile_picture_url, email)
+values (5, 'Derek', 'White', 'https://firebasestorage.googleapis.com/v0/b/collectors-archive.appspot.com/o/user5-profile-picture?alt=media&token=d70b484b-98ae-49e1-a342-7f4ca57944db', 'dw@TE.com');
+
+insert into profiles (user_id, first_name, last_name, profile_picture_url, email)
+values (6, 'Nick', 'Paat', 'https://firebasestorage.googleapis.com/v0/b/collectors-archive.appspot.com/o/user6-profile-picture?alt=media&token=d6441ca7-960c-4135-8661-4fbff80bffd5', 'np@TE.com');
+
+INSERT INTO friends (first_user, second_user)
+Values  (1,4), (4,1), (1,5), (5,1), (1,6), (6,1), (3,4), (4,3), (3,5), (5,3), (3,6), (6,3), (4,6), (6,4);
+
 INSERT INTO user_collection (book_id, user_id) 
 values(2,1), (3,1), (6,1);
+
+INSERT into user_collection (book_id, user_id) 
+values (15, 1), (12, 1), (1, 1), (16, 1);
+
+INSERT into user_collection (book_id, user_id) 
+values (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3), (13, 3), (18, 3), (14, 3);
+
+INSERT into user_collection (book_id, user_id) 
+values (18, 4), (17, 4), (16,4), (15,4), (14,4), (1,4), (2,4), (3,4);
+
+INSERT into user_collection (book_id, user_id) 
+values (4, 5), (5, 5), (6,5), (15,5), (10,5), (1,5);
+
+INSERT into user_collection (book_id, user_id) 
+values (14, 6), (15, 6), (16,6), (17,6), (18,6), (5,6);
 
 COMMIT TRANSACTION;
 

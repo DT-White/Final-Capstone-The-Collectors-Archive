@@ -19,9 +19,9 @@ public interface UserDao {
 
     void addFriends (String username, int friendUserId);
 
-    void addTimeAccessed(String username);
+    //void addTimeAccessed(String username);
 
-    void updateTimeAccessed(String username);
+    //void updateTimeAccessed(String username);
 
     List<Integer> getFriendsUserIds (String username);
 
