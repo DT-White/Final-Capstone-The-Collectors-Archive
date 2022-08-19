@@ -323,7 +323,7 @@ export default {
   align-items: space-between;
   flex-direction: column;
   position: relative;
-  border-radius: 100px;
+  border-radius: 50%;
   box-shadow: 0px 5px 12px #8b824a;
   cursor: pointer;
 }
