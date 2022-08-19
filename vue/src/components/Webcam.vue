@@ -186,9 +186,10 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 100%;
-  top: 150px;
+  top: 130px;
   left: 60px;
   position: absolute;
+  z-index: 1000;
 }
 .camera-shoot img {
   height: 20px;
@@ -270,7 +271,7 @@ body {
 
 #photoTaken{
   left: -4px;
-  top: -12px;
+  top: -29px;
   overflow: hidden;
   position: absolute;
   object-fit:fill;
@@ -279,7 +280,7 @@ body {
 }
 
 #photo-confirm-icons{
-  top: 155px;
+  top: 120px;
   left: 55px;
   position: absolute;
 }

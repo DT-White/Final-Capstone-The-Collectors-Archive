@@ -288,7 +288,7 @@ export default {
   right: 10%;
   max-height: 400px;
   overflow: hidden;
-
+  z-index: 999;
 }
 
 .profileDropdown {
@@ -317,7 +317,7 @@ export default {
   border-width: 20px;
   border-style: solid;
   width: 150px;
-  height: 150px;
+  height: 110px;
   display: flex;
   justify-content: center;
   align-items: space-between;
